@@ -21,7 +21,14 @@ export const ContainerBackground = styled.div`
 export const ContainerImg = styled.div`
   text-align: center;
   img {
-    width: 20rem;
+    width: 5rem;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 2rem;
   }
 `;
 
@@ -106,6 +113,7 @@ export const Carousel = styled.div`
 export const ContainerCarousel = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
 
   @media (max-width: 1080px) {
     flex-direction: column;
@@ -301,4 +309,59 @@ export const ContainerButtons = styled.div`
 export const ContainerTitle = styled.p`
   font-size: 5rem;
   font-weight: 500;
+`;
+
+export const MediaContainer = styled.div`
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const MediaVerse = styled.div`
+  position: relative;
+  width: 80rem;
+  height: 60rem;
+  img {
+    width: 10rem;
+  }
+  .m-part {
+    position: absolute;
+  }
+
+  .part {
+    left: 0;
+    bottom: 34%;
+  }
+
+  .part1 {
+    left: 8%;
+    bottom: 47%;
+  }
+
+  .part2 {
+    left: 16%;
+    bottom: 60%;
+  }
+
+  .part3 {
+    left: 26%;
+    bottom: 51%;
+  }
+
+  .part4 {
+    left: 36%;
+    bottom: 60%;
+  }
+
+  .part5 {
+    left: 45%;
+    bottom: 49%;
+  }
+
+  .part6 {
+    left: 53%;
+    bottom: 35%;
+  }
 `;

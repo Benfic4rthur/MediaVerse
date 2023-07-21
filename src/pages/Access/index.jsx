@@ -34,6 +34,8 @@ import {
   CasaNoturna,
   ContainerButtons,
   ContainerTitle,
+  MediaVerse,
+  MediaContainer,
 } from './styled';
 import { useLayoutEffect } from 'react';
 
@@ -61,8 +63,11 @@ const index = () => {
     <ContainerBackground>
       <Container>
         <ContainerImg>
-          <ContainerTitle>Base de Conhecimento</ContainerTitle>
-          <img src={logo} alt='logo' style={{ width: '5rem' }} />
+          <ContainerTitle>MediaVerse</ContainerTitle>
+          <div>
+            <img src={logo} alt='logo' />
+            <p>Ekor Solutions</p>
+          </div>
         </ContainerImg>
         <ContainerButtons>
           <ButtonClient to='/login'>Área do Cliente</ButtonClient>
@@ -99,7 +104,18 @@ const index = () => {
             </Item>
           </Slider>
         </Carousel>
-        <HexagonalFather>
+        <MediaContainer>
+          <MediaVerse>
+            <img src={pizzaria} alt='' className='m-part part' />
+            <img src={RestauranteNew} alt='' className='m-part part1' />
+            <img src={sushi} alt='' className='m-part part2' />
+            <img src={delivery} alt='' className='m-part part3' />
+            <img src={conveniencia} alt='' className='m-part part4' />
+            <img src={pubs} alt='' className='m-part part5' />
+            <img src={casaNorturna} alt='' className='m-part part6' />
+          </MediaVerse>
+        </MediaContainer>
+        {/* <HexagonalFather>
           <Content>
             <Restaurante>
               <img src={RestauranteNew} alt='restaurante' />
@@ -130,12 +146,18 @@ const index = () => {
               <img src={casaNorturna} alt='CasaNoturna' />
             </CasaNoturna>
           </Content>
-        </HexagonalFather>
+        </HexagonalFather> */}
       </ContainerCarousel>
       <FooterAccess>
         <img src={logoFooter} alt='logo' />
-        <LinkFooter to='https://genuinesistemas.com.br/'>Genuine sistemas &copy;</LinkFooter>, Todos
-        os direitos reservados {year}
+        <LinkFooter
+          to='https://ekorsolutions.vercel.app/'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          EkorSolutions &copy;
+        </LinkFooter>
+        , Todos os direitos reservados {year}
       </FooterAccess>
     </ContainerBackground>
   );
