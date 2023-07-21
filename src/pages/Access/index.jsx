@@ -61,8 +61,11 @@ const index = () => {
     <ContainerBackground>
       <Container>
         <ContainerImg>
-          <ContainerTitle>Base de Conhecimento</ContainerTitle>
-          <img src={logo} alt='logo' style={{ width: '5rem' }} />
+          <ContainerTitle>MediaVerse</ContainerTitle>
+          <div>
+            <img src={logo} alt='logo' />
+            <p>Ekor Solutions</p>
+          </div>
         </ContainerImg>
         <ContainerButtons>
           <ButtonClient to='/login'>Área do Cliente</ButtonClient>
@@ -134,8 +137,14 @@ const index = () => {
       </ContainerCarousel>
       <FooterAccess>
         <img src={logoFooter} alt='logo' />
-        <LinkFooter to='https://genuinesistemas.com.br/'>Genuine sistemas &copy;</LinkFooter>, Todos
-        os direitos reservados {year}
+        <LinkFooter
+          to='https://ekorsolutions.vercel.app/'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          EkorSolutions &copy;
+        </LinkFooter>
+        , Todos os direitos reservados {year}
       </FooterAccess>
     </ContainerBackground>
   );

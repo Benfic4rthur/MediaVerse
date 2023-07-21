@@ -21,7 +21,14 @@ export const ContainerBackground = styled.div`
 export const ContainerImg = styled.div`
   text-align: center;
   img {
-    width: 20rem;
+    width: 5rem;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 2rem;
   }
 `;
 
