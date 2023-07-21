@@ -59,7 +59,7 @@ const Index = () => {
                   {posts.data
                     ?.filter(e => !e?.tags?.includes?.('aprendendo-o-sistema'))
                     .map(post => (
-                      <PostDetailsHome key={post.id} to={'/post/'} post={post} />
+                      <PostDetailsHome key={post.id} to={'/posts/'} post={post} />
                     ))}
                 </PostsContainer>
               </>
