@@ -51,7 +51,7 @@ const Dashboard = () => {
     const sortedPostsAd = postsadm?.filter(
       post => !post.tags.includes('aprendendo-o-sistema'),
     );
-    
+
     const postTags = postsadm?.filter(post => post.tags.includes('aprendendo-o-sistema'));
 
     const valueAd = searchAll ? sortedPostsAd : postTags
@@ -84,7 +84,7 @@ const Dashboard = () => {
                   type='radio'
                   name='fav_language'
                   id='Conteudo'
-                  checked={searchAll}
+                  defaultChecked={true}
                   onClick={() => setSearchAll(true)}
                 />
                 <TitleToggle as='label' htmlFor='Conteudo'>
@@ -97,7 +97,6 @@ const Dashboard = () => {
                   type='radio'
                   name='fav_language'
                   id='Sistema'
-                  checked={!searchAll}
                   onClick={() => setSearchAll(false)}
                 />
                 <TitleToggle as='label' htmlFor='Sistema'>

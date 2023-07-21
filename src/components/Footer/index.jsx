@@ -18,7 +18,7 @@ const faleConosco = 'Fale Conosco';
 const instagram = 'Instagram';
 const site = 'www.genuinesistemas.com.br';
 
-const number = '5548991674323'; // Número de telefone do WhatsApp
+const number = '5551991640517'; // Número de telefone do WhatsApp
 const messageBomDia = 'Bom dia! Tenho uma dúvida, você poderia me ajudar?'; // Texto pré-pronto para a mensagem de bom dia
 const messageBoaTarde = 'Boa tarde! Tenho uma dúvida, você poderia me ajudar?'; // Texto pré-pronto para a mensagem de boa tarde
 const messageBoaNoite = 'Boa noite! Tenho uma dúvida, você poderia me ajudar?'; // Texto pré-pronto para a mensagem de boa noite
