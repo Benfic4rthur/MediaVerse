@@ -62,7 +62,7 @@ const index = () => {
       <Container>
         <ContainerImg>
           <ContainerTitle>Base de Conhecimento</ContainerTitle>
-          <img src={logo} alt='logo' />
+          <img src={logo} alt='logo' style={{ width: '5rem' }} />
         </ContainerImg>
         <ContainerButtons>
           <ButtonClient to='/login'>Área do Cliente</ButtonClient>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom/dist';
 
 import { styled, keyframes } from 'styled-components';
-import imgRestaurante from '../../assets/restaurante.jpg';
+import imgSala from '../../assets/sala.jpg';
 
 export const ContainerBackground = styled.div`
   width: 100%;
@@ -10,7 +10,7 @@ export const ContainerBackground = styled.div`
   background-position: 0;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url('${imgRestaurante}');
+  background-image: url('${imgSala}');
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: min-content auto min-content;
