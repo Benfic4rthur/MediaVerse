@@ -38,9 +38,9 @@ const Index = () => {
             <LuSearch />
           </SearchButton>
         </SearchForm>
-        <Link to='/learning/OFOXyrU9ECBmt5eWnhl3' style={{ textDecoration: 'none' }}>
+        {/* <Link to='/learning/OFOXyrU9ECBmt5eWnhl3' style={{ textDecoration: 'none' }}>
           <ButtonSystem>Aprendendo o Sistema</ButtonSystem>
-        </Link>
+        </Link> */}
       </ContainerButton>
       <Suspense fallback={<></>}>
         <Await
