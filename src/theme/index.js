@@ -2,20 +2,20 @@ import { keyframes } from 'styled-components';
 
 export const theme = {
   color: {
-    first: 'hsl(6, 66%, 58%)',
-    firstHover: 'hsl(6, 54%, 34%)',
-    firstBg: 'hsl(225, 11%, 22%)',
-    firstOpacity: 'hsl(225, 11%, 7%, 0.3)',
-    shadow: 'hsl(225, 11%, 12%, 0.15)',
+    first: 'hsl(228, 76%, 63%)',
+    firstHover: 'hsl(228, 56%, 40%)',
+    firstBg: 'hsl(228, 18%, 22%)',
+    firstOpacity: 'hsl(228, 11%, 7%, 0.3)',
+    shadow: 'hsl(228, 11%, 12%, 0.15)',
 
-    secondBg: 'hsl(225, 11%, 25%)',
-    secondOpacity03: 'hsl(225, 11%, 20%)',
+    secondBg: 'hsl(228, 11%, 25%)',
+    secondOpacity03: 'hsl(228, 11%, 20%)',
 
-    third: 'hsl(225, 11%, 28%, 0.3)',
+    third: 'hsl(228, 11%, 28%, 0.3)',
     thirdBg: '#1C1B1E',
-    thirdOpacity03: 'hsl(225, 11%, 38%, 0.3)',
-
-    fourth: 'hsl(0, 0%, 95%)',
+    thirdOpacity03: 'hsl(228, 11%, 38%, 0.3)',
+    // firstBg
+    fourth: 'hsl(0, 0%, 90%)',
     fourthHover: 'hsl(0, 0%, 95%, 0.3)',
     fourthBg: '#0D0C0F',
     fourthOpacity: 'hsl(0, 0%, 95%, 0.7)',
@@ -35,8 +35,8 @@ export const theme = {
     },
     lineHeight: '150%',
     family: {
-      primary: '"AmpleSoft Pro", serif',
-      second: '"Open Sans", sans-serif',
+      second: '"AmpleSoft Pro", serif',
+      primary: '"Roboto", sans-serif',
     },
     weight: {
       bold: 700,

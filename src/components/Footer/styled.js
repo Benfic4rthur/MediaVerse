@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { MaxWidth } from '../../styles/styledGlobal';
 
 export const Footer = styled.footer`
-  height: 100px;
+  height: 10rem;
   color: white;
   width: 100%;
   background-color: ${({ theme }) => theme.color.fifth};
@@ -25,7 +25,7 @@ export const ContainerMaxWidth = styled.div`
 `;
 
 export const LinkImgFooter = styled.a`
-  min-height: 22px;
+  min-height: 2.2rem;
   display: block;
   padding: 0.3rem;
   padding-bottom: 0rem;
@@ -33,8 +33,8 @@ export const LinkImgFooter = styled.a`
 `;
 
 export const ImgFooter = styled.img`
-  min-height: 22px;
-  width: 15rem;
+  min-height: 2.2rem;
+  width: 4rem;
 `;
 
 export const NavLinkStyled = styled.a`
@@ -46,12 +46,12 @@ export const NavLinkStyled = styled.a`
   text-decoration: none;
   transition: 300ms color;
   padding: 0.5rem;
-  border-radius: 30px;
+  border-radius: 3rem;
   background-color: ${({ theme }) => theme.color.first};
 
   &:hover {
     color: ${({ theme }) => theme.color.fifth};
-    transform: translateY(5px);
+    transform: translateY(0.5rem);
   }
 `;
 
@@ -59,7 +59,7 @@ export const NavLinkWhatsapp = styled(NavLinkStyled)`
   position: fixed;
   z-index: 100;
   bottom: 3rem;
-  border-radius: 30px;
+  border-radius: 3rem;
   font-size: 3.1rem;
   background-color: ${({ theme }) => theme.color.first};
   transform: rotate(40deg);

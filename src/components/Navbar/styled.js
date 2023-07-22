@@ -33,38 +33,34 @@ export const ContainerMaxWidth = styled.div`
 export const NavLinkLogo = styled(NavLink)`
   display: flex;
   align-items: center;
-  padding: .5rem .7rem;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
   height: min-content;
   text-decoration: none;
   border-radius: ${({ theme }) => theme.border.radius};
 `;
 
 export const Logo = styled.img`
-  width: 140px;
-  margin-top: 6px;
-  margin-right: 1px;
+  height: 4rem;
+  margin-top: 0.6rem;
+  margin-right: 0.1rem;
   text-decoration: none;
-
-  @media (max-width: 900px) {
-    width: 100px;
-  }
 `;
 
 export const UserName = styled.span`
   color: rgb(255, 255, 255);
   font-size: 2.5rem;
   color: white;
-  margin-bottom: 6px;
-  font-family: 'AmpleSoft Pro';
+
   font-weight: bold;
 
   @media (max-width: 900px) {
     color: rgb(255, 255, 255);
     font-size: 1.9rem;
     color: white;
-    font-family: 'AmpleSoft Pro';
+
     font-weight: bold;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 `;
 

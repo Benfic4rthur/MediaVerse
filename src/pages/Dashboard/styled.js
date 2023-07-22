@@ -66,6 +66,17 @@ export const ContainerToggle = styled.div`
   display: flex;
   flex-flow: row;
   gap: 1rem;
+
+`;
+
+export const ContainerFormToggle = styled.form`
+  display: flex;
+  flex-flow: row;
+  gap: 1rem;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 export const TitleToggle = styled.h3`
@@ -154,6 +165,15 @@ export const MediaPreview = styled.img`
     cursor: pointer;
     transform: scale(1.1);
   }
+`;
+
+export const InputRadial = styled.input`
+ height: min-content;
+ border-radius: 50%;
+
+
+
+ 
 `;
 
 export const ButtonEvent = styled.button`

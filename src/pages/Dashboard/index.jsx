@@ -17,12 +17,14 @@ import {
   ContainerCreatePost,
   ContainerDate,
   ContainerDialog,
+  ContainerFormToggle,
   ContainerHeader,
   ContainerPost,
   ContainerTitlePost,
   ContainerToggle,
   CreatePostTitle,
   Deta,
+  InputRadial,
   MediaPreview,
   Post,
   TitlePost,
@@ -48,13 +50,11 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    const sortedPostsAd = postsadm?.filter(
-      post => !post.tags.includes('aprendendo-o-sistema'),
-    );
+    const sortedPostsAd = postsadm?.filter(post => !post.tags.includes('aprendendo-o-sistema'));
 
     const postTags = postsadm?.filter(post => post.tags.includes('aprendendo-o-sistema'));
 
-    const valueAd = searchAll ? sortedPostsAd : postTags
+    const valueAd = searchAll ? sortedPostsAd : postTags;
 
     setFilteredPosts(userStatus === 'admin' ? valueAd : posts);
   }, [posts, postsadm, searchAll]);
@@ -78,32 +78,28 @@ const Dashboard = () => {
       ) : filteredPosts?.length > 0 && userStatus === 'admin' ? (
         <ContainerPost>
           {
-            <ContainerToggle as='form' action=''>
-              <ContainerToggle>
-                <input
+            <ContainerFormToggle as='form' action=''>
+              <ContainerToggle as='label' htmlFor='Conteudo'>
+                <InputRadial
                   type='radio'
                   name='fav_language'
                   id='Conteudo'
                   defaultChecked={true}
                   onClick={() => setSearchAll(true)}
                 />
-                <TitleToggle as='label' htmlFor='Conteudo'>
-                  Todo Conteúdo
-                </TitleToggle>
+                <TitleToggle>Todo Conteúdo</TitleToggle>
               </ContainerToggle>
               <span />
-              <ContainerToggle>
-                <input
+              <ContainerToggle as='label' htmlFor='Sistema'>
+                <InputRadial
                   type='radio'
                   name='fav_language'
                   id='Sistema'
                   onClick={() => setSearchAll(false)}
                 />
-                <TitleToggle as='label' htmlFor='Sistema'>
-                  Aprendendo o Sistema
-                </TitleToggle>
+                <TitleToggle>Aprendendo o Sistema</TitleToggle>
               </ContainerToggle>
-            </ContainerToggle>
+            </ContainerFormToggle>
           }
           {filteredPosts.map(post => (
             <Post key={post.id}>

@@ -73,7 +73,6 @@ export const Title = styled.h1`
   font-family: ${({ theme }) => theme.font.family.robotoSlab};
   color: ${({ theme }) => theme.color.fourth};
   padding: 1rem;
-  font-family: 'AmpleSoft Pro';
 `;
 
 export const ContainerTag = styled.div`
