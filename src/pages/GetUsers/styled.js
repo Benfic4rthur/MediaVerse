@@ -53,8 +53,9 @@ export const Card = styled.div`
   place-items: center;
 
   @media (min-width: 900px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content ;
+    gap: 2rem;
+    grid-template-columns: min-content 1fr min-content;
+    grid-template-rows: min-content;
     grid-template-areas: 'init edit date';
   }
 `;
@@ -96,6 +97,7 @@ export const ContRowInit = styled(ContRow)`
   display: flex;
   width: 100%;
 `;
+
 export const ContRowDate = styled(ContRow)`
   grid-area: date;
   justify-content: flex-end;
@@ -106,7 +108,8 @@ export const ContRowDate = styled(ContRow)`
 export const ContRowEdit = styled(ContRow)`
   grid-area: edit;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+
   width: 100%;
 `;
 
