@@ -22,7 +22,7 @@ export default function Contact() {
         const windowHeight = window.innerHeight;
 
         if (contactsPosition.top < windowHeight) {
-          setShowAnimation(true);
+          // setShowAnimation(true);
           setTitulo('- Contato');
         }
       }
@@ -52,10 +52,11 @@ export default function Contact() {
     <>
       <Container>
         <Text>
-          <h2>Transforme sua ideia em realidade!</h2>
+          <h2>Aumente a produtividade dos seus treinamentos!</h2>
           <div>
-            Transforme suas ideias em aplicativos personalizados de sucesso! Contate-nos hoje mesmo
-            e tenha uma equipe dedicada ao seu projeto.
+            Potencialize a produtividade dos seus treinamentos com a ajuda de nossa ferramenta
+            moderna e de simples utilização, voltada para diversos setores, desde faculdades e
+            cursos EAD até treinamentos de reciclagem de ISO.
           </div>
         </Text>
         <Content>
