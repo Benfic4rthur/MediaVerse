@@ -45,7 +45,7 @@ const EditPost = () => {
   const [selectedVideo, setSelectedVideo] = useState('');
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Edição';
+    document.title = 'Ekor Solutions- Edição';
   }, []);
 
   function removeInitialValuesTags(params, initArray) {

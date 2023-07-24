@@ -11,7 +11,7 @@ const Index = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Não é Cliente';
+    document.title = 'Ekor Solutions- Não é Cliente';
   }, []);
 
   return (

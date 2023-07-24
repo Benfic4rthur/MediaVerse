@@ -14,7 +14,7 @@ const Index = () => {
   const loading = navigation.state !== 'idle';
 
   useEffect(() => {
-    document.title = 'Genuine Sistemas - Login';
+    document.title = 'Ekor Solutions- Login';
   }, []);
 
   return (

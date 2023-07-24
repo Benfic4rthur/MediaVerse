@@ -46,7 +46,7 @@ const Dashboard = () => {
   const [searchAll, setSearchAll] = useState(true);
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Painel de Posts';
+    document.title = 'Ekor Solutions- Painel de Posts';
   }, []);
 
   useEffect(() => {

@@ -4,9 +4,9 @@ import erro404 from '../../assets/404.png';
 import { useEffect } from 'react';
 
 const Index = () => {
-useEffect(() => {
-  document.title = 'Genuine Sistemas - Not Found';
-})
+  useEffect(() => {
+    document.title = 'Ekor Solutions- Not Found';
+  });
   return (
     <Container>
       <Image src={erro404} alt='404 page not found' />

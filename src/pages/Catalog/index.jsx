@@ -13,7 +13,7 @@ const Index = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Catalogo';
+    document.title = 'Ekor Solutions - Catalogo';
   }, []);
 
   // const arrayLength = Array.from({ length: 16 }).map((_, i) => i);
@@ -56,12 +56,12 @@ const Index = () => {
 };
 
 // fallback={
-        //   <Container>
-        //     {arrayLength.map((e, i) => (
-        //       <SkeletonPostDetails key={i} />
-        //     ))}
-        //   </Container>
-        // }
+//   <Container>
+//     {arrayLength.map((e, i) => (
+//       <SkeletonPostDetails key={i} />
+//     ))}
+//   </Container>
+// }
 
 export default Index;
 

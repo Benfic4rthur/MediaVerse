@@ -24,7 +24,7 @@ export const Forgot = () => {
   };
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Reset Password';
+    document.title = 'Ekor Solutions- Reset Password';
   }, []);
 
   return (

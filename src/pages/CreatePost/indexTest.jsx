@@ -101,7 +101,7 @@ const CreatePost = () => {
   };
 
   useEffect(() => {
-    document.title = 'Genuine Sistemas - Novo Post';
+    document.title = 'Ekor Solutions- Novo Post';
   }, []);
 
   const generateSearchTokens = title => {

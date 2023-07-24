@@ -17,7 +17,7 @@ const Index = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Home';
+    document.title = 'Ekor Solutions- Home';
   }, []);
 
   const arrayLength = Array.from({ length: 6 }).map((_, i) => i);

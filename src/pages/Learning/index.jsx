@@ -1,6 +1,7 @@
-import { LuEye,
+import {
+  LuEye,
   // LuShare,
-  LuUser
+  LuUser,
 } from 'react-icons/lu';
 import { useParams } from 'react-router-dom';
 import { useFetchDocument } from '../../hooks/useFetchDocument';
@@ -32,7 +33,7 @@ const Learning = () => {
   const { loading, error } = useIncrementViews('posts', id);
 
   useEffect(() => {
-    document.title = `Genuine Sistemas - ${post?.title ?? 'Posts'}`;
+    document.title = `Ekor Solutions- ${post?.title ?? 'Posts'}`;
   }, [post]);
 
   useEffect(() => {

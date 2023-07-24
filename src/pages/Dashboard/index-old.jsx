@@ -40,7 +40,7 @@ const Dashboard = () => {
   const { deleteDocument } = useDeleteDocument('posts');
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Painel de Posts';
+    document.title = 'Ekor Solutions- Painel de Posts';
   }, []);
 
   return (
@@ -226,7 +226,7 @@ export default Dashboard;
 //   const { deleteDocument } = useDeleteDocument('posts');
 
 //   useEffect(() => {
-//     document.title = 'Genuine Sistemas - Dashboard';
+//     document.title = 'Ekor Solutions- Dashboard';
 //   }, []);
 
 //   return (
@@ -370,7 +370,7 @@ export default Dashboard;
 
 //   const { deleteDocument } = useDeleteDocument('posts');
 //   useEffect(() => {
-//     document.title = 'Genuine Sistemas - Dashboard';
+//     document.title = 'Ekor Solutions- Dashboard';
 //   }, []);
 
 //   if (!userStatus) {

@@ -23,7 +23,7 @@ import {
   ContainerHeader,
   ContainerTitlePost,
   CreatePostTitle,
-  UserLoggedBall
+  UserLoggedBall,
 } from './styled';
 
 const FormattedTimeDiff = (loggedAt = 0, loggedOutAt = 0) => {
@@ -66,7 +66,7 @@ const Index = () => {
   // };
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Painel de Usuários';
+    document.title = 'Ekor Solutions- Painel de Usuários';
   }, []);
 
   const [userToggles, setUserToggles] = useState({});

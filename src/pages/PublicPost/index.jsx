@@ -33,7 +33,7 @@ export const PublicPost = () => {
   const shareTitle = `Veja este vídeo sobre "${post?.title}" no Sistema Genuine  `;
 
   useEffect(() => {
-    document.title = `Genuine Sistemas - ${post?.title ?? 'Posts'}`;
+    document.title = `Ekor Solutions- ${post?.title ?? 'Posts'}`;
   }, [post]);
 
   useEffect(() => {
@@ -106,4 +106,3 @@ export const PublicPost = () => {
     </ContainerMain>
   );
 };
-

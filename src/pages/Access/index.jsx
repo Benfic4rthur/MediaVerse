@@ -44,7 +44,7 @@ const index = () => {
   const year = date.getFullYear();
 
   useLayoutEffect(() => {
-    document.title = 'Genuine Sistemas - Acesso';
+    document.title = 'Ekor Solutions - Acesso';
   }, []);
 
   const settings = {

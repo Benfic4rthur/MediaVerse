@@ -31,7 +31,7 @@ const Login = () => {
   }, [authError]);
 
   useEffect(() => {
-    document.title = 'Genuine Sistemas - Login';
+    document.title = 'Ekor Solutions- Login';
   }, []);
 
   return (
