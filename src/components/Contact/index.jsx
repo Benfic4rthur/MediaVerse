@@ -5,9 +5,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 const number = '5551991640517';
-const messageBomDia = 'Bom dia! Gostaria de fazer um orçamento em um projeto!';
-const messageBoaTarde = 'Boa tarde! Gostaria de fazer um orçamento em um projeto!';
-const messageBoaNoite = 'Boa noite! Gostaria de fazer um orçamento em um projeto!';
+const messageBomDia =
+  'Bom dia! Gostaria de me informar um pouco mais sobre a plataforma de videos sob demanda!';
+const messageBoaTarde =
+  'Boa tarde! Gostaria de me informar um pouco mais sobre a plataforma de videos sob demanda!';
+const messageBoaNoite =
+  'Boa noite! Gostaria de me informar um pouco mais sobre a plataforma de videos sob demanda!';
 const now = new Date();
 const currentHour = now.getHours();
 

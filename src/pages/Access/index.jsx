@@ -49,7 +49,7 @@ export default function Access() {
         </ContainerAccessCard>
         <h1 id='TargetSectors'>Setores Alvos</h1>
         <TargetSectors />
-        <h1 id='Contact'>Contatos</h1>
+        <h1 id='Contact'>Contato</h1>
         <Contact />
       </Container>
       <FooterAccess />
