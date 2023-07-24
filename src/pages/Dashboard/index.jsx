@@ -71,11 +71,11 @@ const Dashboard = () => {
         </CreatePostButton>
       </ContainerHeader>
 
-      {filteredPosts?.length === 0 ? (
+      {postsadm?.length === 0  || posts?.length === 0 ? (
         <ContainerCreatePost>
           <CreatePostTitle>Não foram encontrados posts</CreatePostTitle>
         </ContainerCreatePost>
-      ) : filteredPosts?.length > 0 && userStatus === 'admin' ? (
+      ) : postsadm?.length > 0 && userStatus === 'admin' ? (
         <ContainerPost>
           {
             <ContainerFormToggle as='form' action=''>
@@ -101,7 +101,7 @@ const Dashboard = () => {
               </ContainerToggle>
             </ContainerFormToggle>
           }
-          {filteredPosts.map(post => (
+          {filteredPosts?.map(post => (
             <Post key={post.id}>
               {post.mediaURL && (
                 <ContainerDialog>
@@ -166,7 +166,7 @@ const Dashboard = () => {
         </ContainerPost>
       ) : (
         <ContainerPost>
-          {filteredPosts?.map(post => (
+          {posts?.map(post => (
             <Post key={post.id}>
               {post.mediaURL && (
                 <ContainerDialog>

@@ -26,8 +26,6 @@ export const ContainerCard = styled.section`
 `;
 
 export const Card = styled.div`
-  align-items: center;
-  gap: 1rem;
   padding: 1.5rem 2.5rem;
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow};
   border: 1px solid #ccc;
@@ -44,16 +42,19 @@ export const Card = styled.div`
 
   display: grid;
   gap: 0.5rem;
+  align-items: center;
+
   justify-content: center;
   width: 100%;
 
   grid-template-columns: 1fr 1fr;
   grid-template-rows: min-content 1fr;
   grid-template-areas: 'init date' 'edit edit';
+  place-items: center;
 
   @media (min-width: 900px) {
-    grid-template-columns: 1fr ;
-    grid-template-rows: min-content 1fr min-content;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content ;
     grid-template-areas: 'init edit date';
   }
 `;
@@ -145,7 +146,7 @@ export const UserLoggedBall = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: ${props => (props.logged ? 'green' : props.theme.color.first)};
+  background-color: ${props => (props.logged ? 'green' : props.theme.color.error)};
   display: inline-block;
   margin-bottom: 1px;
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.fourthBg};
