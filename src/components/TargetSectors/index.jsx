@@ -3,50 +3,44 @@ import corporative from '../../assets/corporative.jpg';
 import ondemand from '../../assets/ondemand.jpg';
 import reciclagem from '../../assets/reciclagem.jpg';
 import webnar from '../../assets/webnar.jpg';
-import { Container, Sectors } from './styled';
+import { Container, ContainerSectors, Sectors } from './styled';
 
 export default function TargetSectors() {
   return (
     <>
       <Container>
-        <Sectors>
-          <div>
+        <ContainerSectors style={{ marginBottom: '1rem' }}>
+          <Sectors>
             <img src={ead} alt='' />
-          </div>
+          </Sectors>
           <div>Perfeito para cursos e faculdades EAD.</div>
-        </Sectors>
-        <Sectors>
-          <div>
+        </ContainerSectors>
+        <ContainerSectors>
+          <Sectors>
             <img src={corporative} alt='' />
-          </div>
-          <div>
-            Eficaz para treinamentos empresariais com equipes globalmente distribuidas.
-          </div>
-        </Sectors>
-        <Sectors>
-          <div>
+          </Sectors>
+          <div>Eficaz para treinamentos empresariais com equipes globalmente distribuidas.</div>
+        </ContainerSectors>
+        <ContainerSectors>
+          <Sectors>
             <img src={ondemand} alt='' />
-          </div>
-          <div>
-            Funcionalidades incriveis para a disponibilização de videos sob demanda.
-          </div>
-        </Sectors>
-        <Sectors>
-          <div>
+          </Sectors>
+          <div>Funcionalidades incriveis para a disponibilização de videos sob demanda.</div>
+        </ContainerSectors>
+        <ContainerSectors>
+          <Sectors>
             <img src={reciclagem} alt='' />
-          </div>
-          <div>
-            Reciclagem corporativa de forma pratica e rapida, com teste de qualidade.
-          </div>
-        </Sectors>
-        <Sectors>
-          <div>
+          </Sectors>
+          <div>Reciclagem corporativa de forma pratica e rapida, com teste de qualidade.</div>
+        </ContainerSectors>
+        <ContainerSectors>
+          <Sectors>
             <img src={webnar} alt='' />
-          </div>
+          </Sectors>
           <div>
             Webnários agendados com antecedencia e disponibilidade de aviso para os participantes.
           </div>
-        </Sectors>
+        </ContainerSectors>
       </Container>
     </>
   );
