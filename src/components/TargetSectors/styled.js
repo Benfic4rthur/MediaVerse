@@ -43,11 +43,9 @@ export const Container = styled.div`
 `;
 export const Sectors = styled.div`
   background: ${({ theme }) => theme.color.first};
-  width: 20%;
-  height: 25rem;
+  width: 100%;
+  height: 15rem;
   border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
 
   &.up {
     animation: ${sobe} 1s;
@@ -57,12 +55,16 @@ export const Sectors = styled.div`
   }
 
   img {
-    width: 75%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
   }
+`;
 
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+export const ContainerSectors = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 `;
