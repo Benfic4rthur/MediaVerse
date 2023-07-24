@@ -1,4 +1,37 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const showing = keyframes`
+ 0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+`;
+
+const showingReverse = keyframes`
+   0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+`;
+
 
 export const Container = styled.section`
   width: 100%;
@@ -19,6 +52,12 @@ export const ContainerMedia = styled.div`
   background-color: rgb(0 0 0 / 0.5);
   border-radius: 1.2rem;
   overflow: hidden;
+  &.left{
+    animation: ${showing} 1s;
+  }
+  &.right{
+    animation: ${showingReverse} 1s;
+  }
 `;
 
 const Media = css`
@@ -42,6 +81,12 @@ export const ContainerInfos = styled.div`
   justify-content: center;
   @media (min-width: 800px) {
     order: ${props => (props.$reverse ? -1 : 1)};
+  }
+  &.left{
+    animation: ${showing} 1s;
+  }
+  &.right{
+    animation: ${showingReverse} 1s;
   }
 `;
 

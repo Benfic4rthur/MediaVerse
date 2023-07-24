@@ -1,4 +1,35 @@
-import { styled } from 'styled-components';
+import { styled, keyframes } from 'styled-components';
+
+const sobe = keyframes`
+0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+`;
+const desce = keyframes`
+0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -17,6 +48,13 @@ export const Sectors = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
+
+  &.up {
+    animation: ${sobe} 1s;
+  }
+  &.down {
+    animation: ${desce} 1s;
+  }
 
   img {
     width: 75%;

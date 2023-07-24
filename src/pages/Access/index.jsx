@@ -22,28 +22,17 @@ export default function Access() {
         </Nav>
         <br />
         <h1 id='Functionality'>Funcionalidades</h1>
-        {/* <Section>
-          <Functionality />
-          <Functionality reverse />
-          <Functionality />
-          <Functionality reverse />
-        </Section> */}
         <ContainerAccessCard>
-          <AccessCard
-            title={'lorem lorem lorem '}
-            description={
-              'dsuabfyds ahsf gsd fshd uf ds fud sufasbhbfuabsf afybuh fusd fuhs dfhu sdu su dfuhs dfuhs f shudf ushd fuhsdfbsdhf ushdf sdhf sudf sdh fusdb fds fuhds fjsd fuhsd jdsf sdijfsduinfsd dsinfsdinf dnfisdnfijsd '
-            }
-          >
+          <AccessCard title={'lorem lorem lorem '} description={'texto '} classname='left'>
             <Image src='' alt='' />
           </AccessCard>
-          <AccessCard
-            reverse
-            title={'lorem lorem lorem '}
-            description={
-              'dsuabfyds ahsf gsd fshd uf ds fud sufasbhbfuabsf afybuh fusd fuhs dfhu sdu su dfuhs dfuhs f shudf ushd fuhsdfbsdhf ushdf sdhf sudf sdh fusdb fds fuhds fjsd fuhsd jdsf sdijfsduinfsd dsinfsdinf dnfisdnfijsd '
-            }
-          >
+          <AccessCard reverse title={'lorem lorem lorem '} description={'texto '} classname='right'>
+            <Image src='' alt='' />
+          </AccessCard>
+          <AccessCard title={'lorem lorem lorem '} description={'texto'} classname='left'>
+            <Image src='' alt='' />
+          </AccessCard>
+          <AccessCard reverse title={'lorem lorem lorem '} description={'texto '} classname='right'>
             <Image src='' alt='' />
           </AccessCard>
         </ContainerAccessCard>
@@ -53,20 +42,6 @@ export default function Access() {
         <Contact />
       </Container>
       <FooterAccess />
-
-      {/* <ContainerBackground>
-      <FooterAccess>
-        <img src={logoFooter} alt='logo' />
-        <LinkFooter
-          to='https://ekorsolutions.vercel.app/'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          EkorSolutions &copy;
-        </LinkFooter>
-        , Todos os direitos reservados {year}
-      </FooterAccess>
-    </ContainerBackground> */}
     </>
   );
 }

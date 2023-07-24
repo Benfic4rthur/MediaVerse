@@ -9,13 +9,13 @@ export default function TargetSectors() {
   return (
     <>
       <Container>
-        <Sectors>
+        <Sectors className='up'>
           <div>
             <img src={ead} alt='' />
           </div>
           <div>Perfeito para cursos e faculdades EAD.</div>
         </Sectors>
-        <Sectors>
+        <Sectors className='down'>
           <div>
             <img src={corporative} alt='' />
           </div>
@@ -23,7 +23,7 @@ export default function TargetSectors() {
             Eficaz para treinamentos empresariais com equipes globalmente distribuidas.
           </div>
         </Sectors>
-        <Sectors>
+        <Sectors className='up'>
           <div>
             <img src={ondemand} alt='' />
           </div>
@@ -31,7 +31,7 @@ export default function TargetSectors() {
             Funcionalidades incriveis para a disponibilização de videos sob demanda.
           </div>
         </Sectors>
-        <Sectors>
+        <Sectors className='down'>
           <div>
             <img src={reciclagem} alt='' />
           </div>
@@ -39,7 +39,7 @@ export default function TargetSectors() {
             Reciclagem corporativa de forma pratica e rapida, com teste de qualidade.
           </div>
         </Sectors>
-        <Sectors>
+        <Sectors className='up'>
           <div>
             <img src={webnar} alt='' />
           </div>
