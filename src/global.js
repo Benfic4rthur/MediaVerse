@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import AmpleSoftBold from './assets/AmpleSoftPro-Bold.ttf';
-import AmpleSofRegular from './assets/AmpleSoftPro-Regular.ttf';
+
 // import { containerStyleBody } from './styles/styledGlobal';
 
 export const GlobalStyle = createGlobalStyle`
@@ -32,22 +31,4 @@ export const GlobalStyle = createGlobalStyle`
       height: 100%;
    }
 
-/* @font-face {
-
-      src: url(${AmpleSoftBold}) format('truetype');
-}
-
-   @font-face {
-
-      src: url(${AmpleSoftBold}) format('truetype');
-      font-weight: 700;
-      font-style: normal;
-}
-
-   @font-face {
-
-      src: url(${AmpleSofRegular}) format('truetype');
-      font-weight: 500;
-      font-style: normal;
-} */
 `;

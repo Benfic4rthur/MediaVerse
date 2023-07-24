@@ -36,14 +36,26 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10rem;
+`;
 
-  @media (max-width: 1024px) {
+export const ContainerSectors = styled.div`
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+
+  @media (max-width: 800px) {
     flex-direction: column;
+    background-color: red;
   }
 `;
+
+export const ContainerImage = styled.div`
+height: 100%;
+width: 100%;
+`
 export const Sectors = styled.div`
   background: ${({ theme }) => theme.color.first};
-  width: 100%;
+  width: 20rem;
   height: 15rem;
   border-radius: 1rem;
 
@@ -54,7 +66,7 @@ export const Sectors = styled.div`
     animation: ${desce} 1s;
   }
 
-  img {
+  & img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -62,9 +74,4 @@ export const Sectors = styled.div`
   }
 `;
 
-export const ContainerSectors = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-`;
+
