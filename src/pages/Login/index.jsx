@@ -35,7 +35,7 @@ const Login = () => {
   }, [authError]);
 
   useLayoutEffect(() => {
-    document.title = 'MediaVerse- Login';
+    document.title = 'MediaVerse - Login';
   }, []);
 
   return (

@@ -1,25 +1,3 @@
-@font-face {
-  src: url('./assets/AmpleSoftPro-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  src: url('./assets/AmpleSoftPro-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  src: url('./assets/AmpleSoftPro-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  src: url('./assets/AmpleSoftPro-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-<<<<<<< HEAD
 /* width */
 ::-webkit-scrollbar {
   height: 11px;
@@ -44,5 +22,3 @@
   transition: background-color 300ms linear;
   background-color: hsl(211, 90%, 18%);
 }
-=======
->>>>>>> 37fe3c2325a5de7daf8b0f9f9daf48a2c7256110

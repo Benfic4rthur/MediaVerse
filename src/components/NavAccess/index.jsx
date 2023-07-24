@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Link } from 'react-router-dom';
 import { Link as LinkScroll } from 'react-scroll';
 import { Navbar } from './styled';
 
-import logo from '../../assets/logo-ekor.png';
+import logo from '../../assets/logo.png';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
@@ -10,7 +12,7 @@ export default function NavAccess() {
   const [title, setTitle] = useState('- Início');
 
   useEffect(() => {
-    document.title = `MediaVerse - ${title}`;
+    document.title = `MediaVerse ${title}`;
   }, [title]);
 
   return (
@@ -21,7 +23,7 @@ export default function NavAccess() {
             to='init'
             spy={true}
             smooth={true}
-            offset={-70}
+            offset={-80}
             duration={750}
             title='Início'
             className='link'
@@ -35,14 +37,14 @@ export default function NavAccess() {
             to='Functionality'
             spy={true}
             smooth={true}
-            offset={-70}
+            offset={-80}
             duration={750}
             title='Início'
             onClick={() => setTitle('- Início')}
             className='link'
             style={{ cursor: 'pointer' }}
           >
-            <h2>Inicio</h2>
+            <h2>Início</h2>
           </LinkScroll>
           <LinkScroll
             to='Functionality'
