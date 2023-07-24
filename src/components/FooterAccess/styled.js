@@ -1,4 +1,4 @@
-import { styled, keyframes } from 'styled-components';
+import { styled } from 'styled-components';
 
 export const Footer = styled.div`
   display: flex;
@@ -21,6 +21,11 @@ export const Footer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.2);
+      transition: 0.3s;
+    }
   }
 `;
 

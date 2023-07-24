@@ -33,7 +33,19 @@ export default function FooterAccess() {
           <img src={logo} alt='' />
         </div>
 
-        <div>Ekor Solutions &copy; - Todos os direitos reservados, {year}</div>
+        <div>
+          <Link to='https://ekorsolutions.vercel.app' 
+          title='Ekor Solutions' 
+          target='_blank'
+          style={{
+            textDecoration: 'none',
+            color: '#fff'
+          }}
+          >
+            Ekor Solutions &copy;{' '}
+          </Link>
+          - Todos os direitos reservados, {year}
+        </div>
 
         <Social>
           <Link
