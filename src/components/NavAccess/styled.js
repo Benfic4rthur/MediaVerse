@@ -20,18 +20,19 @@ export const Navbar = styled.div`
   padding: 1rem 2rem;
   margin: auto;
   border-radius: 15px;
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease;
   div {
     display: flex;
     gap: 5rem;
   }
   .link {
+    transition: transform 0.3s ease;
+
     text-decoration: none;
     color: white;
   }
   .link:hover {
-    transition: 0.5s;
-    transform: translateY(0.5rem); /* Altere o valor conforme necessário */
+    transform: translateY(0.3rem);
   }
 
   img {

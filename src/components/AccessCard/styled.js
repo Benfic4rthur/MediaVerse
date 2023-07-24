@@ -32,7 +32,6 @@ const showingReverse = keyframes`
   }
 `;
 
-
 export const Container = styled.section`
   width: 100%;
   display: grid;
@@ -52,10 +51,10 @@ export const ContainerMedia = styled.div`
   background-color: rgb(0 0 0 / 0.5);
   border-radius: 1.2rem;
   overflow: hidden;
-  &.left{
+  &.left {
     animation: ${showing} 1s;
   }
-  &.right{
+  &.right {
     animation: ${showingReverse} 1s;
   }
 `;
@@ -79,19 +78,20 @@ export const ContainerInfos = styled.div`
   gap: 1.2rem;
   display: flex;
   justify-content: center;
+  padding-block: 0.8rem 1.6rem;
+
   @media (min-width: 800px) {
     order: ${props => (props.$reverse ? -1 : 1)};
   }
-  &.left{
+  &.left {
     animation: ${showing} 1s;
   }
-  &.right{
+  &.right {
     animation: ${showingReverse} 1s;
   }
 `;
 
 export const Title = styled.h3`
-  padding-top: 0.8rem;
   font-size: ${({ theme }) => theme.font.size.lg};
   color: ${({ theme }) => theme.color.fourth};
 
@@ -104,7 +104,6 @@ export const Description = styled.p`
   color: ${({ theme }) => theme.color.fourth};
   font-size: ${({ theme }) => theme.font.size.base};
   font-weight: 500;
-  padding-bottom: 1.6rem;
 
   @media (min-width: 1024px) {
     font-size: ${({ theme }) => theme.font.size.lgs};
@@ -112,8 +111,14 @@ export const Description = styled.p`
 `;
 
 export const HR = styled.hr`
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.color.fourth};
+  animation: ${showing} .5s;
+
   @media (min-width: 800px) {
-    /* animate-showing */
+    display: none;
   }
 `;
 

@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { Container, Content, Text } from './styled';
+import { ButtonLink, Container, Content, Text } from './styled';
 import { MdEmail, MdWhatsapp } from 'react-icons/md';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -56,35 +55,31 @@ export default function Contact() {
       <Container>
         <Text>
           <h2>Aumente a produtividade dos seus treinamentos!</h2>
-          <div>
+          <p>
             Potencialize a produtividade dos seus treinamentos com a ajuda de nossa ferramenta
             moderna e de simples utilização, voltada para diversos setores, desde faculdades e
             cursos EAD até treinamentos de reciclagem de ISO.
-          </div>
+          </p>
         </Text>
         <Content>
-          <div className='button'>
-            <MdEmail />
-            <Link
-              to='mailto:ekor.solutions@gmail.com'
-              title={'fale Conosco pelo e-mail'}
-              target=' _blank'
-              className='link'
-            >
+          <ButtonLink
+            to='mailto:ekor.solutions@gmail.com'
+            title={'fale Conosco pelo e-mail'}
+            target=' _blank'
+            className='link'
+          >
+              <MdEmail />
               Contate-nos por e-mail
-            </Link>
-          </div>
-          <div className='button'>
+          </ButtonLink>
+          <ButtonLink
+            to={`https://wa.me/${number}?text=${encodeURIComponent(message)}`}
+            title={'fale Conosco pelo Whatsapp'}
+            target=' _blank'
+            className='link'
+          >
             <MdWhatsapp />
-            <Link
-              to={`https://wa.me/${number}?text=${encodeURIComponent(message)}`}
-              title={'fale Conosco pelo Whatsapp'}
-              target=' _blank'
-              className='link'
-            >
-              Chame pelo whatsapp
-            </Link>
-          </div>
+            Chame pelo whatsapp
+          </ButtonLink>
         </Content>
       </Container>
     </>

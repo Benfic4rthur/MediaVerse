@@ -1,14 +1,14 @@
-import { styled, keyframes } from 'styled-components';
+import { Link } from 'react-router-dom';
+import { styled } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  gap: 10rem;
+  gap: 2rem;
   width: 100%;
-  height: 20rem;
-
-  @media (max-width: 900px) {
+  padding-bottom: 8rem;
+  @media (max-width: 800px) {
     flex-direction: column;
   }
 `;
@@ -17,13 +17,14 @@ export const Text = styled.p`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 20%;
+  max-width: 40rem;
+  width: 100%;
 
   h2 {
     font-size: 2.5rem;
     padding-bottom: 1rem;
   }
-  div {
+  p {
     font-size: 1.3rem;
     line-height: 20px;
   }
@@ -33,25 +34,23 @@ export const Content = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 2rem;
+`;
 
-  .button {
-    padding: 1rem;
-    background: ${({ theme }) => theme.color.first};
-    border-radius: 10px;
-    font-size: 2rem;
+export const ButtonLink = styled(Link)`
+  padding: 1rem;
+  background: ${({ theme }) => theme.color.first};
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 2rem;
 
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.7s;
+
+  &:hover {
+    transform: scale(1.15);
     transition: 0.7s;
-
-    &:hover {
-      transform: scale(1.15);
-      transition: 0.7s;
-    }
   }
-  .link {
-    text-decoration: none;
-    color: ${({ theme }) => theme.color.fourthOpacity};
-  }
+  color: ${({ theme }) => theme.color.fourthOpacity};
 `;

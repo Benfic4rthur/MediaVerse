@@ -41,22 +41,23 @@ export const Container = styled.div`
 export const ContainerSectors = styled.div`
   display: flex;
   gap: 1rem;
-  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  flex-flow: wrap;
 
   @media (max-width: 800px) {
-    flex-direction: column;
-    background-color: red;
   }
 `;
 
 export const ContainerImage = styled.div`
-height: 100%;
+  height: 20rem;
+
 width: 100%;
-`
+`;
 export const Sectors = styled.div`
   background: ${({ theme }) => theme.color.first};
   width: 20rem;
-  height: 15rem;
+  height: 25rem;
   border-radius: 1rem;
 
   &.up {
