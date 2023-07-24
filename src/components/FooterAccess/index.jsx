@@ -37,18 +37,18 @@ export default function FooterAccess() {
 
         <Social>
           <Link
-            to='https://www.instagram.com/ekor.solutions/'
-            title={instagram}
-            target='_blank'
+            to={`https://wa.me/${number}?text=${encodeURIComponent(message)}`}
+            title={faleConosco}
+            id='whatsapp'
+            target=' _blank'
             className='link'
           >
             <BsWhatsapp />
           </Link>
           <Link
-            to={`https://wa.me/${number}?text=${encodeURIComponent(message)}`}
-            title={faleConosco}
-            id='whatsapp'
-            target=' _blank'
+            to='https://www.instagram.com/ekor.solutions/'
+            title={instagram}
+            target='_blank'
             className='link'
           >
             <BsInstagram />
