@@ -90,13 +90,13 @@ const Index = () => {
           Cadastrar Usuário <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
-      {filteredUsersInfo.length === 0 ? (
+      {filteredUsersInfo?.length === 0 ? (
         <ContainerCreatePost>
           <CreatePostTitle>Não foram encontrados usuários cadastrados</CreatePostTitle>
         </ContainerCreatePost>
       ) : (
         <ContainerCard>
-          {filteredUsersInfo.map(user => {
+          {filteredUsersInfo?.map(user => {
             const { loggedOutAt, loggedAt, userName, deletedAt, id, userId } = user;
 
             const StillLoggedIn = loggedOutAt === 'Ainda logado!';

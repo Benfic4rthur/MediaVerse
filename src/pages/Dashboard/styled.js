@@ -171,9 +171,6 @@ export const InputRadial = styled.input`
  height: min-content;
  border-radius: 50%;
 
-
-
- 
 `;
 
 export const ButtonEvent = styled.button`
