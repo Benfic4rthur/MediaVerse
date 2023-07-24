@@ -24,7 +24,7 @@ const Index = () => {
   const [loggedOutAt, setLoggedOutAt] = useState(Date.now().toString());
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions- Novo Usuário';
+    document.title = 'MediaVerse- Novo Usuário';
   }, []);
 
   const { createUser, error: authError, loading, successMessage, auth } = UseAuthentication();

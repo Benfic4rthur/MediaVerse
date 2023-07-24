@@ -13,7 +13,7 @@ const Index = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions - Catalogo';
+    document.title = 'MediaVerse - Catalogo';
   }, []);
 
   // const arrayLength = Array.from({ length: 16 }).map((_, i) => i);

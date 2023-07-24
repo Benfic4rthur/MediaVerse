@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 const Index = () => {
   useEffect(() => {
-    document.title = 'Ekor Solutions- Not Found';
+    document.title = 'MediaVerse- Not Found';
   });
   return (
     <Container>

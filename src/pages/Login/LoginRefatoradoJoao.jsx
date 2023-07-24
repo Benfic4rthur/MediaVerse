@@ -14,7 +14,7 @@ const Index = () => {
   const loading = navigation.state !== 'idle';
 
   useEffect(() => {
-    document.title = 'Ekor Solutions- Login';
+    document.title = 'MediaVerse- Login';
   }, []);
 
   return (

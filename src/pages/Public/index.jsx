@@ -11,7 +11,7 @@ const Index = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions- Não é Cliente';
+    document.title = 'MediaVerse- Não é Cliente';
   }, []);
 
   return (

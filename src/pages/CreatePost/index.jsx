@@ -112,7 +112,7 @@ const CreatePost = () => {
   }
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions- Novo Post';
+    document.title = 'MediaVerse- Novo Post';
   }, []);
 
   if (formError) return null;

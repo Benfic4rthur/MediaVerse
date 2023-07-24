@@ -46,7 +46,7 @@ const Dashboard = () => {
   const [searchAll, setSearchAll] = useState(true);
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions- Painel de Posts';
+    document.title = 'MediaVerse- Painel de Posts';
   }, []);
 
   useEffect(() => {

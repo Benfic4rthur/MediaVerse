@@ -19,7 +19,7 @@ const Index = () => {
   const { id: userId } = useParams();
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions- Edição de usuário';
+    document.title = 'MediaVerse- Edição de usuário';
   }, []);
 
   const { user, loading, error: userError, successMessage, updateUser } = UseUserManagement(userId); // Usando o novo hook

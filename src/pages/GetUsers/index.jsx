@@ -66,7 +66,7 @@ const Index = () => {
   // };
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions- Painel de Usuários';
+    document.title = 'MediaVerse- Painel de Usuários';
   }, []);
 
   const [userToggles, setUserToggles] = useState({});

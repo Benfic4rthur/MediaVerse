@@ -24,7 +24,7 @@ export const Forgot = () => {
   };
 
   useLayoutEffect(() => {
-    document.title = 'Ekor Solutions- Reset Password';
+    document.title = 'MediaVerse- Reset Password';
   }, []);
 
   return (
