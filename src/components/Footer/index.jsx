@@ -14,7 +14,6 @@ import {
 } from './styled';
 
 const suporte = 'Suporte 24hrs';
-const faleConosco = 'Fale Conosco';
 const instagram = 'Instagram';
 const site = 'www.genuinesistemas.com.br';
 
@@ -42,7 +41,7 @@ const index = () => {
   return (
     <Footer>
       <ContainerMaxWidth $justify={User?.user}>
-        <LinkImgFooter href='https://genuinesistemas.com.br/' title={site}>
+        <LinkImgFooter href='https://ekorsolutions.vercel.app/' title={site} target=' _blank'>
           <ImgFooter src={logo} />
         </LinkImgFooter>
         {User.user && <div />}
@@ -52,13 +51,17 @@ const index = () => {
             <Invesible>
               <MdWhatsapp />
             </Invesible>
-            <NavLinkStyled href='https://www.instagram.com/genuinesistemas/' title={instagram}>
+            <NavLinkStyled
+              href='https://www.instagram.com/ekor.solutions/'
+              title={instagram}
+              target=' _blank'
+            >
               <LuInstagram />
             </NavLinkStyled>
             <NavLinkStyled
-              href='https://genuinesistemas.com.br/#fale-conosco'
-              title={faleConosco}
-              target='_blank'
+              href='mailto:ekor.solutions@gmail.com'
+              title={'fale Conosco pelo e-mail'}
+              target=' _blank'
             >
               <LuMail />
             </NavLinkStyled>
