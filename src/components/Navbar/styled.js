@@ -18,18 +18,6 @@ export const ContainerMaxWidth = styled.div`
   align-items: center;
 `;
 
-//   test
-//
-// export const Ttt = styled.div`
-//   display: flex;
-//   overflow: visible;
-//   width: 100%;
-//   height: 100%;
-//   justify-content: space-between;
-//   background-color: red;
-//   align-items: center;
-// `;
-
 export const NavLinkLogo = styled(NavLink)`
   display: flex;
   align-items: center;

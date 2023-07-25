@@ -1,6 +1,3 @@
-/* eslint-disable no-irregular-whitespace */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable jsx-a11y/media-has-caption */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuEdit, LuEye, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
@@ -56,6 +53,8 @@ const Dashboard = () => {
 
     const valueAd = searchAll ? sortedPostsAd : postTags;
 
+    console.log(valueAd, posts);
+
     setFilteredPosts(userStatus === 'admin' ? valueAd : posts);
   }, [posts, postsadm, searchAll]);
 
@@ -70,12 +69,7 @@ const Dashboard = () => {
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
-
-      {postsadm?.length === 0  || posts?.length === 0 ? (
-        <ContainerCreatePost>
-          <CreatePostTitle>Não foram encontrados posts</CreatePostTitle>
-        </ContainerCreatePost>
-      ) : postsadm?.length > 0 && userStatus === 'admin' ? (
+      {postsadm?.length > 0 && userStatus === 'admin' && (
         <ContainerPost>
           {
             <ContainerFormToggle as='form' action=''>
@@ -97,7 +91,7 @@ const Dashboard = () => {
                   id='Sistema'
                   onClick={() => setSearchAll(false)}
                 />
-                <TitleToggle>Aprendendo o Sistema</TitleToggle>
+                <TitleToggle>Promocional</TitleToggle>
               </ContainerToggle>
             </ContainerFormToggle>
           }
@@ -164,7 +158,9 @@ const Dashboard = () => {
             </Post>
           ))}
         </ContainerPost>
-      ) : (
+      )}
+
+      {posts?.length > 0 && userStatus !== 'admin' && (
         <ContainerPost>
           {posts?.map(post => (
             <Post key={post.id}>
@@ -228,6 +224,18 @@ const Dashboard = () => {
             </Post>
           ))}
         </ContainerPost>
+      )}
+
+      {postsadm?.length === 0 && userStatus === 'admin' && (
+        <ContainerCreatePost>
+          <CreatePostTitle>Não foram encontrados posts</CreatePostTitle>
+        </ContainerCreatePost>
+      )}
+
+      {posts?.length === 0 && userStatus !== 'admin' && (
+        <ContainerCreatePost>
+          <CreatePostTitle>Não foram encontrados posts</CreatePostTitle>
+        </ContainerCreatePost>
       )}
     </div>
   );
