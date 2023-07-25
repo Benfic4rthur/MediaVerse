@@ -14,8 +14,8 @@ export const Footer = styled.div`
   background: ${({ theme }) => theme.color.firstHover};
 
   img {
-    width: 4rem;
-    margin-right: 2.2rem;
+    width: 3rem;
+    margin-right: 3rem;
   }
 
   .link {
