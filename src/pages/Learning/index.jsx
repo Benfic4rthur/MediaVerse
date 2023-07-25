@@ -33,7 +33,7 @@ const Learning = () => {
   const { loading, error } = useIncrementViews('posts', id);
 
   useEffect(() => {
-    document.title = `MediaVerse- ${post?.title ?? 'Posts'}`;
+    document.title = `MediaVerse - ${post?.title ?? 'Posts'}`;
   }, [post]);
 
   useEffect(() => {

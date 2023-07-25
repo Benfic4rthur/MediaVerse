@@ -45,7 +45,7 @@ const EditPost = () => {
   const [selectedVideo, setSelectedVideo] = useState('');
 
   useLayoutEffect(() => {
-    document.title = 'MediaVerse- Edição';
+    document.title = 'MediaVerse - Edição';
   }, []);
 
   function removeInitialValuesTags(params, initArray) {

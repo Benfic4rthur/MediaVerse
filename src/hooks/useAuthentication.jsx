@@ -113,85 +113,85 @@ export const UseAuthentication = () => {
     });
   };
 
-  //login com cnpj
-  const login = async data => {
-    checkIfIsCanceled();
-    setLoading(true);
-    setError(null);
-    try {
-      const getUserInfo = query(collection(db, 'userInfo'), where('userCnpj', '==', data.userCnpj));
-      const getUserCnpjSnapshot = await getDocs(getUserInfo);
-      if (getUserCnpjSnapshot.empty) {
-        setLoading(false);
-        setError('CNPJ não cadastrado!');
-        return;
-      }
-      const user = getUserCnpjSnapshot.docs[0];
-      if (user.data().deletedAt) {
-        logout(user.data().userId);
-        setLoading(false);
-        setError('Usuário desativado!');
-        return;
-      }
-      const userRef = doc(db, 'userInfo', user.id);
-      await updateDoc(userRef, {
-        loggedAt: Date.now().toString(),
-        loggedOutAt: 'Ainda logado!',
-      });
-      await signInWithEmailAndPassword(auth, user.data().userId, data.password);
-      setLoading(false);
-    } catch (error) {
-      let systemMessageError;
-      if (error.message.includes('auth/wrong-password')) {
-        systemMessageError = 'Senha incorreta!';
-      } else if (error.message.includes('auth/user-not-found')) {
-        systemMessageError = 'CNPJ não cadastrado!';
-      } else {
-        systemMessageError = 'Ocorreu um erro ao logar, por favor tente novamente mais tarde!';
-      }
-      setError(systemMessageError);
-      setLoading(false);
-    }
-  };
-
-  // //login old
+  // //login com cnpj
   // const login = async data => {
   //   checkIfIsCanceled();
   //   setLoading(true);
   //   setError(null);
   //   try {
-  //     const getUserInfo = query(collection(db, 'userInfo'), where('userId', '==', data.email));
-  //     const getUserIdSnapshot = await getDocs(getUserInfo);
-  //     const user = getUserIdSnapshot.docs[0];
+  //     const getUserInfo = query(collection(db, 'userInfo'), where('userCnpj', '==', data.userCnpj));
+  //     const getUserCnpjSnapshot = await getDocs(getUserInfo);
+  //     if (getUserCnpjSnapshot.empty) {
+  //       setLoading(false);
+  //       setError('CNPJ não cadastrado!');
+  //       return;
+  //     }
+  //     const user = getUserCnpjSnapshot.docs[0];
   //     if (user.data().deletedAt) {
   //       logout(user.data().userId);
   //       setLoading(false);
-  //       setError('Usuário desativado!');
+  //       setError('Usuário desativado!');
   //       return;
   //     }
-  //     await signInWithEmailAndPassword(auth, data.email, data.password);
+  //     const userRef = doc(db, 'userInfo', user.id);
+  //     await updateDoc(userRef, {
+  //       loggedAt: Date.now().toString(),
+  //       loggedOutAt: 'Ainda logado!',
+  //     });
+  //     await signInWithEmailAndPassword(auth, user.data().userId, data.password);
   //     setLoading(false);
   //   } catch (error) {
   //     let systemMessageError;
   //     if (error.message.includes('auth/wrong-password')) {
   //       systemMessageError = 'Senha incorreta!';
   //     } else if (error.message.includes('auth/user-not-found')) {
-  //       systemMessageError = 'Usuário não cadastrado!';
+  //       systemMessageError = 'CNPJ não cadastrado!';
   //     } else {
   //       systemMessageError = 'Ocorreu um erro ao logar, por favor tente novamente mais tarde!';
   //     }
   //     setError(systemMessageError);
   //     setLoading(false);
   //   }
-  //   const getUserInfo = query(collection(db, 'userInfo'), where('userId', '==', data.email));
-  //   const getUserIdSnapshot = await getDocs(getUserInfo);
-  //   const user = getUserIdSnapshot.docs[0];
-  //   const userRef = await doc(db, 'userInfo', user.id);
-  //   await updateDoc(userRef, {
-  //     loggedAt: Date.now().toString(),
-  //     loggedOutAt: 'Ainda logado!',
-  //   });
   // };
+
+  // //login old
+  const login = async data => {
+    checkIfIsCanceled();
+    setLoading(true);
+    setError(null);
+    try {
+      const getUserInfo = query(collection(db, 'userInfo'), where('userId', '==', data.email));
+      const getUserIdSnapshot = await getDocs(getUserInfo);
+      const user = getUserIdSnapshot.docs[0];
+      if (user.data().deletedAt) {
+        logout(user.data().userId);
+        setLoading(false);
+        setError('Usuário desativado!');
+        return;
+      }
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      setLoading(false);
+    } catch (error) {
+      let systemMessageError;
+      if (error.message.includes('auth/wrong-password')) {
+        systemMessageError = 'Senha incorreta!';
+      } else if (error.message.includes('auth/user-not-found')) {
+        systemMessageError = 'Usuário não cadastrado!';
+      } else {
+        systemMessageError = 'Ocorreu um erro ao logar, por favor tente novamente mais tarde!';
+      }
+      setError(systemMessageError);
+      setLoading(false);
+    }
+    const getUserInfo = query(collection(db, 'userInfo'), where('userId', '==', data.email));
+    const getUserIdSnapshot = await getDocs(getUserInfo);
+    const user = getUserIdSnapshot.docs[0];
+    const userRef = await doc(db, 'userInfo', user.id);
+    await updateDoc(userRef, {
+      loggedAt: Date.now().toString(),
+      loggedOutAt: 'Ainda logado!',
+    });
+  };
 
   useEffect(() => {
     return () => setCanceled(true);

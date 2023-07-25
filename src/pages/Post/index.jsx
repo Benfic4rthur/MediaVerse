@@ -33,7 +33,7 @@ const Post = () => {
   const shareTitle = `Veja este vídeo sobre "${post?.title}" no Sistema Genuine  `;
 
   useEffect(() => {
-    document.title = `MediaVerse- ${post?.title ?? 'Posts'}`;
+    document.title = `MediaVerse - ${post?.title ?? 'Posts'}`;
   }, [post]);
 
   useEffect(() => {

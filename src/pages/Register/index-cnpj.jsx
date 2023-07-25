@@ -20,7 +20,7 @@ const Index = () => {
   const [error, setError] = useState('');
   const [userStatus, setUserStatus] = useState('');
   const [deletedAt, setDeletedAt] = useState('');
-  // const [userCnpj, setUserCnpj] = useState('');
+  const [userCnpj, setUserCnpj] = useState('');
   const [loggedOutAt, setLoggedOutAt] = useState(Date.now().toString());
 
   useLayoutEffect(() => {
@@ -34,7 +34,7 @@ const Index = () => {
     setError('');
 
     const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
-    // const cleanedCnpj = userCnpj.replace(/\D/g, '');
+    const cleanedCnpj = userCnpj.replace(/\D/g, '');
     const userIdMail = email;
 
     const user = {
@@ -43,7 +43,7 @@ const Index = () => {
       phoneNumber: cleanedPhoneNumber,
       userId: userIdMail,
       userName,
-      // userCnpj: cleanedCnpj,
+      userCnpj: cleanedCnpj,
       password,
       userStatus,
       deletedAt,
@@ -81,27 +81,27 @@ const Index = () => {
       <Form onSubmit={handleSubmit}>
         <CreateInput
           Svg={LuUser}
-          aria-label='Nome usuário'
+          aria-label='Nome proprietario'
           type='text'
           name='displayName'
           required
-          placeholder='Nome usuário'
+          placeholder='Nome proprietário'
           value={displayName}
           onChange={e => setDisplayName(e.target.value)}
           autoComplete='off'
         />
         <CreateInput
           Svg={RxAvatar}
-          aria-label='userName'
+          aria-label='Nome do estabelecimento'
           type='text'
           name='userName'
           required
-          placeholder='Usuário'
+          placeholder='Nome do estabelecimento'
           value={userName}
           onChange={e => setUserName(e.target.value)}
           autoComplete='off'
         />
-        {/* <CreateInput
+        <CreateInput
           Svg={LuBuilding}
           as={InputMask}
           aria-label='CNPJ'
@@ -113,14 +113,14 @@ const Index = () => {
           value={userCnpj}
           onChange={e => setUserCnpj(e.target.value)}
           autoComplete='off'
-        /> */}
+        />
         <CreateInput
           Svg={LuMail}
-          aria-label='E-mail do usuário'
+          aria-label='E-mail do estabelecimento'
           type='email'
           name='email'
           required
-          placeholder='E-mail do usuário'
+          placeholder='E-mail do estabelecimento'
           value={email}
           onChange={e => setEmail(e.target.value)}
           autoComplete='off'

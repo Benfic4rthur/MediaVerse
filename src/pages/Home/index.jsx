@@ -17,7 +17,7 @@ const Index = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
-    document.title = 'MediaVerse- Home';
+    document.title = 'MediaVerse - Home';
   }, []);
 
   const arrayLength = Array.from({ length: 6 }).map((_, i) => i);
