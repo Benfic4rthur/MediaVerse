@@ -1,7 +1,10 @@
 import { H2 } from '../../../pages/Access/styled';
 import { CardFunctionality } from '../CardFunctionality';
-import { Image } from '../CardFunctionality/styled';
+import { Video } from '../CardFunctionality/styled';
 import { ContainerCardFunctionality } from './styled';
+import cursos from '../../../assets/cursos.mp4';
+import usuarios from '../../../assets/usuarios.mp4';
+import conteudo from '../../../assets/conteudo.mp4';
 
 export function Functionality() {
   return (
@@ -15,17 +18,17 @@ export function Functionality() {
           }
           typeAnimated='left'
         >
-          <Image src='' alt='' />
+          <Video src={usuarios} autoPlay loop muted alt='usuários' />
         </CardFunctionality>
         <CardFunctionality
           reverse
           title={'Controle e redirecionamento de conteúdo'}
           description={
-            'Agende webnarios com antecência, avise os participantes e faça o envio do link e disponibilização do login e senha para utilização momentanea.'
+            'Adicione novos conteúdos, redirecione ele ao publico certo, tenha controle total sobre edição e exclusão do contéudo. Libere conteúdo promocional para não alunos.'
           }
           typeAnimated='right'
         >
-          <Image src='' alt='' />
+          <Video src={conteudo} autoPlay loop muted alt='conteudo' />
         </CardFunctionality>
 
         <CardFunctionality
@@ -35,7 +38,7 @@ export function Functionality() {
           }
           typeAnimated='left'
         >
-          <Image src='' alt='' />
+          <Video src={cursos} autoPlay loop muted alt='cursos' />
         </CardFunctionality>
         {/* <CardFunctionality
           reverse
