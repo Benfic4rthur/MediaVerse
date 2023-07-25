@@ -1,14 +1,5 @@
-import { keyframes, styled } from 'styled-components';
+import { styled } from 'styled-components';
 
-const coracao = keyframes`
-  0%
-  {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.2);
-  }
-`;
 export const Header = styled.header`
   position: fixed;
   top: 8px;
@@ -42,7 +33,7 @@ export const Navbar = styled.nav`
 
   img {
     width: 3rem;
-    animation: ${coracao} 5s linear infinite alternate;
+    animation: ${({ theme }) => theme.animation.coracao} 5s infinite alternate; 
   }
 `;
 

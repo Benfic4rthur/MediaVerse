@@ -59,5 +59,11 @@ export const theme = {
       transform: rotate(-20deg);
     }
   `,
+
+    coracao: keyframes`
+  100% {
+    transform: scale(1.2);
+  }
+  `,
   },
 };

@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 export const Footer = styled.div`
   display: flex;
-  padding-inline: .5rem;
+  padding-inline: 0.5rem;
   align-items: center;
   gap: 1rem;
   justify-content: space-around;
@@ -15,7 +15,7 @@ export const Footer = styled.div`
 
   img {
     width: 4rem;
-    margin-right: 1rem;
+    margin-right: 2.2rem;
   }
 
   .link {
