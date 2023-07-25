@@ -1,7 +1,7 @@
-import { H2 } from "../../../pages/Access/styled";
-import { CardFunctionality } from "../CardFunctionality";
-import { Image } from "../CardFunctionality/styled";
-import { ContainerCardFunctionality } from "./styled";
+import { H2 } from '../../../pages/Access/styled';
+import { CardFunctionality } from '../CardFunctionality';
+import { Image } from '../CardFunctionality/styled';
+import { ContainerCardFunctionality } from './styled';
 
 export function Functionality() {
   return (
@@ -27,27 +27,27 @@ export function Functionality() {
         >
           <Image src='' alt='' />
         </CardFunctionality>
-        {/* <CardFunctionality
-          title={'Webnário'}
-          description={
-            'Agende webnarios com antecência, avise os participantes e faça o envio do link e disponibilização do login e senha para utilização momentanea.'
-          }
-          typeAnimated='left'
-        >
-          <Image src='' alt='' />
-        </CardFunctionality> */}
+
         <CardFunctionality
-          // reverse
           title={'Cursos sob demanda'}
           description={
             'Possibilidade de disponibilizar o conteúdo da sua faculdade, curso técnico, treinamento empresárial, reciclagem corporativa, etc. Com a possibilidade de testar o conhecimento adquirido pelo aluno.'
           }
-          typeAnimated='right'
+          typeAnimated='left'
         >
           <Image src='' alt='' />
         </CardFunctionality>
+        {/* <CardFunctionality
+          reverse
+          title={'Webnário'}
+          description={
+            'Agende webnarios com antecência, avise os participantes e faça o envio do link e disponibilização do login e senha para utilização momentanea.'
+          }
+          typeAnimated='right'
+        >
+          <Image src='' alt='' />
+        </CardFunctionality> */}
       </ContainerCardFunctionality>
     </>
   );
 }
-
