@@ -44,21 +44,27 @@ export const ContainerSectors = styled.div`
   flex-direction: row;
   justify-content: center;
   flex-flow: wrap;
-
-  @media (max-width: 800px) {
-  }
 `;
 
 export const ContainerImage = styled.div`
-  height: 20rem;
-
-width: 100%;
+  height: 25rem;
+  width: 100%;
+  border-radius: 1rem;
 `;
 export const Sectors = styled.div`
-  background: ${({ theme }) => theme.color.first};
-  width: 20rem;
-  height: 25rem;
+  width: 28rem;
+  height: 30rem;
   border-radius: 1rem;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    margin: 0 0.75rem;
+  }
+
+  p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+  }
 
   &.up {
     animation: ${sobe} 1s;
@@ -74,5 +80,3 @@ export const Sectors = styled.div`
     border-radius: 10px;
   }
 `;
-
-
