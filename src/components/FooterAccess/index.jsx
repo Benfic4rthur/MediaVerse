@@ -7,10 +7,13 @@ import logo from '../../assets/logo.png';
 const faleConosco = 'Fale Conosco';
 const instagram = 'Instagram';
 
-const number = '5551991640517'; // Número de telefone do WhatsApp
-const messageBomDia = 'Bom dia! Gostaria de fazer um orçamento em um projeto!'; // Texto pré-pronto para a mensagem de bom dia
-const messageBoaTarde = 'Boa tarde! Gostaria de fazer um orçamento em um projeto!'; // Texto pré-pronto para a mensagem de boa tarde
-const messageBoaNoite = 'Boa noite! Gostaria de fazer um orçamento em um projeto!'; // Texto pré-pronto para a mensagem de boa noite
+const number = '5551991640517';
+const messageBomDia =
+  'Bom dia! Gostaria de me informar um pouco mais sobre a plataforma de videos sob demanda!';
+const messageBoaTarde =
+  'Boa tarde! Gostaria de me informar um pouco mais sobre a plataforma de videos sob demanda!';
+const messageBoaNoite =
+  'Boa noite! Gostaria de me informar um pouco mais sobre a plataforma de videos sob demanda!';
 const now = new Date();
 const year = now.getFullYear();
 const currentHour = now.getHours();
@@ -34,13 +37,14 @@ export default function FooterAccess() {
         </div>
 
         <div>
-          <Link to='https://ekorsolutions.vercel.app' 
-          title='Ekor Solutions' 
-          target='_blank'
-          style={{
-            textDecoration: 'none',
-            color: '#fff'
-          }}
+          <Link
+            to='https://ekorsolutions.vercel.app'
+            title='Ekor Solutions'
+            target='_blank'
+            style={{
+              textDecoration: 'none',
+              color: '#fff',
+            }}
           >
             Ekor Solutions &copy;{' '}
           </Link>
