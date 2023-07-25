@@ -1,8 +1,8 @@
-import { Footer, Social } from './styled';
+import { Footer as FooterSyled, Social } from './styled';
 import { BsWhatsapp, BsInstagram } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
-import logo from '../../assets/logo.png';
+import logo from '../../../assets/logo.png';
 
 const faleConosco = 'Fale Conosco';
 const instagram = 'Instagram';
@@ -18,9 +18,8 @@ const now = new Date();
 const year = now.getFullYear();
 const currentHour = now.getHours();
 
-let message = ''; // Inicialize a mensagem vazia
+let message = '';
 
-// Define a mensagem com base na hora do dia
 if (currentHour >= 0 && currentHour < 12) {
   message = messageBomDia;
 } else if (currentHour >= 12 && currentHour < 18) {
@@ -28,10 +27,10 @@ if (currentHour >= 0 && currentHour < 12) {
 } else {
   message = messageBoaNoite;
 }
-export default function FooterAccess() {
+export default function Footer() {
   return (
     <>
-      <Footer>
+      <FooterSyled>
         <div>
           <img src={logo} alt='' />
         </div>
@@ -45,6 +44,7 @@ export default function FooterAccess() {
               textDecoration: 'none',
               color: '#fff',
             }}
+
           >
             Ekor Solutions &copy;{' '}
           </Link>
@@ -70,7 +70,7 @@ export default function FooterAccess() {
             <BsInstagram />
           </Link>
         </Social>
-      </Footer>
+      </FooterSyled>
     </>
   );
 }

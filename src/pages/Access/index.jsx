@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Contact from '../../components/Access/Contact';
-import FooterAccess from '../../components/FooterAccess';
+import FooterAccess from '../../components/Access/Footer';
 
 import { Functionality } from '../../components/Access/Functionality';
 import { Header } from '../../components/Access/Header';

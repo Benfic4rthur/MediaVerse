@@ -2,7 +2,9 @@ import { styled } from 'styled-components';
 
 export const Footer = styled.div`
   display: flex;
+  padding-inline: .5rem;
   align-items: center;
+  gap: 1rem;
   justify-content: space-around;
   height: 10rem;
   width: 100%;
@@ -11,7 +13,7 @@ export const Footer = styled.div`
   background: ${({ theme }) => theme.color.firstHover};
 
   img {
-    width: 5rem;
+    width: 3.8rem;
   }
 
   .link {
@@ -33,8 +35,3 @@ export const Social = styled.div`
   display: flex;
   gap: 1rem;
 `;
-
-// export const ContainerFooter = styled.footer`
-//   background: ${({ theme }) => theme.color.firstHover};
-//   width: 100%;
-// `;
