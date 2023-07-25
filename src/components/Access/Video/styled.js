@@ -1,10 +1,26 @@
 import { keyframes, styled } from 'styled-components';
 import Sala from '../../../assets/sala.jpg';
 
-const showing = keyframes`
+const showingLeft = keyframes`
  0% {
     opacity: 0;
     transform: translateX(-100px);
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+`;
+
+const showingRigth = keyframes`
+   0% {
+    opacity: 0;
+    transform: translateX(100px);
   }
 
   50% {
@@ -28,7 +44,7 @@ export const Container = styled.section`
   align-items: center;
   border-bottom-right-radius: 3rem;
   border-bottom-left-radius: 3rem;
-  box-shadow: 1px 1px 10px hsl(0, 0%, 0%, 0.5);
+  box-shadow: 1px 1px 10px hsl(0, 0%, 0%, 0.3);
 `;
 
 export const ContainerInfor = styled.div`
@@ -50,10 +66,10 @@ export const ContainerVideo = styled.div`
   width: 100%;
   max-width: 70rem;
   aspect-ratio: 16 / 9;
-  background-color: rgb(0 0 0 / 0.5);
+  background-color: rgb(0 0 0 0.5);
   border-radius: 1.2rem;
   overflow: hidden;
-  animation: ${showing} 1s;
+  animation: ${showingLeft} 1s;
 `;
 
 export const Video = styled.video`
@@ -70,9 +86,10 @@ export const Text = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.4);
   padding: 1.5rem;
   border-radius: 1.5rem;
+  animation: ${showingRigth} 1s;
 `;
 
 export const Title = styled.h1`
