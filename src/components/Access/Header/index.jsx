@@ -7,7 +7,7 @@ import { Header as HeaderStyled, Navbar } from './styled';
 import { useEffect, useState } from 'react';
 import { LuMenu, LuX } from 'react-icons/lu';
 import logo from '../../../assets/logo.png';
-import { ContainerAdaptiveMenu, MobileMenuToggle, Nav } from '../../Navbar/styled';
+import { ContainerAdaptiveMenu, MobileMenuToggle, Nav } from './styled';
 
 export function Header() {
   const [title, setTitle] = useState('- Início');
