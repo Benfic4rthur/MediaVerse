@@ -73,15 +73,15 @@ export const Nav = styled.nav`
 
   @media (max-width: 900px) {
     position: absolute;
-    right: 0;
+    right: 2rem;
     top: 0;
     width: fit-content;
     height: fit-content;
     gap: 1rem;
-    z-index: 1;
+    z-index: 10;
     align-items: end;
     flex-direction: column;
-    padding-top: 1.95rem;
+    padding-top: 1.15rem;
   }
 `;
 
@@ -89,7 +89,7 @@ export const ButtonMenuExpanded = styled.button`
   font-size: 2rem;
   padding: 0.6rem;
   border-radius: ${({ theme }) => theme.border.radius};
-  background-color: ${({ theme }) => theme.color.firstOpacity};
+  background-color: ${({ theme }) => theme.color.firstHover};
   color: ${({ theme }) => theme.color.first};
   cursor: pointer;
   display: none;
@@ -115,9 +115,13 @@ export const ContainerAdaptiveMenu = styled.section`
   align-items: center;
   transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, visibility 0.1s ease;
 
+  .link {
+    padding: 1.75rem 0;
+  }
+
   @media (max-width: 900px) {
-    background-color: ${({ theme }) => theme.color.fifth};
-    padding-bottom: 1rem;
+    background-color: ${({ theme }) => theme.color.firstHover};
+    padding: 1rem 0;
     gap: 0.8rem;
     flex-flow: column;
     border-end-end-radius: ${({ theme }) => theme.border.radius};
