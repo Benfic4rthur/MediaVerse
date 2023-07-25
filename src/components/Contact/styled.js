@@ -52,5 +52,5 @@ export const ButtonLink = styled(Link)`
     transform: scale(1.15);
     transition: 0.7s;
   }
-  color: ${({ theme }) => theme.color.fourthOpacity};
+  color: white;
 `;
