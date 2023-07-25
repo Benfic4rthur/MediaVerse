@@ -2,7 +2,7 @@ import { keyframes, styled } from 'styled-components';
 
 const coracao = keyframes`
   0%
-   {
+  {
     transform: scale(1);
   }
   100% {
@@ -42,8 +42,7 @@ export const Navbar = styled.nav`
 
   img {
     width: 3rem;
-    animation: ${coracao} 5s linear infinite;
-    animation-direction: alternate;
+    animation: ${coracao} 5s linear infinite alternate;
   }
 `;
 
