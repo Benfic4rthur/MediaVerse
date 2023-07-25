@@ -61,7 +61,7 @@ export const ContainerMedia = styled.div`
 
 const Media = css`
   object-position: center;
-  min-width: 100%;
+  width: 100%;
   object-fit: cover;
 `;
 
