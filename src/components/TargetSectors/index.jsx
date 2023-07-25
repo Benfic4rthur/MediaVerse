@@ -1,8 +1,8 @@
-import corporative from '../../assets/corporative.jpg';
-import ead from '../../assets/ead.jpeg';
-import ondemand from '../../assets/ondemand.jpg';
-import reciclagem from '../../assets/reciclagem.jpg';
-import webnar from '../../assets/webnar.jpg';
+import corporative from '../../assets/corporative.png';
+import ead from '../../assets/ead.png';
+import ondemand from '../../assets/ondemand.png';
+import reciclagem from '../../assets/reciclagem.png';
+import webnar from '../../assets/webnar.png';
 import { Container, ContainerImage, ContainerSectors, Sectors } from './styled';
 
 export default function TargetSectors() {
@@ -38,9 +38,9 @@ export default function TargetSectors() {
             <ContainerImage>
               <img src={webnar} alt='' />
             </ContainerImage>
-          <p>
-            Webnários agendados com antecedencia e disponibilidade de aviso para os participantes.
-          </p>
+            <p>
+              Webnários agendados com antecedencia e disponibilidade de aviso para os participantes.
+            </p>
           </Sectors>
         </ContainerSectors>
       </Container>

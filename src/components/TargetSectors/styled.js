@@ -50,15 +50,19 @@ export const ContainerSectors = styled.div`
 `;
 
 export const ContainerImage = styled.div`
-  height: 20rem;
-
-width: 100%;
+  height: 25rem;
+  width: 100%;
 `;
 export const Sectors = styled.div`
   background: ${({ theme }) => theme.color.first};
-  width: 20rem;
+  width: 28rem;
   height: 25rem;
   border-radius: 1rem;
+
+  p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+  }
 
   &.up {
     animation: ${sobe} 1s;
@@ -74,5 +78,3 @@ export const Sectors = styled.div`
     border-radius: 10px;
   }
 `;
-
-
