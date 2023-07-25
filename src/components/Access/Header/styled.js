@@ -33,7 +33,7 @@ export const Navbar = styled.nav`
 
   img {
     width: 3rem;
-    animation: ${({ theme }) => theme.animation.coracao} 5s infinite alternate; 
+    animation: ${({ theme }) => theme.animation.coracao} 4s infinite alternate;
   }
 `;
 
