@@ -36,6 +36,7 @@ export const ContainerInfor = styled.div`
   padding-inline: 1rem;
   display: flex;
   flex-flow: column;
+  padding-top: 2rem;
   gap: 2rem;
   align-items: center;
   justify-content: center;
