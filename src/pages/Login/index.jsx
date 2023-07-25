@@ -31,7 +31,7 @@ const Login = () => {
   }, [authError]);
 
   useEffect(() => {
-    document.title = 'MediaVerse- Login';
+    document.title = 'MediaVerse - Login';
   }, []);
 
   return (
