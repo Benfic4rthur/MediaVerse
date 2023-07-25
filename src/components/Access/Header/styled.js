@@ -1,15 +1,15 @@
 import { keyframes, styled } from 'styled-components';
 
 const coracao = keyframes`
-  0%{
+  0%,
+  100% {
     transform: scale(1);
   }
 
-  100% {
+  50% {
     transform: scale(1.2);
   }
 `;
-
 export const Header = styled.header`
   position: fixed;
   top: 8px;
