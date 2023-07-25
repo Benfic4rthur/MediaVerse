@@ -51,6 +51,18 @@ export const ContainerImage = styled.div`
   width: 100%;
   border-radius: 1rem;
 `;
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: 0.5s;
+  &:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
+  }
+`;
+
 export const Sectors = styled.div`
   width: 28rem;
   height: 30rem;
@@ -71,12 +83,5 @@ export const Sectors = styled.div`
   }
   &.down {
     animation: ${desce} 1s;
-  }
-
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
   }
 `;
