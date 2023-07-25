@@ -75,8 +75,8 @@ export function Header() {
               smooth={true}
               offset={-50}
               duration={1000}
-              title='Setores Alvos'
-              onClick={() => setTitle('- Setores Alvos')}
+              title='Setores Alvo'
+              onClick={() => setTitle('- Setores Alvo')}
               className='link'
               style={{ cursor: 'pointer' }}
             >
