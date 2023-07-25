@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
-import Contact from '../../components/Contact';
+import Contact from '../../components/Access/Contact';
 import FooterAccess from '../../components/FooterAccess';
 
-import { AccessCard } from '../../components/AccessCard';
-import { Image } from '../../components/AccessCard/styled';
-
-import NavAccess from '../../components/NavAccess';
-import TargetSectors from '../../components/TargetSectors';
-import { Container, ContainerAccessCard, Nav } from './styled';
+import { Functionality } from '../../components/Access/Functionality';
+import { Header } from '../../components/Access/Header';
+import TargetSectors from '../../components/Access/TargetSectors';
+import { Container } from './styled';
 
 export default function Access() {
   useEffect(() => {
@@ -17,10 +15,19 @@ export default function Access() {
   return (
     <>
       <Container>
-        <Nav>
-          <NavAccess />
-        </Nav>
+        <Header />
         <br />
+        <Functionality />
+        <TargetSectors />
+        <Contact />
+      </Container>
+      <FooterAccess />
+    </>
+  );
+}
+
+{
+  /* <<<<<<< Updated upstream
         <h1 id='Functionality'>Funcionalidades</h1>
         <ContainerAccessCard>
           <AccessCard
@@ -50,7 +57,7 @@ export default function Access() {
             classname='left'
           >
             <Image src='' alt='' />
-          </AccessCard> */}
+          </AccessCard>
           <AccessCard
             // reverse
             title={'Cursos sob demanda'}
@@ -63,11 +70,5 @@ export default function Access() {
           </AccessCard>
         </ContainerAccessCard>
         <h1 id='TargetSectors'>Setores Alvos</h1>
-        <TargetSectors />
-        <h1 id='Contact'>Contato</h1>
-        <Contact />
-      </Container>
-      <FooterAccess />
-    </>
-  );
+======= */
 }

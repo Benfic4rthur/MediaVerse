@@ -1,7 +1,7 @@
 import { ButtonLink, Container, Content, Text } from './styled';
 import { MdEmail, MdWhatsapp } from 'react-icons/md';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { H2 } from '../../../pages/Access/styled';
 
 const number = '5551991640517';
 const messageBomDia =
@@ -52,6 +52,7 @@ export default function Contact() {
 
   return (
     <>
+      <H2 id='Contact'>Contato</H2>
       <Container>
         <Text>
           <h2>Aumente a produtividade dos seus treinamentos!</h2>
@@ -68,8 +69,8 @@ export default function Contact() {
             target=' _blank'
             className='link'
           >
-              <MdEmail />
-              Contate-nos por e-mail
+            <MdEmail />
+            Contate-nos por e-mail
           </ButtonLink>
           <ButtonLink
             to={`https://wa.me/${number}?text=${encodeURIComponent(message)}`}

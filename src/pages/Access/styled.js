@@ -35,24 +35,17 @@ export const Container = styled.div`
   width: 100%;
   margin: auto;
   color: ${({ theme }) => theme.color.fourth};
-
-  h1 {
-    text-align: center;
-    margin: 7rem 0;
-  }
 `;
-export const Nav = styled.nav`
-  position: fixed;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
+
+export const H2 = styled.h2`
+  font-size: ${({ theme }) => theme.font.size.xl};
+  text-align: center;
+  padding: 7rem 0;
 `;
 
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-
 
   color: #fff;
   font-size: 4em;
@@ -115,16 +108,6 @@ export const FooterAccess = styled.footer`
   img {
     width: 2rem;
   }
-`;
-
-
-export const ContainerAccessCard = styled.div`
-  max-width: 153.6rem;
-  width:100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 `;
 
 export const ContainerButtons = styled.div`

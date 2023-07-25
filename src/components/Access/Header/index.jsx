@@ -2,13 +2,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Link } from 'react-router-dom';
 import { Link as LinkScroll } from 'react-scroll';
-import { Navbar } from './styled';
+import { Navbar, Header as HeaderStyled } from './styled';
 
-import logo from '../../assets/logo.png';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import logo from '../../../assets/logo.png';
+import { useState, useEffect } from 'react';
 
-export default function NavAccess() {
+export function Header() {
   const [title, setTitle] = useState('- Início');
 
   useEffect(() => {
@@ -16,7 +15,7 @@ export default function NavAccess() {
   }, [title]);
 
   return (
-    <>
+    <HeaderStyled>
       <Navbar>
         <div>
           <LinkScroll
@@ -90,6 +89,6 @@ export default function NavAccess() {
           </Link>
         </div>
       </Navbar>
-    </>
+    </HeaderStyled>
   );
 }

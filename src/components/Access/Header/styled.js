@@ -11,7 +11,15 @@ const coracao = keyframes`
   }
 `;
 
-export const Navbar = styled.div`
+export const Header = styled.header`
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+`;
+
+export const Navbar = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
