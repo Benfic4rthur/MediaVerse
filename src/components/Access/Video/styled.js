@@ -26,6 +26,9 @@ export const Container = styled.section`
   background-size: cover;
   display: flex;
   align-items: center;
+  border-bottom-right-radius: 3rem;
+  border-bottom-left-radius: 3rem;
+  box-shadow: 1px 1px 10px hsl(0, 0%, 0%, 0.5);
 `;
 
 export const ContainerInfor = styled.div`
@@ -33,11 +36,12 @@ export const ContainerInfor = styled.div`
   padding-inline: 1rem;
   display: flex;
   flex-flow: column;
+  padding-top: 2rem;
   gap: 2rem;
+  align-items: center;
+  justify-content: center;
 
-  @media (min-width: 800px) {
-    align-items: center;
-    justify-content: center;
+  @media (min-width: 780px) {
     flex-flow: row;
   }
 `;
