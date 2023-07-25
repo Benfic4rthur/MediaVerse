@@ -31,7 +31,7 @@ export function Header() {
             offset={-80}
             duration={750}
             title='Início'
-            className='link'
+            className='alink'
             style={{ cursor: 'pointer' }}
           >
             <img src={logo} alt='Logo' title='MediaVerse' onClick={() => setTitle('- Início')} />

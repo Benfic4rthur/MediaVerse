@@ -35,7 +35,6 @@ export const Navbar = styled.nav`
   }
   .link {
     transition: transform 0.3s ease;
-
     text-decoration: none;
     color: white;
   }
