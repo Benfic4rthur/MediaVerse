@@ -10,7 +10,7 @@ import { Container, ContainerSectors } from './styled';
 export default function TargetSectors() {
   return (
     <>
-      <H2 id='TargetSectors'>Setores Alvos</H2>
+      <H2 id='TargetSectors'>Setores Alvo</H2>
 
       <Container>
         <ContainerSectors>
