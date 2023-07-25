@@ -37,7 +37,7 @@ export const router = createBrowserRouter(
     <Route>
       {/* Rotas disponível para usuários deslogados */}
       <Route element={<RedirectIfNotAuthenticated />}>
-        <Route path='/access' element={<Access />} />;
+        <Route path='/access' element={<Access />} loader={publicLoader} />;
         <Route element={<Layout />}>
           {/* layout que vai ser herdado pelas rotas da aplicação */}
           <Route path='/public-post/:id' element={<PublicPost />} />;

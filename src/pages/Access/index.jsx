@@ -1,13 +1,17 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import Contact from '../../components/Access/Contact';
 import FooterAccess from '../../components/Access/Footer';
 
+import { Await, useLoaderData } from 'react-router-dom';
 import { Functionality } from '../../components/Access/Functionality';
 import { Header } from '../../components/Access/Header';
 import TargetSectors from '../../components/Access/TargetSectors';
+import { Video } from '../../components/Access/Video';
 import { Container } from './styled';
 
 export default function Access() {
+  const data = useLoaderData();
+
   useEffect(() => {
     document.title = 'MediaVerse - Acesso';
   }, []);
@@ -16,7 +20,9 @@ export default function Access() {
     <>
       <Container>
         <Header />
-        <br />
+        <Suspense fallback={<></>}>
+          <Await resolve={data.PostsData}>{data => <Video data={data} />}</Await>
+        </Suspense>
         <Functionality />
         <TargetSectors />
         <Contact />

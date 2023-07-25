@@ -44,7 +44,7 @@ export function Header() {
           </MobileMenuToggle>
           <ContainerAdaptiveMenu $expanded={expanded}>
             <LinkScroll
-              to='Functionality'
+              to='init'
               spy={true}
               smooth={true}
               offset={-80}

@@ -6,6 +6,7 @@ export const Header = styled.header`
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
+  z-index: 1;
 `;
 
 export const Navbar = styled.nav`
