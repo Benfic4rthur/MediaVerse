@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { ContainerImage, Sectors, Image } from './styled';
 import { useAnimation } from '../../../hooks/useAnimation';
+import { ContainerImage, Image, Sectors } from './styled';
 
 export function CardTargetSectors({ src, alt, description, typeAnimated }) {
   const ref = useRef(null);
