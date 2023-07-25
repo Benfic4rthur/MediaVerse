@@ -108,7 +108,7 @@ export const ButtonMenuExpanded = styled.button`
 
 export const ContainerAdaptiveMenu = styled.section`
   display: flex;
-  gap: 5rem;
+  gap: 1rem;
   flex-flow: row;
   width: fit-content;
   justify-content: center;
