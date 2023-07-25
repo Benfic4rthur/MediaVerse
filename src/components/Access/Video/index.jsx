@@ -8,7 +8,6 @@ import {
   Title,
   Video as VideoStyled,
 } from './styled';
-// import MediaVerse from '../../../assets/mediaverse.mp4';
 
 export function Video({ data }) {
   const [state, setstate] = useState({});
