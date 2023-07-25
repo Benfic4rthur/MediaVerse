@@ -38,7 +38,7 @@ export const PublicPost = () => {
 
   useEffect(() => {
     const fetchTag = async () => {
-      setTagsVal(await FetchTags('posts', ['nao-e-cliente']));
+      setTagsVal(await FetchTags('posts', ['promotional']));
     };
 
     fetchTag();

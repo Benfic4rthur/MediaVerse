@@ -138,7 +138,7 @@ const Index = () => {
           <hr />
           <option value='funcionario'>Funcionário</option>
           <hr />
-          <option value='cliente'>Cliente</option>
+          <option value='aluno'>Aluno</option>
           <hr />
         </CreateInput>
         <CreateInput

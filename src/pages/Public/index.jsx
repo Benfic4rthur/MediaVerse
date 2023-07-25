@@ -11,12 +11,12 @@ const Index = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
-    document.title = 'MediaVerse- Não é Cliente';
+    document.title = 'MediaVerse - Promocional';
   }, []);
 
   return (
     <ContainerHome>
-      <ContainerTitle>Novidades do Sistema Genuine:</ContainerTitle>
+      <ContainerTitle>Novidades que podem ser interessantes:</ContainerTitle>
 
       <Suspense fallback={<></>}>
         <Await
@@ -44,6 +44,6 @@ export default Index;
 
 export async function publicLoader() {
   return defer({
-    PostsData: FetchTags('posts', ['nao-e-cliente']),
+    PostsData: FetchTags('posts', ['promotional']),
   });
 }

@@ -42,7 +42,7 @@ export default function Access() {
           >
             <Image src='' alt='' />
           </AccessCard>
-          <AccessCard
+          {/* <AccessCard
             title={'Webnário'}
             description={
               'Agende webnarios com antecência, avise os participantes e faça o envio do link e disponibilização do login e senha para utilização momentanea.'
@@ -50,9 +50,9 @@ export default function Access() {
             classname='left'
           >
             <Image src='' alt='' />
-          </AccessCard>
+          </AccessCard> */}
           <AccessCard
-            reverse
+            // reverse
             title={'Cursos sob demanda'}
             description={
               'Possibilidade de disponibilizar o conteúdo da sua faculdade, curso técnico, treinamento empresárial, reciclagem corporativa, etc. Com a possibilidade de testar o conhecimento adquirido pelo aluno.'

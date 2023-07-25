@@ -4,7 +4,6 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 //pages
-import About from '../pages/About';
 import Catalog, { catalogAction, catalogLoader } from '../pages/Catalog';
 import CreatePost from '../pages/CreatePost';
 import Dashboard from '../pages/Dashboard';
@@ -60,7 +59,6 @@ export const router = createBrowserRouter(
             action={catalogAction}
           />
           <Route path='/Learning/:id' element={<Learning />} />
-          <Route path='/about' element={<About />} />
           <Route path='/search' element={<Search />} />
           <Route path='/posts/:id' element={<Post />} />
           {/* Rotas que só podem ser acessadas pelo admin e funcionário */}
