@@ -8,12 +8,14 @@ export const Footer = styled.div`
   justify-content: space-around;
   height: 10rem;
   width: 100%;
+  text-align: center;
   font-size: 1.2rem;
   color: ${({ theme }) => theme.color.fourth};
   background: ${({ theme }) => theme.color.firstHover};
 
   img {
-    width: 3.8rem;
+    width: 4rem;
+    margin-right: 1rem;
   }
 
   .link {
