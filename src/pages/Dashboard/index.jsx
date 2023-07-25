@@ -50,9 +50,9 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    const sortedPostsAd = postsadm?.filter(post => !post.tags.includes('aprendendo-o-sistema'));
+    const sortedPostsAd = postsadm?.filter(post => !post.tags.includes('promotional'));
 
-    const postTags = postsadm?.filter(post => post.tags.includes('aprendendo-o-sistema'));
+    const postTags = postsadm?.filter(post => post.tags.includes('promotional'));
 
     const valueAd = searchAll ? sortedPostsAd : postTags;
 
