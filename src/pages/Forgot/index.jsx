@@ -39,7 +39,7 @@ export const Forgot = () => {
             name='email'
             required
             value={email}
-            placeholder='E-mail do estabelecimento'
+            placeholder='E-mail do usuário'
             onChange={e => setEmail(e.target.value)}
           />
           <ButtonForm type='submit' value={'Resetar'}>
