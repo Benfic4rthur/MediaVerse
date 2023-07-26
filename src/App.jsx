@@ -109,6 +109,7 @@ function App() {
     onAuthStateChanged(auth, user => {
       setUser(user);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, deletedAt]);
 
   if (loadingUser) {
