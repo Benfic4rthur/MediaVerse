@@ -12,6 +12,7 @@ export const Footer = styled.div`
   font-size: 1.2rem;
   color: ${({ theme }) => theme.color.fourth};
   background: ${({ theme }) => theme.color.firstNav};
+  padding: 0 1rem;
 
   img {
     width: 4rem;
