@@ -44,7 +44,6 @@ export default function Footer() {
               textDecoration: 'none',
               color: '#fff',
             }}
-
           >
             Ekor Solutions &copy;{' '}
           </Link>

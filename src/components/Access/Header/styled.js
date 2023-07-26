@@ -135,15 +135,21 @@ export const LinkScroll = styled(Link)`
   padding: 1rem 1.5rem;
   border-radius: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s linear;
+  transition: 0.3s;
 
   &:hover {
-    background-color: ${({ theme }) => theme.color.firstOpacity};
+    transform: translateY(0.3rem);
+    transition: transform 0.3s ease;
   }
 
   @media (max-width: 800px) {
     padding-block: 1.5rem;
     border-radius: 0;
+    transition: background-color 0.3s linear;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.firstOpacity};
+    }
   }
 `;
 
@@ -151,7 +157,7 @@ export const LogoLinkScroll = styled(Link)`
   width: 4rem;
   cursor: pointer;
   border-radius: 1rem;
-  padding-inline: .5rem;
+  padding-inline: 0.5rem;
   animation: ${({ theme }) => theme.animation.coracao} 4s infinite alternate;
 
   & img {
