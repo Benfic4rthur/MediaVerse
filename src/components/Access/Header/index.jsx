@@ -32,7 +32,7 @@ export function Header() {
             tabindex='0'
             title='Início'
           >
-            <img src={logo} alt='Logo' title='MediaVerse' onClick={() => setTitle('- Início')} />
+            <img src={logo} alt='Logo' title='MediaVerse' onClick={() => setTitle('- Início')} style={{paddingTop: '5px'}}/>
           </LogoLinkScroll>
         </div>
 
