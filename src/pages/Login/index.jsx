@@ -4,7 +4,7 @@ import { redirect } from 'react-router-dom';
 import { CreateInput } from '../../components/CreateInput';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 import { ButtonForm, ContainerForm, Error, Form } from '../../styles/formStyled';
-import { ContainerCenter, LinkStyled } from '../../styles/styledGlobal';
+import { ContainerCenter, LinkStyled, Subtitle } from '../../styles/styledGlobal';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <ContainerCenter>
       <ContainerForm>
-        <h1>Entrar</h1>
+        <Subtitle>Entrar</Subtitle>
         <Form onSubmit={handleSubmit}>
           <CreateInput
             Svg={RxEnvelopeClosed}
