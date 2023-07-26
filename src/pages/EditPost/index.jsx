@@ -130,9 +130,9 @@ const EditPost = () => {
       views: post?.views ?? 0,
     };
 
-    await updateDocument(id, postToUpdate);
+   const Document =  await updateDocument(id, postToUpdate);
 
-    navigate('/');
+    if (Document) navigate(`/posts/${id}`);
   }
 
   const Reset = () => {

@@ -48,6 +48,8 @@ export const useUpdateDocument = (docCollection) => {
         type: "UPDATED_DOC",
         payload: updatedDocument,
       });
+
+      return true;
     } catch (error) {
       console.log(error);
       checkCancelBeforeDispatch({ type: "ERROR", payload: error.message });
