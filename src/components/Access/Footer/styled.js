@@ -16,6 +16,7 @@ export const Footer = styled.div`
 
   img {
     width: 4rem;
+    margin-right: 1.5rem;
   }
 
   .link {
