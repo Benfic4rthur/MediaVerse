@@ -57,6 +57,7 @@ export const useInsertDocument = docCollection => {
         type: 'INSERTED_DOC',
         payload: insertedDocument,
       });
+      return insertedDocument;
     } catch (error) {
       checkCancelBeforeDispatch({ type: 'ERROR', payload: error.message });
     }

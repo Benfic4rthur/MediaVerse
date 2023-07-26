@@ -106,9 +106,10 @@ const CreatePost = () => {
 
     // console.log(VideoURL, ThumbURL);
 
-    await insertDocument(post);
+   const Document =   await insertDocument(post);
 
-    navigate('/');
+
+    if (Document) navigate(`/posts/${Document?.id}`);
   }
 
   useLayoutEffect(() => {
