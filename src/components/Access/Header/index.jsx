@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Link } from 'react-router-dom';
-import { Link as LinkScroll } from 'react-scroll';
-import { Header as HeaderStyled, Navbar } from './styled';
+// import { Link  } from 'react-scroll';
+import { Header as HeaderStyled, LinkScroll, LogoLinkScroll, Navbar } from './styled';
 
 import { useEffect, useState } from 'react';
 import { LuMenu, LuX } from 'react-icons/lu';
@@ -12,9 +12,7 @@ import { ContainerAdaptiveMenu, MobileMenuToggle, Nav } from './styled';
 export function Header() {
   const [title, setTitle] = useState('- Início');
   const [expanded, setExpanded] = useState(false);
-  const toggleMenu = () => {
-    setExpanded(!expanded);
-  };
+  const toggleMenu = () => setExpanded(!expanded);
 
   useEffect(() => {
     document.title = `MediaVerse ${title}`;
@@ -24,18 +22,18 @@ export function Header() {
     <HeaderStyled>
       <Navbar>
         <div>
-          <LinkScroll
+          <LogoLinkScroll
             to='init'
+            className='logo'
             spy={true}
             smooth={true}
             offset={-80}
             duration={750}
+            tabindex='0'
             title='Início'
-            className='link'
-            style={{ cursor: 'pointer' }}
           >
             <img src={logo} alt='Logo' title='MediaVerse' onClick={() => setTitle('- Início')} />
-          </LinkScroll>
+          </LogoLinkScroll>
         </div>
 
         <Nav>
@@ -49,12 +47,11 @@ export function Header() {
               smooth={true}
               offset={-80}
               duration={750}
+              tabindex='0'
               title='Início'
               onClick={() => setTitle('- Início')}
-              className='link'
-              style={{ cursor: 'pointer' }}
             >
-              <h2>Início</h2>
+              Início
             </LinkScroll>
             <LinkScroll
               to='Functionality'
@@ -62,12 +59,11 @@ export function Header() {
               smooth={true}
               offset={-80}
               duration={600}
+              tabindex='0'
               title='Funcionalidades'
               onClick={() => setTitle('- Funcionalidades')}
-              className='link'
-              style={{ cursor: 'pointer' }}
             >
-              <h2>Funcionalidades</h2>
+              Funcionalidades
             </LinkScroll>
             <LinkScroll
               to='TargetSectors'
@@ -75,12 +71,11 @@ export function Header() {
               smooth={true}
               offset={-50}
               duration={1000}
+              tabindex='0'
               title='Setores Alvo'
               onClick={() => setTitle('- Setores Alvo')}
-              className='link'
-              style={{ cursor: 'pointer' }}
             >
-              <h2>Setores Alvo</h2>
+              Setores Alvo
             </LinkScroll>
             <LinkScroll
               to='Contact'
@@ -88,16 +83,15 @@ export function Header() {
               smooth={true}
               offset={-50}
               duration={1000}
+              tabindex='0'
               title='Contatos'
               onClick={() => setTitle('- Contatos')}
-              className='link'
-              style={{ cursor: 'pointer' }}
             >
-              <h2>Contatos</h2>
+              Contatos
             </LinkScroll>
-            <Link to='/login' className='link'>
-              <h2>Login</h2>
-            </Link>
+            <LinkScroll as={Link} to='/login'>
+              Login
+            </LinkScroll>
           </ContainerAdaptiveMenu>
         </Nav>
       </Navbar>
