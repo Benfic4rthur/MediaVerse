@@ -8,10 +8,10 @@ import {
   Container,
   ContainerInfo,
   ContainerMain,
-  ContainerTag,
+  // ContainerTag,
   LinkShare,
   SpaceShare,
-  Tag,
+  // Tag,
   Title,
   VideoStyled,
 } from './styled';
@@ -92,13 +92,13 @@ const Post = () => {
               </SpaceShare>
             </ContainerInfo>
             <Body>{post.body}</Body>
-            {post?.tags?.length > 0 && (
+            {/* {post?.tags?.length > 0 && (
               <ContainerTag>
                 {post?.tags?.map(tag => (
                   <Tag key={tag}>{tag}</Tag>
                 ))}
               </ContainerTag>
-            )}
+            )} */}
           </>
         )}
       </Container>

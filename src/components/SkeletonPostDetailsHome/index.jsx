@@ -1,4 +1,8 @@
-import { Author, ContainerMidia, ContainerPost, ContainerTag, Title } from './styled';
+import { Author, 
+  ContainerMidia,
+  ContainerPost, 
+  // ContainerTag, 
+  Title } from './styled';
 
 export const SkeletonPostDetailsHome = () => {
   return (
@@ -6,7 +10,7 @@ export const SkeletonPostDetailsHome = () => {
       <ContainerMidia />
       <Title />
       <Author />
-      <ContainerTag />
+      {/* <ContainerTag /> */}
     </ContainerPost>
   );
 };

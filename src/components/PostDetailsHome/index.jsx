@@ -6,10 +6,10 @@ import {
   ContainerDeta,
   ContainerMidia,
   ContainerPost,
-  ContainerTag,
+  // ContainerTag,
   Deta,
   Image,
-  Tag,
+  // Tag,
   Title,
   Video,
 } from './styled';
@@ -57,11 +57,11 @@ export const PostDetailsHome = ({ post, to }) => {
         <Author>Autor: {post.createdBy}</Author>
         <Deta title={'Postado em ' + date}>{date}</Deta>
       </ContainerDeta>
-      <ContainerTag>
+      {/* <ContainerTag>
         {post.tags.map(tag => (
           <Tag key={tag}>{tag}</Tag>
         ))}
-      </ContainerTag>
+      </ContainerTag> */}
     </ContainerPost>
   );
 };
