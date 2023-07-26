@@ -104,10 +104,7 @@ const CreatePost = () => {
       views: 0,
     };
 
-
-
-   const Document =   await insertDocument(post);
-
+    const Document = await insertDocument(post);
 
     if (Document) navigate(`/posts/${Document?.id}`);
   }
