@@ -102,7 +102,7 @@ const Index = () => {
       ) : (
         <ContainerCard>
           {filteredUsersInfo?.map(user => {
-            const { loggedOutAt, loggedAt, userName, deletedAt, id, userId } = user;
+            const { loggedOutAt, loggedAt, userName, deletedAt, id, userId, userStatus } = user;
 
             const StillLoggedIn = loggedOutAt === 'Ainda logado!';
             const loggedOutAtNum = Number(loggedOutAt);
@@ -124,7 +124,7 @@ const Index = () => {
                     />
                   </ContainerTitlePost>
                   <Author>
-                    <LuUser size={16} /> {userName}
+                    <LuUser size={16} /> {userName} | {userStatus}
                   </Author>
                 </ContRowInit>
                 <ContRowDate className='edit'>
