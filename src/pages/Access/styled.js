@@ -35,6 +35,7 @@ export const Container = styled.div`
   width: 100%;
   margin: auto;
   color: ${({ theme }) => theme.color.fourth};
+  padding: 0 1rem;
 `;
 
 export const H2 = styled.h2`
