@@ -66,10 +66,14 @@ export const ContainerVideo = styled.div`
   width: 100%;
   max-width: 70rem;
   aspect-ratio: 16 / 9;
-  background-color: rgb(0 0 0 0.5);
+  background-color: hsl(0, 0%, 0%, 0.5);
   border-radius: 1.2rem;
   overflow: hidden;
   animation: ${showingLeft} 1s;
+
+  &.disable {
+    animation: ${showingRigth} 0s;
+  }
 `;
 
 export const Video = styled.video`
@@ -86,10 +90,14 @@ export const Text = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: hsl(0, 0%, 0%, 0.4);
   padding: 1.5rem;
   border-radius: 1.5rem;
   animation: ${showingRigth} 1s;
+
+  &.disable {
+    animation: ${showingRigth} 0s;
+  }
 `;
 
 export const Title = styled.h1`
@@ -101,4 +109,22 @@ export const Title = styled.h1`
 export const Description = styled.p`
   font-size: 1.6rem;
   font-size: clamp(1.4rem, 3vw, 1.8rem);
+`;
+
+export const SkeletonTitle = styled.div`
+  height: clamp(2.5rem, 5vw, 3.4rem);
+  width: 100%;
+  background-color: hsl(0, 0%, 80%, 0.3);
+  backdrop-filter: blur(7px);
+  margin-bottom: .8rem;
+  border-radius: 1rem;
+  `;
+
+export const SkeletonDescription = styled.p`
+  height: clamp(1.4rem, 3vw, 1.8rem);
+  width: 100%;
+  background-color: hsl(0, 0%, 80%, 0.3);
+  backdrop-filter: blur(7px);
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
 `;

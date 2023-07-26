@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { Suspense } from 'react';
+import { Await } from 'react-router-dom';
 import {
   Container,
   ContainerInfor,
@@ -9,28 +10,29 @@ import {
   Video as VideoStyled,
 } from './styled';
 
-export function Video({ data }) {
-  const [state, setstate] = useState({});
-
-  useEffect(() => {
-    setstate(data?.[0]);
-
-  }, [data]);
-
+export function Video({ getData }) {
   return (
-    <Container id="init">
+    <Container id='init'>
       <ContainerInfor>
-        <ContainerVideo>
-          <VideoStyled
-            src={state?.mediaURL}
-            controls
-            poster={state?.thumbURL ? state?.thumbURL : ''}
-          ></VideoStyled>
-        </ContainerVideo>
-        <Text>
-          <Title>{state.title}</Title>
-          <Description>{state.body}</Description>
-        </Text>
+        <Suspense fallback={<></>}>
+          <Await resolve={getData}>
+            {data => (
+              <>
+                <ContainerVideo>
+                  <VideoStyled
+                    src={data?.[0]?.mediaURL}
+                    controls
+                    poster={data?.[0]?.thumbURL ? data?.[0]?.thumbURL : ''}
+                  ></VideoStyled>
+                </ContainerVideo>
+                <Text>
+                  <Title>{data?.[0]?.title}</Title>
+                  <Description>{data?.[0]?.body}</Description>
+                </Text>
+              </>
+            )}
+          </Await>
+        </Suspense>
       </ContainerInfor>
     </Container>
   );

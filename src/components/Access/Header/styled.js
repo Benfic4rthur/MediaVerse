@@ -1,3 +1,4 @@
+import { Link } from 'react-scroll';
 import { styled } from 'styled-components';
 
 export const Header = styled.header`
@@ -30,11 +31,6 @@ export const Navbar = styled.nav`
   }
   .link:hover {
     transform: translateY(0.3rem);
-  }
-
-  img {
-    width: 3rem;
-    animation: ${({ theme }) => theme.animation.coracao} 4s infinite alternate;
   }
 `;
 
@@ -82,16 +78,12 @@ export const ButtonMenuExpanded = styled.button`
 
 export const ContainerAdaptiveMenu = styled.section`
   display: flex;
-  gap: 5rem;
+  gap: 1.5rem;
   flex-flow: row;
   width: fit-content;
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, visibility 0.1s ease;
-
-  .link {
-    padding: 1.75rem 0;
-  }
 
   @media (max-width: 800px) {
     background-color: ${({ theme }) => theme.color.firstHover};
@@ -130,5 +122,39 @@ export const MobileMenuToggle = styled.button`
     margin-right: 0.5rem;
     display: flex;
     z-index: 1;
+  }
+`;
+
+export const LinkScroll = styled(Link)`
+  width: 100%;
+  font-size: ${({ theme }) => theme.font.size.base};
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.color.fourth};
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s linear;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.firstOpacity};
+  }
+
+  @media (max-width: 800px) {
+    padding-block: 1.5rem;
+    border-radius: 0;
+  }
+`;
+
+export const LogoLinkScroll = styled(Link)`
+  width: 4rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  padding-inline: .5rem;
+  animation: ${({ theme }) => theme.animation.coracao} 4s infinite alternate;
+
+  & img {
+    width: 100%;
   }
 `;
