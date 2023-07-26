@@ -11,11 +11,10 @@ export const Footer = styled.div`
   text-align: center;
   font-size: 1.2rem;
   color: ${({ theme }) => theme.color.fourth};
-  background: ${({ theme }) => theme.color.firstHover};
+  background: ${({ theme }) => theme.color.firstNav};
 
   img {
-    width: 3rem;
-    margin-right: 3rem;
+    width: 4rem;
   }
 
   .link {
@@ -31,9 +30,15 @@ export const Footer = styled.div`
       transition: 0.3s;
     }
   }
+
+  @media (max-width: 700px) {
+    .spaceText {
+      width: 50%;
+    }
+  }
 `;
 
 export const Social = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
 `;

@@ -35,7 +35,7 @@ export default function Footer() {
           <img src={logo} alt='' />
         </div>
 
-        <div>
+        <div className='spaceText'>
           <Link
             to='https://ekorsolutions.vercel.app'
             title='Ekor Solutions'
@@ -45,7 +45,7 @@ export default function Footer() {
               color: '#fff',
             }}
           >
-            Ekor Solutions &copy;{' '}
+            Ekor Solutions &copy;
           </Link>
           - Todos os direitos reservados, {year}
         </div>
