@@ -13,6 +13,7 @@ export const UseUserManagement = userId => {
     try {
       const userDataRef = doc(db, 'userInfo', userId);
       const userData = await getDocFromCache(userDataRef);
+      // console.log("usuario" , userData.data(), userId);
       setUser({ ...userData.data(), id: userId }); // Adiciona o campo 'id' ao objeto 'userData'
       setLoading(false);
     } catch (error) {
@@ -35,7 +36,7 @@ export const UseUserManagement = userId => {
         displayName: updatedData.displayName,
         phoneNumber: updatedData.phoneNumber,
         userName: updatedData.userName,
-        userStatus: updatedData.userStatus,
+        userCnpj: updatedData.userCnpj,
       });
 
       setUser(updatedData);

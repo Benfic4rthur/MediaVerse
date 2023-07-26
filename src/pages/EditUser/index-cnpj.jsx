@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuBuilding, LuPhone, LuUser } from 'react-icons/lu';
-import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
 import { CreateInput } from '../../components/CreateInput';
@@ -16,6 +15,7 @@ const Index = () => {
   const [userName, setUserName] = useState('');
   const [error, setError] = useState('');
   const [userStatus, setUserStatus] = useState('');
+  const [userCnpj, setUserCnpj] = useState('');
   const { id: userId } = useParams();
 
   useLayoutEffect(() => {
@@ -29,7 +29,7 @@ const Index = () => {
       setDisplayName(user.displayName);
       setPhoneNumber(user.phoneNumber);
       setUserName(user.userName);
-      setUserStatus(user.userStatus);
+      setUserCnpj(user.userCnpj);
     }
   }, [user]);
 
@@ -44,12 +44,13 @@ const Index = () => {
     setError('');
 
     const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
+    const cleanedCnpj = userCnpj.replace(/\D/g, '');
 
     const updatedData = {
       displayName,
       phoneNumber: cleanedPhoneNumber,
       userName,
-      userStatus,
+      userCnpj: cleanedCnpj,
     };
     await updateUser(updatedData);
   };
@@ -81,20 +82,18 @@ const Index = () => {
           autoComplete='off'
         />
         <CreateInput
-          Svg={MdOutlineAdminPanelSettings}
-          as='select'
+          Svg={LuBuilding}
+          as={InputMask}
+          aria-label='CNPJ'
+          mask='99.999.999/9999-99'
+          maskPlaceholder={null}
+          name='userCnpj'
           required
-          value={userStatus}
-          onChange={e => setUserStatus(e.target.value)}
-        >
-          <option value=''>Selecione o tipo de usuário</option>
-          <hr />
-          <option value='admin'>Administrador</option>
-          <hr />
-          <option value='funcionario'>Funcionário</option>
-          <hr />
-          <option value='aluno'>Aluno</option>
-        </CreateInput>
+          placeholder='CNPJ'
+          value={userCnpj}
+          onChange={e => setUserCnpj(e.target.value)}
+          autoComplete='off'
+        />
         <CreateInput
           Svg={LuPhone}
           as={InputMask}

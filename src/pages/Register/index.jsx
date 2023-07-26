@@ -101,19 +101,6 @@ const Index = () => {
           onChange={e => setUserName(e.target.value)}
           autoComplete='off'
         />
-        {/* <CreateInput
-          Svg={LuBuilding}
-          as={InputMask}
-          aria-label='CNPJ'
-          mask='99.999.999/9999-99'
-          maskPlaceholder={null}
-          name='userCnpj'
-          required
-          placeholder='CNPJ'
-          value={userCnpj}
-          onChange={e => setUserCnpj(e.target.value)}
-          autoComplete='off'
-        /> */}
         <CreateInput
           Svg={LuMail}
           aria-label='E-mail do usuário'
