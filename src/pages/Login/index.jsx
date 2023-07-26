@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { RxEnvelopeClosed, RxLockClosed } from 'react-icons/rx';
-import { Link, redirect } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 import { CreateInput } from '../../components/CreateInput';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 import { ButtonForm, ContainerForm, Error, Form } from '../../styles/formStyled';
-import { ContainerCenter } from '../../styles/styledGlobal';
+import { ContainerCenter, LinkStyled } from '../../styles/styledGlobal';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -63,10 +63,9 @@ const Login = () => {
           {error && <Error>{error}</Error>}
           <h4>
             Esqueceu sua senha?{' '}
-            <Link to='/forgot-password' style={{ textDecoration: 'none' }}>
-              {' '}
+            <LinkStyled to='/forgot-password' style={{ textDecoration: 'none' }}>
               Clique aqui!
-            </Link>
+            </LinkStyled>
           </h4>
         </Form>
       </ContainerForm>
