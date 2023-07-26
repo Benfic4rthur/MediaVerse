@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-irregular-whitespace */
 import { useLayoutEffect, useState } from 'react';
-import { LuEdit, LuPlus, LuUser } from 'react-icons/lu';
+import { LuEdit, LuPlus, LuUser, LuTrash2 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 import Toggle from 'react-toggle';
@@ -25,6 +25,7 @@ import {
   CreatePostTitle,
   UserLoggedBall,
 } from './styled';
+import { UseAuthValue } from '../../context/AuthContext';
 
 const FormattedTimeDiff = (loggedAt = 0, loggedOutAt = 0) => {
   let formattedTime = '';
@@ -54,16 +55,17 @@ const FormattedTimeDiff = (loggedAt = 0, loggedOutAt = 0) => {
 
 const Index = () => {
   const { documents: usersInfo } = useAllUsersInfo('userInfo');
+  const { user, userName, userStatus, userEmail } = UseAuthValue();
   const { deleteDocument } = useDeleteUserInfo();
   const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
   const dateUserTime = new Intl.DateTimeFormat('pt-BR', { timeStyle: 'short' });
   const { softRehabUser, softDeleteUser } = useSoftDelete();
-  // const handleDelete = (userId, userName) => {
-  //   const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário ${userName}?`);
-  //   if (confirmDelete) {
-  //     deleteDocument(userId);
-  //   }
-  // };
+  const handleDelete = (userId, userName) => {
+    const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário ${userName}?`);
+    if (confirmDelete) {
+      deleteDocument(userId);
+    }
+  };
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Painel de Usuários';
@@ -71,7 +73,10 @@ const Index = () => {
 
   const [userToggles, setUserToggles] = useState({});
 
-  const filteredUsersInfo = usersInfo ? usersInfo.filter(user => user.userStatus !== 'admin') : [];
+  const usersNoAdm = usersInfo?.filter(user => user.userStatus !== 'admin');
+  const alluserInfo = usersInfo?.filter(user => user.userName !== 'administrador');
+  const filteredUsersInfo = userName !== "administrador" ? usersNoAdm : alluserInfo;
+
 
   const handleToggleChange = (userId, checked) => {
     setUserToggles(prevState => ({ ...prevState, [userId]: checked }));
@@ -83,8 +88,8 @@ const Index = () => {
     <div>
       <ContainerHeader>
         <Subtitle>
-          Gerencie seus {filteredUsersInfo.length}{' '}
-          {filteredUsersInfo.length > 1 ? 'Usuários' : 'Usuário'}
+          Gerencie seus {filteredUsersInfo?.length}{' '}
+          {filteredUsersInfo?.length > 1 ? 'Usuários' : 'Usuário'}
         </Subtitle>
         <CreatePostButton as={Link} to='/register'>
           Cadastrar Usuário <LuPlus size={17} />
@@ -122,10 +127,12 @@ const Index = () => {
                     <LuUser size={16} /> {userName}
                   </Author>
                 </ContRowInit>
-
                 <ContRowDate className='edit'>
                   <ButtonEvent as={Link} to={`/editUser/${id}`} title='editar usuário'>
                     <LuEdit />
+                  </ButtonEvent>
+                <ButtonEvent onClick={() => handleDelete(id, userName)} title='Apagar usuário'>
+                    <LuTrash2 />
                   </ButtonEvent>
                   <ContainerButtonEvent>
                     <div>

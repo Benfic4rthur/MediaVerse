@@ -106,14 +106,13 @@ const CreatePost = () => {
 
     // console.log(VideoURL, ThumbURL);
 
-   const Document =   await insertDocument(post);
-
+    const Document = await insertDocument(post);
 
     if (Document) navigate(`/posts/${Document?.id}`);
   }
 
   useLayoutEffect(() => {
-    document.title = 'MediaVerse- Novo Post';
+    document.title = 'MediaVerse - Novo Post';
   }, []);
 
   if (formError) return null;
