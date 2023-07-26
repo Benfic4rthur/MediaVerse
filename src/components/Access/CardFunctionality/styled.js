@@ -1,7 +1,8 @@
+/* eslint-disable import/no-named-as-default */
 import styled, { css, keyframes } from 'styled-components';
 
 const showing = keyframes`
- 0% {
+  0% {
     opacity: 0;
     transform: translateX(-100px);
   }
@@ -17,7 +18,7 @@ const showing = keyframes`
 `;
 
 const showingReverse = keyframes`
-   0% {
+  0% {
     opacity: 0;
     transform: translateX(100px);
   }
@@ -56,6 +57,11 @@ export const ContainerMedia = styled.div`
   }
   &.right {
     animation: ${showingReverse} 1s;
+  }
+  transition: 0.5s;
+  &:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
   }
 `;
 
@@ -115,7 +121,7 @@ export const HR = styled.hr`
   height: 1px;
   width: 100%;
   background-color: ${({ theme }) => theme.color.fourth};
-  animation: ${showing} .5s;
+  animation: ${showing} 0.5s;
 
   @media (min-width: 800px) {
     display: none;
