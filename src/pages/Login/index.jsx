@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <ContainerCenter>
       <ContainerForm>
-        <Subtitle>Entrar</Subtitle>
+        <Subtitle>Login</Subtitle>
         <Form onSubmit={handleSubmit}>
           <CreateInput
             Svg={RxEnvelopeClosed}
@@ -61,7 +61,7 @@ const Login = () => {
           />
           <ButtonForm disabled={loading}>{loading ? ' Aguarde...' : 'Entrar'}</ButtonForm>
           {error && <Error>{error}</Error>}
-          <h4>
+          <h4 style={{color: 'hsl(0, 0%, 95%, 0.7)'}}>
             Esqueceu sua senha?{' '}
             <LinkStyled to='/forgot-password' style={{ textDecoration: 'none' }}>
               Clique aqui!

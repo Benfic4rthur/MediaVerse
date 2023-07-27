@@ -1,6 +1,6 @@
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { useLayoutEffect, useState } from 'react';
-import { RiMailLine } from 'react-icons/ri';
+import { RxEnvelopeClosed } from 'react-icons/rx';
 import { CreateInput } from '../../components/CreateInput';
 import { ButtonForm, ContainerForm, Form } from '../../styles/formStyled';
 import { ContainerCenter, LinkStyled, Subtitle } from '../../styles/styledGlobal';
@@ -33,7 +33,7 @@ export const Forgot = () => {
         <Subtitle>Resetar senha</Subtitle>
         <Form onSubmit={passwordRecovery}>
           <CreateInput
-            Svg={RiMailLine}
+            Svg={RxEnvelopeClosed}
             aria-label='Email'
             type='email'
             name='email'
@@ -45,7 +45,7 @@ export const Forgot = () => {
           <ButtonForm type='submit' value={'Resetar'}>
             Resetar
           </ButtonForm>
-          <h4>
+          <h4 style={{ color: 'hsl(0, 0%, 95%, 0.7)'}}>
             Resetou sua senha?
             <LinkStyled to='/login' style={{ textDecoration: 'none' }}>
               {' '}
