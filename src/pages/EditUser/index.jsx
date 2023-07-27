@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { LuBuilding, LuPhone, LuUser } from 'react-icons/lu';
+import { LuBuilding, LuPhone, LuUser, LuMail } from 'react-icons/lu';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
@@ -16,13 +16,14 @@ const Index = () => {
   const [userName, setUserName] = useState('');
   const [error, setError] = useState('');
   const [userStatus, setUserStatus] = useState('');
-  const { id: userId } = useParams();
+  const [userEmail, setUserEmail] = useState('');
+  const { id } = useParams();
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição de usuário';
   }, []);
 
-  const { user, loading, error: userError, successMessage, updateUser } = UseUserManagement(userId); // Usando o novo hook
+  const { user, loading, error: userError, successMessage, updateUser } = UseUserManagement(id); // Usando o novo hook
 
   useEffect(() => {
     if (user) {
@@ -30,6 +31,7 @@ const Index = () => {
       setPhoneNumber(user.phoneNumber);
       setUserName(user.userName);
       setUserStatus(user.userStatus);
+      setUserEmail(user.userId);
     }
   }, [user]);
 
@@ -79,6 +81,16 @@ const Index = () => {
           value={userName}
           onChange={e => setUserName(e.target.value)}
           autoComplete='off'
+        />
+        <CreateInput
+          Svg={LuMail}
+          aria-label='E-mail do usuário'
+          type='email'
+          name='email'
+          required
+          placeholder={userEmail}
+          disabled
+          title="E-mail do usuário"
         />
         <CreateInput
           Svg={MdOutlineAdminPanelSettings}
