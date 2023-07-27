@@ -158,7 +158,7 @@ export const LogoLinkScroll = styled(Link)`
   cursor: pointer;
   border-radius: 1rem;
   padding-inline: 0.5rem;
-  animation: ${({ theme }) => theme.animation.coracao} 4s infinite alternate;
+  animation: ${({ theme }) => theme.animation.coracao} 3s infinite alternate;
 
   & img {
     width: 100%;
