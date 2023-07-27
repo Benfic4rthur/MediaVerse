@@ -18,7 +18,7 @@ export default function TargetSectors() {
             src={ead}
             alt={'ead img'}
             description={
-              'Eficaz para treinamentos empresariais com equipes globalmente distribuidas.'
+              'Perfeito para plataformas de cursos e faculdades EAD.'
             }
             typeAnimated={'up'}
           />
@@ -27,7 +27,7 @@ export default function TargetSectors() {
             src={corporative}
             alt={'corporative img'}
             description={
-              'Webnários agendados com antecedencia e disponibilidade de aviso para os participantes.'
+              'Eficaz para treinamentos empresariais com equipes globalmente distribuidas.'
             }
             typeAnimated={'down'}
           />
@@ -35,7 +35,7 @@ export default function TargetSectors() {
             src={ondemand}
             alt={'ondemand img'}
             description={
-              'Webnários agendados com antecedencia e disponibilidade de aviso para os participantes.'
+              'Funcionalidades incriveis para a disponibilização de videos sob demanda.'
             }
             typeAnimated={'up'}
           />
@@ -43,14 +43,14 @@ export default function TargetSectors() {
             src={reciclagem}
             alt={'reciclagem img'}
             description={
-              'Webnários agendados com antecedencia e disponibilidade de aviso para os participantes.'
+              'Reciclagem corporativa de forma pratica e rapida, com teste de qualidade.'
             }
             typeAnimated={'down'}
           />
           <CardTargetSectors
             src={webnar}
             alt={'webnar img'}
-            description={'Perfeito para cursos e faculdades EAD.'}
+            description={'Webnários agendados com antecedencia e disponibilidade de aviso para os participantes.'}
             typeAnimated={'up'}
           />
         </ContainerSectors>
