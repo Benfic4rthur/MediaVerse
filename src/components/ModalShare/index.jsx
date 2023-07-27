@@ -51,21 +51,21 @@ export const DialogDemo = ({ children, shareUrl, title, ...rest }) => {
             <SpaceIconsShare>
               <WhatsappShareButton url={shareUrl} title={title} socialMedia='whatsapp'>
                 <AiOutlineWhatsApp
-                  size={68}
+                  size={58}
                   color='#fff'
                   style={{ background: '#047b16', borderRadius: '15px' }}
                 />
               </WhatsappShareButton>
               <FacebookShareButton url={shareUrl} title={title} socialMedia='facebook'>
                 <AiOutlineFacebook
-                  size={68}
+                  size={58}
                   color='#fff'
                   style={{ background: '#3b5998', borderRadius: '15px' }}
                 />
               </FacebookShareButton>
               <TwitterShareButton url={shareUrl} title={title} socialMedia='twitter'>
                 <AiOutlineTwitter
-                  size={68}
+                  size={58}
                   color='#fff'
                   style={{ background: '#00acee', borderRadius: '15px' }}
                 />

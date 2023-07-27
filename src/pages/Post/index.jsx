@@ -30,7 +30,7 @@ const Post = () => {
   const { loading, error } = useIncrementViews('posts', id);
 
   const shareUrl = window.location.href;
-  const shareTitle = `Veja este vídeo sobre "${post?.title}" no Sistema Genuine  `;
+  const shareTitle = `Veja este vídeo sobre "${post?.title}" `;
 
   useEffect(() => {
     document.title = `MediaVerse - ${post?.title ?? 'Posts'}`;

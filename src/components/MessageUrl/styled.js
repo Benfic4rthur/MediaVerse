@@ -2,7 +2,7 @@ import * as Toast from '@radix-ui/react-toast';
 import styled, { keyframes } from 'styled-components';
 // "@mui/icons-material": "^5.13.7",
 
-const viewportPadding = "2.5rem"
+const viewportPadding = '2.5rem';
 
 export const ToastViewport = styled(Toast.Viewport)`
   position: fixed;
@@ -12,7 +12,7 @@ export const ToastViewport = styled(Toast.Viewport)`
   flex-direction: column;
   padding: ${viewportPadding};
   gap: 1rem;
-  width: 30rem;
+  width: 22rem;
   max-width: 100vw;
   margin: 0;
   list-style: none;
@@ -22,8 +22,9 @@ export const ToastViewport = styled(Toast.Viewport)`
 
 export const ToastRoot = styled(Toast.Root)`
   background-color: hsl(225, 11%, 22%);
-  border-radius: 1rem;
-  box-shadow: hsl(206 22% 7% / 35%) 0rem 1rem 38px -1rem, hsl(206 22% 7% / 20%) 0rem 1rem 2rem -1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: hsl(206 22% 7% / 35%) 0rem 1rem 38px -1rem,
+    hsl(206 22% 7% / 20%) 0rem 1rem 2rem -1.5rem;
   padding: 1.5rem;
   display: grid;
   grid-template-areas: 'title action' 'description action';
@@ -39,7 +40,7 @@ export const ToastRoot = styled(Toast.Root)`
   &[data-state='closed'] {
     animation: hide 100ms ease-in;
   }
-/*
+  /*
   &[data-swipe='move'] {
     transform: translateX(var(--radix-toast-swipe-move-x));
   } */
@@ -61,7 +62,7 @@ export const hide = keyframes`
   to {
     opacity: 0;
   }
-`
+`;
 
 export const slideIn = keyframes`
   from {
@@ -83,8 +84,8 @@ export const swipeOut = keyframes`
 
 export const ToastTitle = styled(Toast.Title)`
   grid-area: title;
-  margin-bottom: .5rem;
   font-weight: 500;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: white;
+  margin-left: 1.2rem;
 `;

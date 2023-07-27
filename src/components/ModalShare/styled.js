@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 import { Content, Overlay } from '@radix-ui/react-dialog';
 import styled from 'styled-components';
 
