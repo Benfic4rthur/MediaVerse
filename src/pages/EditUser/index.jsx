@@ -89,6 +89,7 @@ const Index = () => {
           name='email'
           required
           placeholder={userEmail}
+          value={userEmail}
           disabled
           title="E-mail do usuário"
         />
