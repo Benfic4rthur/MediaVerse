@@ -75,8 +75,7 @@ const Index = () => {
 
   const usersNoAdm = usersInfo?.filter(user => user.userStatus !== 'admin');
   const alluserInfo = usersInfo?.filter(user => user.userName !== 'administrador');
-  const filteredUsersInfo = userName !== "administrador" ? usersNoAdm : alluserInfo;
-
+  const filteredUsersInfo = userName !== 'administrador' ? usersNoAdm : alluserInfo;
 
   const handleToggleChange = (userId, checked) => {
     setUserToggles(prevState => ({ ...prevState, [userId]: checked }));
@@ -131,7 +130,7 @@ const Index = () => {
                   <ButtonEvent as={Link} to={`/editUser/${id}`} title='editar usuário'>
                     <LuEdit />
                   </ButtonEvent>
-                <ButtonEvent onClick={() => handleDelete(id, userName)} title='Apagar usuário'>
+                  <ButtonEvent onClick={() => handleDelete(id, userName)} title='Apagar usuário'>
                     <LuTrash2 />
                   </ButtonEvent>
                   <ContainerButtonEvent>

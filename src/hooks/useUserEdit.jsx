@@ -1,19 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '../firebase/config';
 import { useState, useEffect } from 'react';
-import { doc, getDocFromCache, updateDoc } from 'firebase/firestore';
+import { doc, getDocFromCache, updateDoc, collection, getDocs } from 'firebase/firestore';
 
 export const UseUserManagement = userId => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null); // Estado para mostrar mensagem de sucesso
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const getUserData = async () => {
     try {
       const userDataRef = doc(db, 'userInfo', userId);
       const userData = await getDocFromCache(userDataRef);
-      setUser({ ...userData.data(), id: userId }); // Adiciona o campo 'id' ao objeto 'userData'
+      setUser({ ...userData.data(), id: userId });
       setLoading(false);
     } catch (error) {
       setError(error.message);
@@ -25,12 +24,25 @@ export const UseUserManagement = userId => {
     try {
       setLoading(true);
       setError(null);
-      setSuccessMessage(null); // Limpar a mensagem de sucesso antes de criar um novo usuário
-      // Atualizar informações no Firestore
-      const userInfoRef = doc(db, 'userInfo', userId);
-      if (!userInfoRef) {
-        throw new Error('Usuário não encontrado!');
+      setSuccessMessage(null);
+
+      // checa se o userName já existe
+      const querySnapshot = await getDocs(collection(db, 'userInfo'));
+      const existingUser = querySnapshot.docs.find(
+        doc => doc.id !== userId && doc.data().userName === updatedData.userName,
+      );
+      // const ademiro = querySnapshot.docs.find(
+      //   doc => doc.id !== userId && updatedData.userName === 'administrador'
+      // )
+
+      // if (ademiro){
+      //   throw new Error('Você não pode alterar seu nome de usuário para administrador!');
+      // }
+      if (existingUser) {
+        throw new Error('Nome de usuário já existe!');
       }
+
+      const userInfoRef = doc(db, 'userInfo', userId);
       await updateDoc(userInfoRef, {
         displayName: updatedData.displayName,
         phoneNumber: updatedData.phoneNumber,
@@ -40,7 +52,7 @@ export const UseUserManagement = userId => {
 
       setUser(updatedData);
       setLoading(false);
-      setSuccessMessage('Usuário editado com sucesso!'); // Definir a mensagem de sucesso
+      setSuccessMessage('Usuário editado com sucesso!');
     } catch (error) {
       setError(error.message);
       setLoading(false);
