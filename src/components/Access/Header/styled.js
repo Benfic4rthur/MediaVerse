@@ -44,7 +44,7 @@ export const Nav = styled.nav`
   @media (max-width: 800px) {
     position: absolute;
     right: 2rem;
-    top: 0;
+    top: .3rem;
     width: fit-content;
     height: fit-content;
     gap: 1rem;
@@ -86,7 +86,7 @@ export const ContainerAdaptiveMenu = styled.section`
   transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, visibility 0.1s ease;
 
   @media (max-width: 800px) {
-    background-color: ${({ theme }) => theme.color.firstHover};
+    background-color: ${({ theme }) => theme.color.firstNav};
     padding: 1rem 0;
     gap: 0.8rem;
     flex-flow: column;
