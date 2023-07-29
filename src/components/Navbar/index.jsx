@@ -69,7 +69,7 @@ const Index = () => {
                   className={isActive => (isActive ? 'active' : '')}
                   onClick={() => setExpanded(false)}
                 >
-                  Edite seu perfil
+                  Edite seu Perfil
                 </NavLinkStyled>
 
                 {userStatus === 'funcionario' ||
