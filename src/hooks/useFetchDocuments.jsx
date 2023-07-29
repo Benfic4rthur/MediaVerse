@@ -13,22 +13,22 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
     async function loadData() {
       if (cancelled) return;
       setLoading(true);
-      const collectionRef = await collection(db, docCollection);
+      const collectionRef = collection(db, docCollection);
       try {
         let q;
         if (search) {
           const searchTokens = generateSearchTokens(search);
-          q = await query(
+          q = query(
             collectionRef,
             where('searchTokens', 'array-contains-any', searchTokens),
             orderBy('createdAt', 'desc'),
           );
         } else if (uid) {
-          q = await query(collectionRef, where('uid', '==', uid), orderBy('createdAt', 'desc'));
+          q = query(collectionRef, where('uid', '==', uid), orderBy('createdAt', 'desc'));
         } else {
-          q = await query(collectionRef, orderBy('createdAt', 'desc'));
+          q = query(collectionRef, orderBy('createdAt', 'desc'));
         }
-        await onSnapshot(q, querySnapshot => {
+       onSnapshot(q, querySnapshot => {
           setDocuments(
             querySnapshot.docs.map(doc => ({
               id: doc.id,

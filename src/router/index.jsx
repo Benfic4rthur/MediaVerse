@@ -31,6 +31,7 @@ import { RedirectIfNotAdmin } from '../redirects/RedirectIfNotAdmin';
 import { RedirectIfNotAuthenticated } from '../redirects/RedirectIfNotAuthenticated';
 import { RedirectIfNotAuthorized } from '../redirects/RedirectIfNotAuthorized';
 import { PublicPost } from '../pages/PublicPost';
+import { Account } from '../pages/Account';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,8 +59,9 @@ export const router = createBrowserRouter(
             loader={catalogLoader}
             action={catalogAction}
           />
+          <Route path='/account' element={<Account />} />
           <Route path='/Learning/:id' element={<Learning />} />
-          <Route path='/search' element={<Search />} />
+          {/* <Route path='/search' element={<Search />} /> */}
           <Route path='/posts/:id' element={<Post />} />
           {/* Rotas que só podem ser acessadas pelo admin e funcionário */}
           <Route element={<RedirectIfNotAuthorized />}>

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-named-as-default */
 import { Content, Overlay } from '@radix-ui/react-dialog';
 import styled from 'styled-components';
+import { DialogContentStyled } from '../../styles/styledDialog';
 
 export const DialogOverlay = styled(Overlay)`
   background-color: rgba(0 0 0 / 0.5);
@@ -10,41 +11,9 @@ export const DialogOverlay = styled(Overlay)`
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 `;
 
-export const DialogContent = styled(Content)`
-  background: ${({ theme }) => theme.color.firstBg};
-  border-radius: 0.6rem;
-  position: fixed;
-  display: grid;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+export const DialogContent = styled(DialogContentStyled)`
   width: min(100%, 50rem);
   max-height: 85vh;
-  overflow: auto;
-  padding: 2.5rem;
-  animation: both 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 2;
-  .DialogTitle {
-    color: ${({ theme }) => theme.color.fourth};
-  }
-
-  &::-webkit-scrollbar {
-    width: 0.8rem;
-    height: 0.8rem;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.color.firstOpacity};
-    border-radius: ${({ theme }) => theme.border.radius};
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.color.firstHover};
-  }
 `;
 
 export const DialogDescription = styled(Content)`

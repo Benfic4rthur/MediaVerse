@@ -1,4 +1,4 @@
-import { ButtonLink, Container, Content, Text } from './styled';
+import { ButtonLink, Container, Content, Description, Text, Title } from './styled';
 import { MdEmail, MdWhatsapp } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import { H2 } from '../../../pages/Access/styled';
@@ -13,7 +13,7 @@ const messageBoaNoite =
 const now = new Date();
 const currentHour = now.getHours();
 
-export default function Contact() {
+export function Contact() {
   const [titulo, setTitulo] = useState('');
 
   useEffect(() => {
@@ -55,12 +55,12 @@ export default function Contact() {
       <H2 id='Contact'>Contato</H2>
       <Container>
         <Text>
-          <h2>Aumente a produtividade dos seus treinamentos!</h2>
-          <p>
+          <Title>Aumente a produtividade dos seus treinamentos!</Title>
+          <Description>
             Potencialize a produtividade dos seus treinamentos com a ajuda de nossa ferramenta
             moderna e de simples utilização, voltada para diversos setores, desde faculdades e
             cursos EAD até treinamentos de reciclagem de ISO.
-          </p>
+          </Description>
         </Text>
         <Content>
           <ButtonLink

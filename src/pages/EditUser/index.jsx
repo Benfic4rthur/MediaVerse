@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
+import { getAuth, signInWithEmailAndPassword, updateEmail } from 'firebase/auth';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuBuilding, LuPhone, LuUser, LuMail } from 'react-icons/lu';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
 import { CreateInput } from '../../components/CreateInput';
-import { UseUserManagement } from '../../hooks/useUserEdit'; // Importando o novo hook
+import { UseUserManagement } from '../../hooks/useUserEdit';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 
 import { useParams } from 'react-router-dom';
@@ -13,11 +14,13 @@ import { useParams } from 'react-router-dom';
 const Index = () => {
   const [displayName, setDisplayName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [userGmail, setUserGmail] = useState('');
   const [userName, setUserName] = useState('');
   const [error, setError] = useState('');
   const [userStatus, setUserStatus] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const { id } = useParams();
+
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição de usuário';
@@ -26,10 +29,15 @@ const Index = () => {
   const { user, loading, error: userError, successMessage, updateUser } = UseUserManagement(id); // Usando o novo hook
 
   useEffect(() => {
+    console.log(user);
+  }, [user]);
+
+  useEffect(() => {
     if (user) {
       setDisplayName(user.displayName);
       setPhoneNumber(user.phoneNumber);
       setUserName(user.userName);
+      setUserGmail(user.userId);
       setUserStatus(user.userStatus);
       setUserEmail(user.userId);
     }
@@ -53,6 +61,7 @@ const Index = () => {
       userName,
       userStatus,
     };
+
     await updateUser(updatedData);
   };
 
@@ -119,6 +128,16 @@ const Index = () => {
           placeholder='Telefone do estabelecimento'
           value={phoneNumber}
           onChange={e => setPhoneNumber(e.target.value)}
+          autoComplete='off'
+        />
+        <CreateInput
+          aria-label='E-mail do usuário'
+          type='email'
+          name='e-mail'
+          required
+          value={userGmail}
+          placeholder='Telefone do estabelecimento'
+          onChange={e => setUserGmail(e.target.value)}
           autoComplete='off'
         />
         <ButtonForm>{loading ? 'Aguarde...' : 'Atualizar'}</ButtonForm>

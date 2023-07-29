@@ -23,6 +23,7 @@ const Index = () => {
   const toggleMenu = () => {
     setExpanded(!expanded);
   };
+
   const atualizarTelaManualmente = () => {
     this.forceUpdate();
   };
@@ -30,17 +31,12 @@ const Index = () => {
     <Header>
       <ContainerMaxWidth>
         {user ? (
-          <NavLinkLogo
-            to='/'
-            onClick={atualizarTelaManualmente}
-          >
+          <NavLinkLogo to='/' onClick={atualizarTelaManualmente}>
             <Logo src={logo} alt='logo' />
             {!!user && <UserName>{'@' + userName}</UserName>}
           </NavLinkLogo>
         ) : (
-          <NavLinkLogo
-            to='/access'
-          >
+          <NavLinkLogo to='/access'>
             <Logo src={logo} alt='logo' />
             {!!user && <UserName>{'@' + userName}</UserName>}
           </NavLinkLogo>
@@ -66,26 +62,38 @@ const Index = () => {
                 >
                   Catalog
                 </NavLinkStyled> */}
-                {(userStatus === 'funcionario' || userStatus === 'admin') && (
-                  <>
-                    <NavLinkStyled
-                      aria-label='novo post'
-                      to='/create-post'
-                      className={isActive => (isActive ? 'active' : '')}
-                      onClick={() => setExpanded(false)}
-                    >
-                      Novo Post
-                    </NavLinkStyled>
-                    <NavLinkStyled
-                      aria-label='painel de postagens'
-                      to='/dashboard'
-                      className={isActive => (isActive ? 'active' : '')}
-                      onClick={() => setExpanded(false)}
-                    >
-                      {userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
-                    </NavLinkStyled>
-                  </>
-                )}
+
+                <NavLinkStyled
+                  aria-label='painel de postagens'
+                  to='/account'
+                  className={isActive => (isActive ? 'active' : '')}
+                  onClick={() => setExpanded(false)}
+                >
+                  Account
+                </NavLinkStyled>
+
+                {userStatus === 'funcionario' ||
+                  (userStatus === 'admin' && (
+                    <>
+                      <NavLinkStyled
+                        aria-label='novo post'
+                        to='/create-post'
+                        className={isActive => (isActive ? 'active' : '')}
+                        onClick={() => setExpanded(false)}
+                      >
+                        Novo Post
+                      </NavLinkStyled>
+                      <NavLinkStyled
+                        aria-label='painel de postagens'
+                        to='/dashboard'
+                        className={isActive => (isActive ? 'active' : '')}
+                        onClick={() => setExpanded(false)}
+                      >
+                        {userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
+                      </NavLinkStyled>
+                    </>
+                  ))}
+
                 {userStatus === 'admin' && (
                   <>
                     <NavLinkStyled

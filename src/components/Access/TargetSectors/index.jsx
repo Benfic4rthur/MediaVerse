@@ -7,7 +7,7 @@ import { H2 } from '../../../pages/Access/styled';
 import { CardTargetSectors } from '../CardTargetSectors';
 import { Container, ContainerSectors } from './styled';
 
-export default function TargetSectors() {
+export function TargetSectors() {
   return (
     <>
       <H2 id='TargetSectors'>Setores Alvo</H2>

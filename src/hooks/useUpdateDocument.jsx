@@ -36,7 +36,7 @@ export const useUpdateDocument = (docCollection) => {
     checkCancelBeforeDispatch({ type: "LOADING" });
 
     try {
-      const docRef = await doc(db, docCollection, uid);
+      const docRef = doc(db, docCollection, uid);
 
       // console.log(docRef);
 

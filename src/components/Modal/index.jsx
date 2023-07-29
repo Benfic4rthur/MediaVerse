@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { LuX } from 'react-icons/lu';
-import { DialogContent, DialogOverlay, IconButton, Image, Video,ButtonActive } from './styled';
+import { DialogContent, Image, Video, ButtonActive } from './styled';
+import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 
 export const DialogDemo = ({ children, mediaURL, ...rest }) => (
   <>

@@ -27,7 +27,7 @@ if (currentHour >= 0 && currentHour < 12) {
 } else {
   message = messageBoaNoite;
 }
-export default function Footer() {
+export function Footer() {
   return (
     <>
       <FooterSyled>

@@ -21,17 +21,6 @@ export const Text = styled.p`
   max-width: 45rem;
   width: 100%;
 
-  h2 {
-    font-size: clamp(2.5rem, 5vw, 3.4rem);
-    padding-bottom: 1rem;
-  }
-
-  p {
-    font-size: 1.6rem;
-    font-size: clamp(1.4rem, 3vw, 1.8rem);
-
-    line-height: 20px;
-  }
   /*
   @media (max-width: 900px) {
     h2 {
@@ -69,4 +58,16 @@ export const ButtonLink = styled(Link)`
     transition: 0.7s;
   }
   color: white;
+`;
+
+export const Title = styled.h2`
+    font-size: clamp(2.5rem, 5vw, 3.4rem);
+    padding-bottom: 1rem;
+`;
+
+export const Description = styled.p`
+  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+
+  line-height: 20px;
 `;

@@ -29,10 +29,16 @@ export function Header() {
             smooth={true}
             offset={-80}
             duration={750}
-            tabindex='0'
+            tabIndex='0'
             title='Início'
           >
-            <img src={logo} alt='Logo' title='MediaVerse' onClick={() => setTitle('- Início')} style={{paddingTop: '5px'}}/>
+            <img
+              src={logo}
+              alt='Logo'
+              title='MediaVerse'
+              onClick={() => setTitle('- Início')}
+              style={{ paddingTop: '5px' }}
+            />
           </LogoLinkScroll>
         </div>
 
@@ -47,7 +53,7 @@ export function Header() {
               smooth={true}
               offset={-80}
               duration={750}
-              tabindex='0'
+              tabIndex='0'
               title='Início'
               onClick={() => setTitle('- Início')}
             >
@@ -59,7 +65,7 @@ export function Header() {
               smooth={true}
               offset={-80}
               duration={600}
-              tabindex='0'
+              tabIndex='0'
               title='Funcionalidades'
               onClick={() => setTitle('- Funcionalidades')}
             >
@@ -71,7 +77,7 @@ export function Header() {
               smooth={true}
               offset={-50}
               duration={1000}
-              tabindex='0'
+              tabIndex='0'
               title='Setores Alvo'
               onClick={() => setTitle('- Setores Alvo')}
             >
@@ -83,7 +89,7 @@ export function Header() {
               smooth={true}
               offset={-50}
               duration={1000}
-              tabindex='0'
+              tabIndex='0'
               title='Contatos'
               onClick={() => setTitle('- Contatos')}
             >

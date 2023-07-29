@@ -3,8 +3,6 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { LuX } from 'react-icons/lu';
 import {
   DialogContent,
-  DialogOverlay,
-  IconButton,
   ButtonActive,
   SpaceUrl,
   SpaceIconsShare,
@@ -14,6 +12,7 @@ import { AiOutlineFacebook, AiOutlineTwitter, AiOutlineWhatsApp } from 'react-ic
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
 import MessageUrl from '../MessageUrl';
 import { useState } from 'react';
+import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 
 const handleCopyUrl = () => {
   navigator.clipboard
