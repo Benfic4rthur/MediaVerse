@@ -96,7 +96,7 @@ const Index = () => {
           type='text'
           name='userName'
           required
-          placeholder='Usuário'
+          placeholder='Apelido'
           value={userName}
           onChange={e => setUserName(e.target.value)}
           autoComplete='off'

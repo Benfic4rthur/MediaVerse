@@ -72,22 +72,22 @@ const Index = () => {
       <Form onSubmit={handleSubmit}>
         <CreateInput
           Svg={LuUser}
-          aria-label='Nome proprietario'
+          aria-label='Nome do usuario'
           type='text'
           name='displayName'
           required
-          placeholder='Nome proprietário'
+          placeholder='Nome do usuario'
           value={displayName}
           onChange={e => setDisplayName(e.target.value)}
           autoComplete='off'
         />
         <CreateInput
           Svg={RxAvatar}
-          aria-label='Nome do estabelecimento'
+          aria-label='Apelido do usuario'
           type='text'
           name='userName'
           required
-          placeholder='Nome do estabelecimento'
+          placeholder='Apelido'
           value={userName}
           onChange={e => setUserName(e.target.value)}
           autoComplete='off'
@@ -126,7 +126,7 @@ const Index = () => {
           maskPlaceholder={null}
           name='celular'
           required
-          placeholder='Telefone do estabelecimento'
+          placeholder='Telefone do usuario'
           value={phoneNumber}
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'

@@ -184,22 +184,22 @@ export function Account() {
       <Form onSubmit={handleSubmit}>
         <CreateInput
           Svg={LuUser}
-          aria-label='Nome proprietario'
+          aria-label='Nome do usuário'
           type='text'
           name='displayName'
           required
-          placeholder='Nome proprietário'
+          placeholder='Nome do usuário'
           value={displayName}
           onChange={e => setDisplayName(e.target.value)}
           autoComplete='off'
         />
         <CreateInput
           Svg={RxAvatar}
-          aria-label='Nome do estabelecimento'
+          aria-label='Apelido do usuário'
           type='text'
           name='userName'
           required
-          placeholder='Nome do estabelecimento'
+          placeholder='Apelido do usuário'
           value={userName}
           onChange={e => setUserName(e.target.value)}
           autoComplete='off'
@@ -210,7 +210,7 @@ export function Account() {
           type='email'
           name='userId'
           required
-          placeholder='Telefone do estabelecimento'
+          placeholder='E-mail do usuário'
           value={userGmail}
           onChange={e => setUserGmail(e.target.value)}
           autoComplete='off'
@@ -223,7 +223,7 @@ export function Account() {
           maskPlaceholder={null}
           name='celular'
           required
-          placeholder='Telefone do estabelecimento'
+          placeholder='Telefone do usuário'
           value={phoneNumber}
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'

@@ -36,7 +36,7 @@ export const DialogCurrent = ({
           
           <DialogContent>
             <Subtitle as={Dialog.Title} className='DialogTitle'>
-              Preview da mídia
+              Confirme sua identidade:
             </Subtitle>
             <Form onSubmit={handleSubmit}>
               <CreateInput
@@ -45,7 +45,7 @@ export const DialogCurrent = ({
                 type='email'
                 name='email'
                 required
-                placeholder='Telefone do estabelecimento'
+                placeholder='E-mail'
                 value={ValueEmail}
                 onChange={e => setValueEmail?.(e.target.value)}
                 autoComplete='off'
@@ -55,7 +55,7 @@ export const DialogCurrent = ({
                 aria-label='Nova senha'
                 type='password'
                 name='password'
-                placeholder='Nova senha'
+                placeholder='Senha'
                 value={ValuePassword}
                 onChange={e => setValuePassword?.(e.target.value)}
                 autoComplete='off'

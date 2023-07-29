@@ -64,12 +64,12 @@ const Index = () => {
                 </NavLinkStyled> */}
 
                 <NavLinkStyled
-                  aria-label='painel de postagens'
+                  aria-label='Edição de Usuário'
                   to='/account'
                   className={isActive => (isActive ? 'active' : '')}
                   onClick={() => setExpanded(false)}
                 >
-                  Account
+                  Edite seu perfil
                 </NavLinkStyled>
 
                 {userStatus === 'funcionario' ||
