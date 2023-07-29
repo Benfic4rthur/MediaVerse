@@ -10,6 +10,7 @@ import { UseUserManagement } from '../../hooks/useUserEdit';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 
 import { useParams } from 'react-router-dom';
+import { Subtitle } from '../../styles/styledGlobal';
 
 const Index = () => {
   const [displayName, setDisplayName] = useState('');
@@ -26,7 +27,7 @@ const Index = () => {
     document.title = 'MediaVerse - Edição de usuário';
   }, []);
 
-  const { user, loading, error: userError, successMessage, updateUser } = UseUserManagement(id); // Usando o novo hook
+  const { user, loading, error: userError, successMessage, updateUser } = UseUserManagement(id);
 
   useEffect(() => {
     console.log(user);
@@ -67,7 +68,7 @@ const Index = () => {
 
   return (
     <ContainerForm>
-      <h1>Edição de Usuário</h1>
+      <Subtitle>Edição de Usuário</Subtitle>
       <Form onSubmit={handleSubmit}>
         <CreateInput
           Svg={LuUser}
@@ -130,7 +131,7 @@ const Index = () => {
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'
         />
-        <CreateInput
+        {/* <CreateInput
           aria-label='E-mail do usuário'
           type='email'
           name='e-mail'
@@ -139,7 +140,7 @@ const Index = () => {
           placeholder='Telefone do estabelecimento'
           onChange={e => setUserGmail(e.target.value)}
           autoComplete='off'
-        />
+        /> */}
         <ButtonForm>{loading ? 'Aguarde...' : 'Atualizar'}</ButtonForm>
         {error && <Error>{error}</Error>}
         {successMessage && (
