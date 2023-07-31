@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { LuBuilding, LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
+import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
 import { CreateInput } from '../../components/CreateInput';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 
+import { UseAuthValue } from '../../context/AuthContext';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 
@@ -20,7 +21,9 @@ const Index = () => {
   const [error, setError] = useState('');
   const [userStatus, setUserStatus] = useState('');
   const [deletedAt, setDeletedAt] = useState('');
+  const [userGender, setUserGender] = useState('');
   // const [userCnpj, setUserCnpj] = useState('');
+  const { imgUser } = UseAuthValue();
   const [loggedOutAt, setLoggedOutAt] = useState(Date.now().toString());
 
   useLayoutEffect(() => {
@@ -28,6 +31,12 @@ const Index = () => {
   }, []);
 
   const { createUser, error: authError, loading, successMessage, auth } = UseAuthentication();
+
+  const RandomImage = (arrayUrl = []) => {
+    const random = Math.ceil(Math.random() * (arrayUrl.length - 1));
+    const randomAbsolute = Math.abs(random);
+    return { url: arrayUrl?.[randomAbsolute], id: randomAbsolute };
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -37,6 +46,18 @@ const Index = () => {
     // const cleanedCnpj = userCnpj.replace(/\D/g, '');
     const userIdMail = email;
 
+    if (userStatus === '') {
+      setError('por favor selecione o tipo de usuário');
+      return;
+    }
+
+    if (userGender === '') {
+      setError('por favor selecione o sexo do usuário');
+      return;
+    }
+
+    const photoURL = RandomImage(imgUser[userGender]).url;
+
     const user = {
       displayName,
       email,
@@ -44,16 +65,13 @@ const Index = () => {
       userId: userIdMail,
       userName,
       // userCnpj: cleanedCnpj,
+      userGender,
+      photoURL,
       password,
       userStatus,
       deletedAt,
       loggedOutAt,
     };
-
-    if (userStatus === '') {
-      setError('por favor selecione o tipo de usuário');
-      return;
-    }
 
     if (password !== confirmPassword) {
       setError('As senhas não são iguais');
@@ -127,6 +145,19 @@ const Index = () => {
           <hr />
           <option value='aluno'>Aluno</option>
           <hr />
+        </CreateInput>
+        <CreateInput
+          Svg={MdOutlineAdminPanelSettings}
+          as='select'
+          required
+          value={userGender}
+          onChange={e => setUserGender(e.target.value)}
+        >
+          <option value=''>Selecionar sexo</option>
+          <hr />
+          <option value='feminino'>feminino</option>
+          <hr />
+          <option value='masculino'>masculino</option>
         </CreateInput>
         <CreateInput
           Svg={LuPhone}

@@ -15,11 +15,13 @@ import {
   NavLinkStyled,
   UserName,
 } from './styled.js';
+import { getAuth } from 'firebase/auth';
 
 const Index = () => {
   const { user, userName, userStatus, userEmail } = UseAuthValue();
   const { logout } = UseAuthentication();
   const [expanded, setExpanded] = useState(false);
+  const auth = getAuth()
   const toggleMenu = () => {
     setExpanded(!expanded);
   };
@@ -27,6 +29,7 @@ const Index = () => {
   const atualizarTelaManualmente = () => {
     this.forceUpdate();
   };
+  
   return (
     <Header>
       <ContainerMaxWidth>

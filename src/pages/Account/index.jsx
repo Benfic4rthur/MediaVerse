@@ -2,6 +2,7 @@ import {
   EmailAuthProvider,
   getAuth,
   reauthenticateWithCredential,
+  signOut,
   updateEmail,
   updatePassword,
   updateProfile,
@@ -12,8 +13,9 @@ import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
 import { CreateInput } from '../../components/CreateInput';
-import { DialogCurrent } from '../../components/ModalAccount';
 import { db } from '../../firebase/config';
+// import { UseUserManagement } from '../../hooks/useUserEdit';
+import { DialogCurrent } from '../../components/ModalAccount';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 import { ResetButton } from './styled';
@@ -41,7 +43,7 @@ export function Account() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const auth = getAuth();
-  const user = auth?.currentUser;
+  const user = auth.currentUser;
 
   useEffect(() => {
     console.log(user);
@@ -71,40 +73,40 @@ export function Account() {
 
       console.log({ DocumentData, Document }, { ...DocumentData, id: Document.id });
       setUserData({ ...DocumentData, id: IdUser });
-      setDisplayName(DocumentData?.displayName);
-      setPhoneNumber(DocumentData?.phoneNumber);
-      setUserName(DocumentData?.userName);
-      setUserGmail(DocumentData?.userId);
+      setDisplayName(DocumentData.displayName);
+      setPhoneNumber(DocumentData.phoneNumber);
+      setUserName(DocumentData.userName);
+      setUserGmail(DocumentData.userId);
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  // export const SetNewEmail = async ({ newEmail, oldEmail, password }) => {
+  // const SetNewEmail = async (user, newEmail, oldEmail, password) => {
   //   try {
-  //     const EmailAuthCredential = EmailAuthProvider.credential(oldEmail, password);
 
-  //     const UserCredential = await reauthenticateWithCredential(user, EmailAuthCredential);
+  //     const UserCredential = await signInWithEmailAndPassword(user, oldEmail, password);
 
   //     await updateEmail(UserCredential.user, newEmail);
 
-  //     return { email: newEmail, password };
+  //     return { UserCredential: UserCredential.user, email: newEmail, password };
   //   } catch (err) {
   //     console.error(err);
   //   }
   // };
 
-  // export const SetNewPassword = async ({ newPassword, oldPassword, email }) => {
+  // const SetNewPassword = async (user, newPassword, oldPassword, email) => {
   //   try {
-  //     const EmailAuthCredential = EmailAuthProvider.credential(email, oldPassword);
 
-  //     const UserCredential = await reauthenticateWithCredential(user, EmailAuthCredential);
+  //     const UserCredential = await signInWithEmailAndPassword(user, email, oldPassword);
 
   //     await updatePassword(UserCredential.user, newPassword);
+  //     console.log('lostt');
 
-  //     return { email, password: newPassword };
+  //     return { UserCredential: UserCredential.user, email, password: newPassword };
   //   } catch (err) {
   //     console.error(err);
+  //     console.log('123');
   //   }
   // };
 
@@ -125,36 +127,31 @@ export function Account() {
     setCurrentPassword('');
   };
 
+  // const { updateUser } = UseUserManagement(UserData.id);
+
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
 
-    setLoading(true);
     try {
-      if (CurrentGmail === user.email) {
+      setLoading(true);
+
+      const newValue = {
+        phoneNumber: phoneNumber,
+        userName: userName,
+        userId: userGmail,
+        displayName: displayName,
+      };
+
+      if (CurrentGmail === user?.email) {
         const EmailAuthCredential = EmailAuthProvider.credential(CurrentGmail, CurrentPassword);
 
-        // const UserCredential = await signInWithEmailAndPassword(
-        //   auth,
-        //   CurrentGmail,
-        //   CurrentPassword,
-        // );
         const UserCredential = await reauthenticateWithCredential(user, EmailAuthCredential);
 
-        const newValue = {
-          phoneNumber: phoneNumber,
-          userName: userName,
-          userId: userGmail,
-          displayName: displayName,
-        };
-
-        if (userGmail !== UserCredential?.email) {
-          await updateEmail(UserCredential.user, userGmail);
-          console.log('Email');
+        if ((phoneNumber || userName || userGmail || displayName) && UserCredential?.user?.email) {
+          await SetNewValueDocument('userInfo', UserData.id, newValue);
+          console.log('Info');
         }
-
-        await SetNewValueDocument('userInfo', UserData.id, newValue);
-        console.log('Info');
 
         if (userName !== UserData.userName) {
           await updateProfile(UserCredential.user, { displayName: userName });
@@ -165,16 +162,25 @@ export function Account() {
           await updatePassword(UserCredential.user, password);
           console.log('Password');
         }
+
+        if (userGmail !== UserCredential?.email) {
+          await updateEmail(UserCredential.user, userGmail);
+          console.log('Email');
+        }
+
+        getUserData(user?.email);
+
         ResetForm();
         setLoading(false);
       } else {
         console.log('not email');
-        setError('E-mail incorreto. Por favor, verifique e tente novamente');
-        setLoading(false);
+        throw new Error('E-mail incorreto. Por favor, verifique e tente novamente');
       }
     } catch (err) {
       console.error(err);
       setLoading(false);
+      setError(err);
+      signOut(auth);
     }
   };
 
@@ -252,7 +258,6 @@ export function Account() {
         <ResetButton type='reset' onClick={ResetForm}>
           Reset
         </ResetButton>
-
         <DialogCurrent
           ValueEmail={CurrentGmail}
           ValuePassword={CurrentPassword}

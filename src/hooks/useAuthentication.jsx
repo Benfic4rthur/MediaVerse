@@ -48,10 +48,7 @@ export const UseAuthentication = () => {
       const { user } = await createUserWithEmailAndPassword(auth, data.email, data.password); // Criar usuário
       await updateProfile(user, {
         displayName: data.displayName,
-        phoneNumber: data.phoneNumber,
-        userStatus: data.userStatus,
-        deletedAt: data.deletedAt,
-        loggedOutAt: data.loggedOutAt,
+        photoURL: data.photoURL,
       }); // Atualizar informações
 
       const newUserInfo = {
@@ -60,6 +57,8 @@ export const UseAuthentication = () => {
         userId: data.email,
         userStatus: data.userStatus,
         loggedAt: '',
+        photoURL: data.photoURL,
+        userGender: data.userGender,
         loggedOutAt: data.loggedOutAt,
         deletedAt: data.deletedAt,
         displayName: data.displayName,

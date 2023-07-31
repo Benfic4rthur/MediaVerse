@@ -9,6 +9,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { router } from './router';
 //context
 import { AuthProvider } from './context/AuthContext';
+
 //hooks
 import { UseAuthentication } from './hooks/useAuthentication';
 import { useUserInfo } from './hooks/userName';
@@ -23,27 +24,6 @@ function App() {
   const [countdown, setCountdown] = useState(3600); // 3600 segundos
   const notClientTags = 'promotional';
   const applicationTags = [
-    // 'Cadastro',
-    // 'controle',
-    // 'financeiro',
-    // 'analise',
-    // 'administrativo',
-    // 'produto',
-    // 'nfce',
-    // 'pdv',
-    // 'estoque',
-    // 'incluir',
-    // 'alterar',
-    // 'aplicativo',
-    // 'painel',
-    // 'comanda',
-    // 'emissão',
-    // 'inutilização',
-    // 'caixa',
-    // 'promoções',
-    // 'tutorial',
-    // 'pacote-contabilidade',
-    // 'aprendendo-o-sistema',
     'iso',
     'reciclagem',
     'treinamento',
@@ -52,6 +32,11 @@ function App() {
     'curso',
     notClientTags,
   ];
+
+  const imgUser = {
+    feminino: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    masculino: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+  };
 
   const usePageVisibility = () => {
     const [isVisible, setIsVisible] = useState(true);
@@ -109,7 +94,7 @@ function App() {
     onAuthStateChanged(auth, user => {
       setUser(user);
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, deletedAt]);
 
   if (loadingUser) {
@@ -121,7 +106,9 @@ function App() {
   }
 
   return (
-    <AuthProvider value={{ user, userStatus, userName, userEmail, applicationTags, notClientTags }}>
+    <AuthProvider
+      value={{ user, userStatus, userName, userEmail, applicationTags, notClientTags, imgUser }}
+    >
       <RouterProvider router={router} />
     </AuthProvider>
   );

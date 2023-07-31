@@ -38,6 +38,7 @@ export const UseUserManagement = userId => {
       // if (ademiro){
       //   throw new Error('Você não pode alterar seu nome de usuário para administrador!');
       // }
+      
       if (existingUser) {
         throw new Error('Nome de usuário já existe!');
       }
