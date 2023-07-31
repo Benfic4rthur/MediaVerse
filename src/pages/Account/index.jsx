@@ -10,6 +10,7 @@ import {
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
+import { FaVenusMars } from 'react-icons/fa';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
 import { CreateInput } from '../../components/CreateInput';
@@ -29,6 +30,9 @@ export function Account() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [CurrentGmail, setCurrentGmail] = useState('');
   const [CurrentPassword, setCurrentPassword] = useState('');
+  const [userGender, setUserGender] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [UserData, setUserData] = useState({
     deletedAt: '',
     displayName: '',
@@ -61,9 +65,8 @@ export function Account() {
       const Collection = collection(db, 'userInfo');
       const Where = where('userId', '==', email);
 
-      const querySnapshot = query(Collection, Where);
-      const { docs } = await getDocs(querySnapshot);
-      const IdUser = docs[0].id;
+      const querySnapshot = await getDocs(query(Collection, Where));
+      const IdUser = querySnapshot.docs[0].id;
 
       const docRef = doc(db, 'userInfo', IdUser);
 
@@ -77,38 +80,12 @@ export function Account() {
       setPhoneNumber(DocumentData.phoneNumber);
       setUserName(DocumentData.userName);
       setUserGmail(DocumentData.userId);
+      setUserGender(DocumentData.userGender);
+      setPhotoUrl(DocumentData.photoURL);
     } catch (error) {
       console.error(error.message);
     }
   }
-
-  // const SetNewEmail = async (user, newEmail, oldEmail, password) => {
-  //   try {
-
-  //     const UserCredential = await signInWithEmailAndPassword(user, oldEmail, password);
-
-  //     await updateEmail(UserCredential.user, newEmail);
-
-  //     return { UserCredential: UserCredential.user, email: newEmail, password };
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // const SetNewPassword = async (user, newPassword, oldPassword, email) => {
-  //   try {
-
-  //     const UserCredential = await signInWithEmailAndPassword(user, email, oldPassword);
-
-  //     await updatePassword(UserCredential.user, newPassword);
-  //     console.log('lostt');
-
-  //     return { UserCredential: UserCredential.user, email, password: newPassword };
-  //   } catch (err) {
-  //     console.error(err);
-  //     console.log('123');
-  //   }
-  // };
 
   const SetNewValueDocument = async (collectionPath = 'userInfo', collectionId, newValue) => {
     const docCollection = doc(db, collectionPath, collectionId);
@@ -121,13 +98,13 @@ export function Account() {
     setPhoneNumber(UserData.phoneNumber);
     setUserName(UserData.userName);
     setUserGmail(UserData.userId);
+    setUserGender(UserData.userGender);
+    setPhotoUrl(UserData.photoURL);
     setPassword('');
     setConfirmPassword('');
     setCurrentGmail('');
     setCurrentPassword('');
   };
-
-  // const { updateUser } = UseUserManagement(UserData.id);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -141,6 +118,8 @@ export function Account() {
         userName: userName,
         userId: userGmail,
         displayName: displayName,
+        userGender: userGender,
+        photoURL: photoUrl,
       };
 
       if (CurrentGmail === user?.email) {
@@ -183,11 +162,23 @@ export function Account() {
       signOut(auth);
     }
   };
+  useEffect(() => {
+    if (userGender === 'feminino') {
+      import(`../../assets/avatares/feminino/${photoUrl}.jpg`)
+        .then(image => setAvatar(image.default))
+        .catch(error => console.error(error));
+    } else {
+      import(`../../assets/avatares/masculino/${photoUrl}.jpg`)
+        .then(image => setAvatar(image.default))
+        .catch(error => console.error(error));
+    }
+  }, [userGender, photoUrl]);
 
   return (
     <ContainerForm>
       <Subtitle>Edição de Usuário</Subtitle>
       <Form onSubmit={handleSubmit}>
+        <img src={avatar} alt='' style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
         <CreateInput
           Svg={LuUser}
           aria-label='Nome do usuário'
@@ -234,6 +225,19 @@ export function Account() {
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'
         />
+        <CreateInput
+          Svg={FaVenusMars}
+          as='select'
+          required
+          value={userGender}
+          onChange={e => setUserGender(e.target.value)}
+        >
+          <option value=''>Selecionar sexo</option>
+          <hr />
+          <option value='feminino'>feminino</option>
+          <hr />
+          <option value='masculino'>masculino</option>
+        </CreateInput>
 
         <CreateInput
           Svg={LuLock}

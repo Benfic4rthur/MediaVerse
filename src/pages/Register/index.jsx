@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
+import { FaVenusMars } from 'react-icons/fa';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
@@ -147,7 +148,7 @@ const Index = () => {
           <hr />
         </CreateInput>
         <CreateInput
-          Svg={MdOutlineAdminPanelSettings}
+          Svg={FaVenusMars}
           as='select'
           required
           value={userGender}
@@ -167,7 +168,7 @@ const Index = () => {
           maskPlaceholder={null}
           name='celular'
           required
-          placeholder='Telefone do estabelecimento'
+          placeholder='Telefone do usuário'
           value={phoneNumber}
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'

@@ -2,6 +2,7 @@
 import { getAuth, signInWithEmailAndPassword, updateEmail } from 'firebase/auth';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuBuilding, LuPhone, LuUser, LuMail } from 'react-icons/lu';
+import { FaVenusMars } from 'react-icons/fa';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
@@ -20,6 +21,7 @@ const Index = () => {
   const [error, setError] = useState('');
   const [userStatus, setUserStatus] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [userGender, setUserGender] = useState('');
   const { id } = useParams();
 
 
@@ -41,6 +43,7 @@ const Index = () => {
       setUserGmail(user.userId);
       setUserStatus(user.userStatus);
       setUserEmail(user.userId);
+      setUserGender(user.userGender);
     }
   }, [user]);
 
@@ -61,6 +64,7 @@ const Index = () => {
       phoneNumber: cleanedPhoneNumber,
       userName,
       userStatus,
+      userGender
     };
 
     await updateUser(updatedData);
@@ -101,7 +105,7 @@ const Index = () => {
           placeholder={userEmail}
           value={userEmail}
           disabled
-          title="E-mail do usuário"
+          title="E-mail do usuário não pode ser alterado"
         />
         <CreateInput
           Svg={MdOutlineAdminPanelSettings}
@@ -117,6 +121,19 @@ const Index = () => {
           <option value='funcionario'>Funcionário</option>
           <hr />
           <option value='aluno'>Aluno</option>
+        </CreateInput>
+        <CreateInput
+          Svg={FaVenusMars}
+          as='select'
+          required
+          value={userGender}
+          onChange={e => setUserGender(e.target.value)}
+        >
+          <option value=''>Selecionar sexo</option>
+          <hr />
+          <option value='feminino'>feminino</option>
+          <hr />
+          <option value='masculino'>masculino</option>
         </CreateInput>
         <CreateInput
           Svg={LuPhone}

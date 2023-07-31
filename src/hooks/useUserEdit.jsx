@@ -49,6 +49,7 @@ export const UseUserManagement = userId => {
         phoneNumber: updatedData.phoneNumber,
         userName: updatedData.userName,
         userStatus: updatedData.userStatus,
+        userGender: updatedData.userGender,
       });
 
       setUser(updatedData);
