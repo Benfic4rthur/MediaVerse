@@ -19,7 +19,7 @@ function App() {
   const [user, setUser] = useState(undefined);
   const { auth } = UseAuthentication();
   const userEmail = user ? user.email : '';
-  const { userStatus, userName, deletedAt, userId } = useUserInfo(userEmail);
+  const { userStatus, userName, deletedAt, userId, userGender, photoURL } = useUserInfo(userEmail);
   const loadingUser = user === undefined;
   const [countdown, setCountdown] = useState(3600); // 3600 segundos
   const notClientTags = 'promotional';
@@ -107,7 +107,17 @@ function App() {
 
   return (
     <AuthProvider
-      value={{ user, userStatus, userName, userEmail, applicationTags, notClientTags, imgUser }}
+      value={{
+        user,
+        userStatus,
+        userName,
+        userEmail,
+        userGender,
+        photoURL,
+        applicationTags,
+        notClientTags,
+        imgUser,
+      }}
     >
       <RouterProvider router={router} />
     </AuthProvider>

@@ -69,7 +69,7 @@ export const Nav = styled.nav`
     z-index: 1;
     align-items: end;
     flex-direction: column;
-    padding-top: 1.95rem;
+    padding-top: 1rem;
   }
 `;
 
@@ -92,6 +92,7 @@ export const ButtonMenuExpanded = styled.button`
     color: ${({ theme }) => theme.color.fourth};
     background-color: ${({ theme }) => theme.color.third};
   }
+
 `;
 
 export const ContainerAdaptiveMenu = styled.section`
@@ -161,13 +162,14 @@ export const NavLinkStyled = styled(NavLink)`
 
 export const MobileMenuToggle = styled.button`
   font-size: 2rem;
-  padding: 0.6rem;
-  border-radius: ${({ theme }) => theme.border.radius};
+  /* padding: 0.6rem; */
+  border-radius: 50%;
+  overflow: hidden;
   background-color: ${({ theme }) => theme.color.firstOpacity};
   color: ${({ theme }) => theme.color.first};
   cursor: pointer;
   display: none;
-  margin-right: 0.5rem;
+  /* margin-right: 0.5rem; */
   transition: 0.3s background-color, 0.3s color;
 
   &:hover {
@@ -175,9 +177,8 @@ export const MobileMenuToggle = styled.button`
     background-color: ${({ theme }) => theme.color.third};
   }
 
-  display: none;
   @media (max-width: 900px) {
-    margin-right: 0.5rem;
+    /* margin-right: 0.5rem; */
     display: flex;
     z-index: 1;
   }

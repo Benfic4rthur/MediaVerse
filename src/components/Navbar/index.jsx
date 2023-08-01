@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
-import { LuLogOut, LuMenu, LuX } from 'react-icons/lu';
+import { useEffect, useState } from 'react';
+import { LuLogOut } from 'react-icons/lu';
 import logo from '../../assets/logo.png';
 import { UseAuthValue } from '../../context/AuthContext';
 import { UseAuthentication } from '../../hooks/useAuthentication';
+
+import { getAuth } from 'firebase/auth';
 import {
   ContainerAdaptiveMenu,
   ContainerMaxWidth,
@@ -15,21 +17,35 @@ import {
   NavLinkStyled,
   UserName,
 } from './styled.js';
-import { getAuth } from 'firebase/auth';
 
 const Index = () => {
-  const { user, userName, userStatus, userEmail } = UseAuthValue();
+  const { user, userName, userStatus, userEmail, userGender, photoURL } = UseAuthValue();
   const { logout } = UseAuthentication();
+  const [avatar, setAvatar] = useState('');
   const [expanded, setExpanded] = useState(false);
-  const auth = getAuth()
+  const auth = getAuth();
   const toggleMenu = () => {
     setExpanded(!expanded);
   };
 
+  useEffect(() => {
+    if (photoURL) {
+      if (userGender === 'feminino') {
+        import(`../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`)
+          .then(image => setAvatar(image.default))
+          .catch(error => console.error(error));
+      } else {
+        import(`../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`)
+          .then(image => setAvatar(image.default))
+          .catch(error => console.error(error));
+      }
+    }
+  }, [user, auth.currentUser, userGender, photoURL]);
+
   const atualizarTelaManualmente = () => {
     this.forceUpdate();
   };
-  
+
   return (
     <Header>
       <ContainerMaxWidth>
@@ -48,7 +64,12 @@ const Index = () => {
           {user && (
             <>
               <MobileMenuToggle onClick={toggleMenu}>
-                {expanded ? <LuX /> : <LuMenu />}
+                {/* {expanded ? <LuX /> : <LuMenu />} */}
+                <img
+                  src={avatar}
+                  alt=''
+                  style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                />
               </MobileMenuToggle>
               <ContainerAdaptiveMenu $expanded={expanded}>
                 {/* <NavLinkStyled

@@ -7,6 +7,10 @@ export const useUserInfo = (email) => {
   const [userStatus, setUserStatus] = useState('');
   const [deletedAt, setDeletedAt] = useState('');
   const [userId, setUserId] = useState('');
+  const [userGender, setUserGender] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
+  const [usarData, setUsarData] = useState('');
+
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -15,10 +19,14 @@ export const useUserInfo = (email) => {
         const userSnapshot = await getDocs(userQuery);
         if (!userSnapshot.empty) {
           const userData = userSnapshot.docs[0].data();
+          setUsarData(userData)
           setUserName(userData.userName);
           setUserStatus(userData.userStatus);
           setDeletedAt(userData.deletedAt);
           setUserId(userData.userId);
+          setUserGender(userData.userGender);
+          setPhotoURL(userData.photoURL);
+          console.log(userData);
         }
       } catch (error) {
         console.error('Error fetching user info:', error);
@@ -30,5 +38,5 @@ export const useUserInfo = (email) => {
     }
   }, [email]);
 
-  return { userName, userStatus, deletedAt, userId };
+  return {usarData, userName, userStatus, deletedAt, userId, userGender, photoURL };
 };

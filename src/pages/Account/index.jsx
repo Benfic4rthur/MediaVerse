@@ -9,14 +9,15 @@ import {
 } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
 import { FaVenusMars } from 'react-icons/fa';
+import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
 import { CreateInput } from '../../components/CreateInput';
 import { db } from '../../firebase/config';
 // import { UseUserManagement } from '../../hooks/useUserEdit';
 import { DialogCurrent } from '../../components/ModalAccount';
+import { DialogPhoto } from '../../components/ModalPhoto';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 import { ResetButton } from './styled';
@@ -31,7 +32,7 @@ export function Account() {
   const [CurrentGmail, setCurrentGmail] = useState('');
   const [CurrentPassword, setCurrentPassword] = useState('');
   const [userGender, setUserGender] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
   const [avatar, setAvatar] = useState('');
   const [UserData, setUserData] = useState({
     deletedAt: '',
@@ -40,6 +41,8 @@ export function Account() {
     loggedAt: '',
     loggedOutAt: '',
     phoneNumber: '',
+    photoURL: '',
+    userGender: '',
     userId: '',
     userName: '',
     userStatus: '',
@@ -81,7 +84,7 @@ export function Account() {
       setUserName(DocumentData.userName);
       setUserGmail(DocumentData.userId);
       setUserGender(DocumentData.userGender);
-      setPhotoUrl(DocumentData.photoURL);
+      setPhotoURL(DocumentData.photoURL);
     } catch (error) {
       console.error(error.message);
     }
@@ -99,7 +102,7 @@ export function Account() {
     setUserName(UserData.userName);
     setUserGmail(UserData.userId);
     setUserGender(UserData.userGender);
-    setPhotoUrl(UserData.photoURL);
+    setPhotoURL(UserData.photoURL);
     setPassword('');
     setConfirmPassword('');
     setCurrentGmail('');
@@ -119,7 +122,7 @@ export function Account() {
         userId: userGmail,
         displayName: displayName,
         userGender: userGender,
-        photoURL: photoUrl,
+        photoURL: photoURL,
       };
 
       if (CurrentGmail === user?.email) {
@@ -127,13 +130,16 @@ export function Account() {
 
         const UserCredential = await reauthenticateWithCredential(user, EmailAuthCredential);
 
-        if ((phoneNumber || userName || userGmail || displayName) && UserCredential?.user?.email) {
+        if (
+          (phoneNumber || userName || userGmail || displayName || userGender || photoURL) &&
+          UserCredential?.user?.email
+        ) {
           await SetNewValueDocument('userInfo', UserData.id, newValue);
           console.log('Info');
         }
 
-        if (userName !== UserData.userName) {
-          await updateProfile(UserCredential.user, { displayName: userName });
+        if (userName !== UserData.userName || photoURL !== UserData.photoURL) {
+          await updateProfile(UserCredential.user, { displayName: userName, photoURL });
           console.log('Name');
         }
 
@@ -151,6 +157,7 @@ export function Account() {
 
         ResetForm();
         setLoading(false);
+        window.location.reload()
       } else {
         console.log('not email');
         throw new Error('E-mail incorreto. Por favor, verifique e tente novamente');
@@ -162,23 +169,33 @@ export function Account() {
       signOut(auth);
     }
   };
+
   useEffect(() => {
-    if (userGender === 'feminino') {
-      import(`../../assets/avatares/feminino/${photoUrl}.jpg`)
-        .then(image => setAvatar(image.default))
-        .catch(error => console.error(error));
-    } else {
-      import(`../../assets/avatares/masculino/${photoUrl}.jpg`)
-        .then(image => setAvatar(image.default))
-        .catch(error => console.error(error));
+    if (photoURL) {
+      if (userGender === 'feminino') {
+        import(`../../assets/avatares/feminino/${photoURL}.jpg`)
+          .then(image => setAvatar(image.default))
+          .catch(error => console.error(error));
+      } else {
+        import(`../../assets/avatares/masculino/${photoURL}.jpg`)
+          .then(image => setAvatar(image.default))
+          .catch(error => console.error(error));
+      }
     }
-  }, [userGender, photoUrl]);
+  }, [userGender, photoURL]);
 
   return (
     <ContainerForm>
       <Subtitle>Edição de Usuário</Subtitle>
       <Form onSubmit={handleSubmit}>
-        <img src={avatar} alt='' style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+        <DialogPhoto userGender={userGender} setPhotoURL={setPhotoURL}>
+          <img
+            src={avatar}
+            alt=''
+            style={{ width: '100px', height: '100px', borderRadius: '50%' }}
+          />
+        </DialogPhoto>
+
         <CreateInput
           Svg={LuUser}
           aria-label='Nome do usuário'
