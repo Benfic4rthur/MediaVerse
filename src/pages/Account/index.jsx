@@ -77,7 +77,7 @@ export function Account() {
 
       const DocumentData = Document.data();
 
-      console.log({ DocumentData, Document }, { ...DocumentData, id: Document.id });
+      // console.log({ DocumentData, Document }, { ...DocumentData, id: Document.id });
       setUserData({ ...DocumentData, id: IdUser });
       setDisplayName(DocumentData.displayName);
       setPhoneNumber(DocumentData.phoneNumber);

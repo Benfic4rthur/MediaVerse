@@ -53,7 +53,7 @@ const Dashboard = () => {
 
     const valueAd = searchAll ? sortedPostsAd : postTags;
 
-    console.log(valueAd, posts);
+    // console.log(valueAd, posts);
 
     setFilteredPosts(userStatus === 'admin' ? valueAd : posts);
   }, [posts, postsadm, searchAll]);
