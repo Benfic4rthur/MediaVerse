@@ -105,7 +105,7 @@ const Index = () => {
           placeholder={userEmail}
           value={userEmail}
           disabled
-          title="E-mail do usuário não pode ser alterado"
+          title='E-mail do usuário não pode ser alterado'
         />
         <CreateInput
           Svg={MdOutlineAdminPanelSettings}
@@ -126,7 +126,9 @@ const Index = () => {
           Svg={FaVenusMars}
           as='select'
           required
+          disabled
           value={userGender}
+          title='Sexo do usuário não pode ser alterado'
           onChange={e => setUserGender(e.target.value)}
         >
           <option value=''>Selecionar sexo</option>

@@ -2,7 +2,6 @@ import {
   EmailAuthProvider,
   getAuth,
   reauthenticateWithCredential,
-  signOut,
   updateEmail,
   updatePassword,
   updateProfile,
@@ -18,18 +17,24 @@ import { db } from '../../firebase/config';
 // import { UseUserManagement } from '../../hooks/useUserEdit';
 import { DialogCurrent } from '../../components/ModalAccount';
 import { DialogPhoto } from '../../components/ModalPhoto';
-import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
+import {
+  ButtonForm,
+  ContainerForm,
+  Error as ErrorStyled,
+  Form,
+  Success,
+} from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 import { ResetButton } from './styled';
 
 export function Account() {
   const [displayName, setDisplayName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [userGmail, setUserGmail] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [CurrentGmail, setCurrentGmail] = useState('');
+  const [CurrentEmail, setCurrentEmail] = useState('');
   const [CurrentPassword, setCurrentPassword] = useState('');
   const [userGender, setUserGender] = useState('');
   const [photoURL, setPhotoURL] = useState('');
@@ -53,7 +58,6 @@ export function Account() {
   const user = auth.currentUser;
 
   useEffect(() => {
-    console.log(user);
     getUserData(user.email);
   }, [user]);
 
@@ -77,12 +81,11 @@ export function Account() {
 
       const DocumentData = Document.data();
 
-      console.log({ DocumentData, Document }, { ...DocumentData, id: Document.id });
       setUserData({ ...DocumentData, id: IdUser });
       setDisplayName(DocumentData.displayName);
       setPhoneNumber(DocumentData.phoneNumber);
       setUserName(DocumentData.userName);
-      setUserGmail(DocumentData.userId);
+      setUserEmail(DocumentData.userId);
       setUserGender(DocumentData.userGender);
       setPhotoURL(DocumentData.photoURL);
     } catch (error) {
@@ -100,12 +103,12 @@ export function Account() {
     setDisplayName(UserData.displayName);
     setPhoneNumber(UserData.phoneNumber);
     setUserName(UserData.userName);
-    setUserGmail(UserData.userId);
+    setUserEmail(UserData.userId);
     setUserGender(UserData.userGender);
     setPhotoURL(UserData.photoURL);
     setPassword('');
     setConfirmPassword('');
-    setCurrentGmail('');
+    setCurrentEmail('');
     setCurrentPassword('');
   };
 
@@ -113,60 +116,76 @@ export function Account() {
     e.preventDefault();
     setError('');
 
+    setLoading(true);
     try {
-      setLoading(true);
+      const docCollection = 'userInfo';
+      const userInfoQuery = query(collection(db, docCollection), where('userName', '==', userName));
+      const userIdQuery = query(collection(db, docCollection), where('userId', '==', userEmail));
+      const userInfoSnapshot = await getDocs(userInfoQuery);
+      const userIdSnapshot = await getDocs(userIdQuery);
+
+      if (!userInfoSnapshot.empty && userName !== UserData.userName) {
+        setLoading(false);
+        return setError('Nome de usuário já existe!');
+      }
+
+      if (!userIdSnapshot.empty && userEmail !== UserData.userId) {
+        setLoading(false);
+        return setError('E-mail já cadastrado!');
+      }
 
       const newValue = {
         phoneNumber: phoneNumber,
         userName: userName,
-        userId: userGmail,
+        userId: userEmail,
         displayName: displayName,
         userGender: userGender,
         photoURL: photoURL,
       };
 
-      if (CurrentGmail === user?.email) {
-        const EmailAuthCredential = EmailAuthProvider.credential(CurrentGmail, CurrentPassword);
+      if (CurrentEmail === user?.email) {
+        const EmailAuthCredential = EmailAuthProvider.credential(CurrentEmail, CurrentPassword);
 
         const UserCredential = await reauthenticateWithCredential(user, EmailAuthCredential);
 
         if (
-          (phoneNumber || userName || userGmail || displayName || userGender || photoURL) &&
+          (phoneNumber || userName || userEmail || displayName || userGender || photoURL) &&
           UserCredential?.user?.email
         ) {
           await SetNewValueDocument('userInfo', UserData.id, newValue);
-          console.log('Info');
         }
 
         if (userName !== UserData.userName || photoURL !== UserData.photoURL) {
           await updateProfile(UserCredential.user, { displayName: userName, photoURL });
-          console.log('Name');
         }
 
         if (password === confirmPassword && password !== '') {
           await updatePassword(UserCredential.user, password);
-          console.log('Password');
         }
 
-        if (userGmail !== UserCredential?.email) {
-          await updateEmail(UserCredential.user, userGmail);
-          console.log('Email');
+        if (userEmail !== UserCredential?.email) {
+          await updateEmail(UserCredential.user, userEmail);
         }
 
         getUserData(user?.email);
 
         ResetForm();
         setLoading(false);
-        window.location.reload()
+        window.location.reload();
       } else {
-        console.log('not email');
-        throw new Error('E-mail incorreto. Por favor, verifique e tente novamente');
+        setLoading(false);
+
+        return setError('E-mail incorreto. Por favor, verifique e tente novamente');
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
       setLoading(false);
-      setError(err);
-      signOut(auth);
+
+      if (error.message.includes('Password')) {
+        return setError('A senha precisa conter ao menos 6 caracteres!');
+      } else if (error.message.includes('auth/email-already-in-use')) {
+        return setError('E-mail já cadastrado!');
+      }
     }
   };
 
@@ -225,8 +244,8 @@ export function Account() {
           name='userId'
           required
           placeholder='E-mail do usuário'
-          value={userGmail}
-          onChange={e => setUserGmail(e.target.value)}
+          value={userEmail}
+          onChange={e => setUserEmail(e.target.value)}
           autoComplete='off'
         />
         <CreateInput
@@ -280,9 +299,9 @@ export function Account() {
           Reset
         </ResetButton>
         <DialogCurrent
-          ValueEmail={CurrentGmail}
+          ValueEmail={CurrentEmail}
           ValuePassword={CurrentPassword}
-          setValueEmail={setCurrentGmail}
+          setValueEmail={setCurrentEmail}
           setValuePassword={setCurrentPassword}
           formSubmitFunction={handleSubmit}
           loading={loading}
@@ -290,7 +309,7 @@ export function Account() {
           <ButtonForm type='button'>{loading ? 'Aguarde...' : 'Atualizar'}</ButtonForm>
         </DialogCurrent>
 
-        {error && <Error>{error}</Error>}
+        {error && <ErrorStyled>{error}</ErrorStyled>}
         {successMessage && (
           <Success>
             <p className='success'>{successMessage}</p>
