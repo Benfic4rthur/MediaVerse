@@ -114,6 +114,17 @@ export function Account() {
     setError('');
 
     try {
+      const docCollection = 'userInfo';
+      const userInfoQuery = query(collection(db, docCollection),where('userName', '==', e.userName));
+      const userIdQuery = query(collection(db, docCollection), where('userId', '==', e.email));
+      const userInfoSnapshot = await getDocs(userInfoQuery);
+      const userIdSnapshot = await getDocs(userIdQuery);
+      if (!userInfoSnapshot.empty) {
+        throw new Error('Nome de usuário já existe');
+      }
+      if (!userIdSnapshot.empty) {
+        throw new Error('Email já cadastrado!');
+      }
       setLoading(true);
 
       const newValue = {
@@ -135,38 +146,51 @@ export function Account() {
           UserCredential?.user?.email
         ) {
           await SetNewValueDocument('userInfo', UserData.id, newValue);
-          console.log('Info');
+          // console.log('Info');
         }
 
         if (userName !== UserData.userName || photoURL !== UserData.photoURL) {
           await updateProfile(UserCredential.user, { displayName: userName, photoURL });
-          console.log('Name');
+          // console.log('Name');
         }
 
         if (password === confirmPassword && password !== '') {
           await updatePassword(UserCredential.user, password);
-          console.log('Password');
+          // console.log('Password');
         }
 
         if (userGmail !== UserCredential?.email) {
           await updateEmail(UserCredential.user, userGmail);
-          console.log('Email');
+          // console.log('Email');
         }
 
         getUserData(user?.email);
 
         ResetForm();
         setLoading(false);
-        window.location.reload()
+        window.location.reload();
       } else {
-        console.log('not email');
+        // console.log('not email');
         throw new Error('E-mail incorreto. Por favor, verifique e tente novamente');
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
       setLoading(false);
-      setError(err);
+      setError(error);
       signOut(auth);
+      if (error.message.includes('Email já cadastrado!')) {
+        return setError('E-mail já cadastrado!');
+      }
+      if (error.message.includes('Nome de usuário já existe')) {
+        return setError('Nome de usuário já existe!');
+      }
+      if (error.message.includes('Password')) {
+        return setError('A senha precisa conter ao menos 6 caracteres!');
+      }
+
+      if (error.message.includes('auth/email-already-in-use')) {
+        return setError('E-mail já cadastrado!');
+      }
     }
   };
 
@@ -290,7 +314,7 @@ export function Account() {
           <ButtonForm type='button'>{loading ? 'Aguarde...' : 'Atualizar'}</ButtonForm>
         </DialogCurrent>
 
-        {error && <Error>{error}</Error>}
+        {error && <Error>{error.message}</Error>}
         {successMessage && (
           <Success>
             <p className='success'>{successMessage}</p>
