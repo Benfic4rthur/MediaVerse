@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { MaxWidth } from '../../styles/styledGlobal';
 
 export const Header = styled.header`
@@ -37,87 +37,113 @@ export const Logo = styled.img`
 
 export const UserName = styled.span`
   color: rgb(255, 255, 255);
-  font-size: 2.5rem;
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
   color: white;
-
   font-weight: bold;
-
-  @media (max-width: 900px) {
-    color: rgb(255, 255, 255);
-    font-size: 1.9rem;
-    color: white;
-
-    font-weight: bold;
-    margin-bottom: 0;
-  }
 `;
 
 export const Nav = styled.nav`
-  height: fit-content;
   width: fit-content;
+  height: 100%;
   position: relative;
   min-height: 100%;
   display: flex;
+  padding: 1rem 0;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     position: absolute;
     right: 0;
     top: 0;
-    width: fit-content;
-    height: fit-content;
     gap: 1rem;
     z-index: 1;
     align-items: end;
     flex-direction: column;
-    padding-top: 1rem;
   }
 `;
 
-export const ButtonMenuExpanded = styled.button`
-  font-size: 2rem;
-  padding: 0.6rem;
-  border-radius: ${({ theme }) => theme.border.radius};
-  background-color: ${({ theme }) => theme.color.firstOpacity};
-  color: ${({ theme }) => theme.color.first};
-  cursor: pointer;
-  display: none;
-  margin-right: 0.5rem;
-  transition: 0.3s background-color, 0.3s color;
-
-  @media (max-width: 900px) {
-    display: flex;
-  }
-
-  &:hover {
-    color: ${({ theme }) => theme.color.fourth};
-    background-color: ${({ theme }) => theme.color.third};
-  }
-
-`;
-
-export const ContainerAdaptiveMenu = styled.section`
+export const ContainerMenu = styled.section`
+  height: 100%;
   display: flex;
+
   gap: 1rem;
+  position: relative;
   flex-flow: row;
   width: fit-content;
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, visibility 0.1s ease;
+`;
 
-  @media (max-width: 900px) {
-    background-color: ${({ theme }) => theme.color.fifth};
+export const ContainerAdaptiveMenu = styled.div`
+  position: absolute;
+  top: 0rem;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: end;
+`;
+
+// export const Cont = styled.div`
+//   position: relative;
+//   top: 0rem;
+//   right: 0;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.6rem;
+//   align-items: end;
+
+//   @media (min-width: 1000px) {
+//     transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, visibility 0.1s ease;
+//     position: absolute;
+//     gap: 0.8rem;
+//     flex-flow: column;
+//     border-end-end-radius: ${({ theme }) => theme.border.radius};
+//     border-end-start-radius: ${({ theme }) => theme.border.radius};
+
+//     transform-origin: top right;
+//     transform: scaleY(0);
+//     visibility: hidden;
+//   }
+// `;
+
+export const RowMenu = styled.section`
+  display: flex;
+  gap: 1rem;
+  z-index: 1;
+  flex-flow: row;
+  width: fit-content;
+
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 1000px) {
     padding-bottom: 1rem;
     gap: 0.8rem;
     flex-flow: column;
     border-end-end-radius: ${({ theme }) => theme.border.radius};
     border-end-start-radius: ${({ theme }) => theme.border.radius};
 
-    width: ${props => (props.$expanded ? '24rem' : '4rem')};
-    height: ${props => (props.$expanded ? '100%' : 0)};
     transform-origin: top right;
-    transform: ${props => (props.$expanded ? 'scaleY(1)' : 'scaleY(0)')};
-    visibility: ${props => (props.$expanded ? 'visible' : 'hidden')};
+    transform: scaleY(0);
+    visibility: hidden;
   }
+`;
+
+export const Menu = styled.div`
+  width: ${props => (props.$expanded ? '24rem' : '4rem')};
+  height: ${props => (props.$expanded ? '100%' : 0)};
+  border-end-end-radius: ${({ theme }) => theme.border.radius};
+  background-color: ${({ theme }) => theme.color.fifth};
+
+  padding-bottom: 1rem;
+  display: flex;
+  gap: 0.8rem;
+  flex-flow: column;
+  border-end-start-radius: ${({ theme }) => theme.border.radius};
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, visibility 0.1s ease;
+  transform: ${props => (props.$expanded ? 'scaleY(1)' : 'scaleY(0)')};
+  transform-origin: top right;
+  visibility: ${props => (props.$expanded ? 'visible' : 'hidden')};
 `;
 
 export const NavLinkStyled = styled(NavLink)`
@@ -127,9 +153,16 @@ export const NavLinkStyled = styled(NavLink)`
   padding: 0.5rem;
   border-radius: ${({ theme }) => theme.border.radius};
   display: flex;
+  white-space: nowrap;
   justify-content: center;
   align-items: center;
   transition: 0.3s background-color, 0.3s color;
+  width: 100%;
+  padding: 1.3rem;
+  font-size: ${({ theme }) => theme.font.size.base};
+  display: flex;
+  gap: 0.5rem;
+  border-radius: 0;
 
   &.active {
     background-color: ${({ theme }) => theme.color.firstOpacity};
@@ -141,45 +174,95 @@ export const NavLinkStyled = styled(NavLink)`
     color: ${({ theme }) => theme.color.fourth};
     background-color: ${({ theme }) => theme.color.third};
   }
-
-  & span {
-    display: none;
-  }
-
-  @media (max-width: 900px) {
-    width: 100%;
-    padding: 1.3rem;
-    font-size: ${({ theme }) => theme.font.size.base};
-    display: flex;
-    gap: 0.5rem;
-    border-radius: 0;
-
-    & span {
-      display: inline;
-    }
-  }
 `;
 
-export const MobileMenuToggle = styled.button`
-  font-size: 2rem;
-  /* padding: 0.6rem; */
+const HiddenNavLink = css`
+  position: absolute;
+  transform-origin: top right;
+  transform: scaleY(0);
+  visibility: hidden;
+`;
+
+const a1 = "650px"
+const a2 = "750px"
+const a3 = "870px"
+const a4 = "1020px"
+const a5 = "1100px"
+
+export const NavLinkRowMenu = styled(NavLinkStyled)`
+  &.a1 {
+    @media (max-width: ${a1}) {
+      ${HiddenNavLink}
+    }
+  }
+  &.a2 {
+    @media (max-width: ${a2}) {
+      ${HiddenNavLink}
+    }
+  }
+  &.a3 {
+    @media (max-width: ${a3}) {
+      ${HiddenNavLink}
+    }
+  }
+  &.a4 {
+    @media (max-width: ${a4}) {
+      ${HiddenNavLink}
+    }
+  }
+  /* &.a5 {
+    @media (max-width: ${a5}) {
+      ${HiddenNavLink}
+    }
+  } */
+`;
+
+export const NavLinkMenuExpanded = styled(NavLinkStyled)`
+  &.a1 {
+    @media (min-width: ${a1}) {
+      ${HiddenNavLink}
+    }
+  }
+  &.a2 {
+    @media (min-width: ${a2}) {
+      ${HiddenNavLink}
+    }
+  }
+  &.a3 {
+    @media (min-width: ${a3}) {
+      ${HiddenNavLink}
+    }
+  }
+  &.a4 {
+    @media (min-width: ${a4}) {
+      ${HiddenNavLink}
+    }
+  }
+  /* &.a5 {
+    @media (min-width: ${a5}) {
+      ${HiddenNavLink}
+    }
+  } */
+`;
+
+export const ButtonMenuExpanded = styled.button`
+  min-height: 5rem;
+  min-width: 5rem;
   border-radius: 50%;
   overflow: hidden;
   background-color: ${({ theme }) => theme.color.firstOpacity};
   color: ${({ theme }) => theme.color.first};
   cursor: pointer;
-  display: none;
-  /* margin-right: 0.5rem; */
   transition: 0.3s background-color, 0.3s color;
+  display: flex;
+  z-index: 1;
 
   &:hover {
     color: ${({ theme }) => theme.color.fourth};
     background-color: ${({ theme }) => theme.color.third};
   }
 
-  @media (max-width: 900px) {
-    /* margin-right: 0.5rem; */
-    display: flex;
-    z-index: 1;
+  &.hidden {
+    visibility: hidden;
   }
 `;

@@ -14,7 +14,7 @@ import {
 } from './styled';
 
 export const DialogPhoto = ({ children, userGender, setPhotoURL, ...rest }) => {
-  const [Images, setImages] = useState([]);
+  const [imageURL, setImages] = useState([]);
   const { imgUser } = UseAuthValue();
 
   const [open, setOpen] = useState(false);
@@ -54,7 +54,7 @@ export const DialogPhoto = ({ children, userGender, setPhotoURL, ...rest }) => {
             </Subtitle>
 
             <ContainerButtonAvatar>
-              {Images.map((e, i) => (
+              {imageURL.map((e, i) => (
                 <ButtonAvatar
                   key={i}
                   onClick={() => {
