@@ -117,7 +117,6 @@ const Index = () => {
                     style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                   />
                 </ButtonMenuExpanded>
-
                 <ContainerAdaptiveMenu>
                   <ButtonMenuExpanded className='hidden' onClick={toggleMenu}>
                     <img
@@ -134,7 +133,7 @@ const Index = () => {
                       className={`${isActive => (isActive ? 'active' : '')}`}
                       onClick={() => setExpanded(false)}
                     >
-                      Edit User
+                      Edite seu Perfil
                     </NavLinkStyled>
                     {(userStatus === 'funcionario' || userStatus === 'admin') && (
                       <>
