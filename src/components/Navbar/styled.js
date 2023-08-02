@@ -23,6 +23,7 @@ export const NavLinkLogo = styled(NavLink)`
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.7rem;
+  z-index: 2;
   height: min-content;
   text-decoration: none;
   border-radius: ${({ theme }) => theme.border.radius};
@@ -190,6 +191,8 @@ const a4 = "1020px"
 const a5 = "1100px"
 
 export const NavLinkRowMenu = styled(NavLinkStyled)`
+  border-radius: ${({ theme }) => theme.border.radius};
+
   &.a1 {
     @media (max-width: ${a1}) {
       ${HiddenNavLink}

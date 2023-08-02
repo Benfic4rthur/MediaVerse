@@ -65,6 +65,7 @@ export const DialogPhoto = ({ children, userGender, setPhotoURL, ...rest }) => {
                   <ImageAvatar src={e?.url} alt='' />
                 </ButtonAvatar>
               ))}
+              <input type="file"  />
             </ContainerButtonAvatar>
 
             <Dialog.Close asChild>

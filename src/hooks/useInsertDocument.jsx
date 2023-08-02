@@ -1,12 +1,6 @@
-import { useState, useEffect, useReducer } from 'react';
+import { Timestamp, addDoc, collection } from 'firebase/firestore';
+import { useEffect, useReducer, useState } from 'react';
 import { db } from '../firebase/config';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
-
-const initialState = {
-  loading: null,
-  error: null,
-  successMessage: null,
-};
 
 const insertReducer = (state, action) => {
   switch (action.type) {
@@ -34,15 +28,15 @@ const insertReducer = (state, action) => {
 };
 
 export const useInsertDocument = docCollection => {
-  const [response, dispatch] = useReducer(insertReducer, initialState);
-
-  // lidando com memoryleak
   const [cancelled, setCancelled] = useState(false);
+  const [response, dispatch] = useReducer(insertReducer, {
+    loading: null,
+    error: null,
+    successMessage: null,
+  });
 
   const checkCancelBeforeDispatch = action => {
-    if (!cancelled) {
-      dispatch(action);
-    }
+    if (!cancelled) dispatch(action);
   };
 
   const insertDocument = async document => {
@@ -67,5 +61,5 @@ export const useInsertDocument = docCollection => {
     return () => setCancelled(true);
   }, []);
 
-  return {insertDocument, response};
+  return { insertDocument, response };
 };

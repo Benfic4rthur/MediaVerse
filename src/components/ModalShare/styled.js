@@ -12,7 +12,7 @@ export const DialogOverlay = styled(Overlay)`
 `;
 
 export const DialogContent = styled(DialogContentStyled)`
-  width: min(100%, 50rem);
+  width: min(95%, 50rem);
   max-height: 85vh;
 `;
 

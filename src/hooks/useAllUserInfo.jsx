@@ -13,13 +13,13 @@ export const useAllUsersInfo = (docCollection) => {
     async function loadData() {
       if (cancelled) return;
       setLoading(true);
-      const collectionRef = await collection(db, docCollection);
+      const collectionRef =  collection(db, docCollection);
       try {
         let q;
-        q = await query(
+        q =  query(
             collectionRef,
           );
-        await onSnapshot(q, querySnapshot => {
+         onSnapshot(q, querySnapshot => {
           setDocuments(
             querySnapshot.docs.map(doc => ({
               id: doc.id,

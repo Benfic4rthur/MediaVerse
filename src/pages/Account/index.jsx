@@ -17,13 +17,7 @@ import { db } from '../../firebase/config';
 // import { UseUserManagement } from '../../hooks/useUserEdit';
 import { DialogCurrent } from '../../components/ModalAccount';
 import { DialogPhoto } from '../../components/ModalPhoto';
-import {
-  ButtonForm,
-  ContainerForm,
-  Error as ErrorStyled,
-  Form,
-  Success,
-} from '../../styles/formStyled';
+import { ButtonForm, ContainerForm, Error as ErrorStyled, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 import { ResetButton } from './styled';
 
@@ -58,6 +52,7 @@ export function Account() {
   const user = auth.currentUser;
 
   useEffect(() => {
+    console.log(user);
     getUserData(user.email);
   }, [user]);
 
@@ -81,6 +76,7 @@ export function Account() {
 
       const DocumentData = Document.data();
 
+      console.log({ DocumentData, Document }, { ...DocumentData, id: Document.id });
       setUserData({ ...DocumentData, id: IdUser });
       setDisplayName(DocumentData.displayName);
       setPhoneNumber(DocumentData.phoneNumber);
@@ -123,15 +119,13 @@ export function Account() {
       const userIdQuery = query(collection(db, docCollection), where('userId', '==', userEmail));
       const userInfoSnapshot = await getDocs(userInfoQuery);
       const userIdSnapshot = await getDocs(userIdQuery);
-
+      console.log(!userInfoSnapshot.empty, userName, UserData.userName);
       if (!userInfoSnapshot.empty && userName !== UserData.userName) {
-        setLoading(false);
-        return setError('Nome de usuário já existe!');
+        throw new Error('Nome de usuário já existe');
       }
 
       if (!userIdSnapshot.empty && userEmail !== UserData.userId) {
-        setLoading(false);
-        return setError('E-mail já cadastrado!');
+        throw new Error('Email já cadastrado!');
       }
 
       const newValue = {
@@ -171,17 +165,19 @@ export function Account() {
 
         ResetForm();
         setLoading(false);
-        window.location.reload();
+        // window.location.reload();
       } else {
-        setLoading(false);
-
-        return setError('E-mail incorreto. Por favor, verifique e tente novamente');
+        // console.log('not email');
+        throw new Error('E-mail incorreto. Por favor, verifique e tente novamente');
       }
     } catch (error) {
       console.error(error);
       setLoading(false);
-
-      if (error.message.includes('Password')) {
+      if (error.message.includes('Email já cadastrado!')) {
+        return setError('E-mail já cadastrado!');
+      } else if (error.message.includes('Nome de usuário já existe')) {
+        return setError('Nome de usuário já existe!');
+      } else if (error.message.includes('Password')) {
         return setError('A senha precisa conter ao menos 6 caracteres!');
       } else if (error.message.includes('auth/email-already-in-use')) {
         return setError('E-mail já cadastrado!');
