@@ -9,7 +9,7 @@ export const useUserInfo = (email) => {
   const [userId, setUserId] = useState('');
   const [userGender, setUserGender] = useState('');
   const [photoURL, setPhotoURL] = useState('');
-  const [usarData, setUsarData] = useState('');
+  const [usarData, setUsarData] = useState({});
 
 
   useEffect(() => {
@@ -26,7 +26,6 @@ export const useUserInfo = (email) => {
           setUserId(userData.userId);
           setUserGender(userData.userGender);
           setPhotoURL(userData.photoURL);
-          console.log(userData);
         }
       } catch (error) {
         console.error('Error fetching user info:', error);

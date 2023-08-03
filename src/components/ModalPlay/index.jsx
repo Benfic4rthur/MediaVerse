@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { LuHeading1, LuX } from 'react-icons/lu';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
+import { Tag } from '../../styles/StyledPostForm';
 import { ButtonForm, Form } from '../../styles/formStyled';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { SpinerLoading, Subtitle } from '../../styles/styledGlobal';
@@ -18,17 +19,22 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   const [Loader, setLoader] = useState(false);
   const [Error, setError] = useState('');
   const [Name, setName] = useState('');
+  const [Collec, setCollec] = useState([]);
   const { insertDocument, response } = useInsertDocument('collec');
   const { userEmail } = UseAuthValue();
+  const Where = and(where('name', '==', Name), where('userId', '==', userEmail));
+  const WhereEmail = where('userId', '==', userEmail);
 
   useEffect(() => {
     const func = async () => {
-      const val = await GetCollectionValues('collec');
+      const val = await GetCollectionValues('collec', WhereEmail);
       console.log(val);
+      setCollec(val);
     };
 
     func();
-  }, []);
+  }, [RenderTag]);
+  // >>>>>>> Stashed changes
 
   const handleSubmit = async e => {
     e?.preventDefault();
@@ -37,12 +43,12 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
 
     try {
       if (Name) {
-        const Where = and(where('name', '==', Name), where('userId', '==', userEmail));
-
         const val = await GetCollectionValues('collec', Where);
 
         if (val?.length == 0) {
           await insertDocument({ name: Name, userId: userEmail });
+
+          setRenderTag(++RenderTag);
         } else {
           setError('Coleção ja existe');
         }
@@ -50,7 +56,6 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
         setError('Selecione o nome de uma coleção');
       }
 
-      setRenderTag(++RenderTag);
       setLoader(false);
       setOpen(false);
     } catch (error) {
@@ -69,6 +74,12 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
         <Dialog.Portal>
           <DialogOverlay />
           <DialogContent>
+            <div>
+              {Collec?.map(e => (
+                <Tag key={e?.id}>{e?.name}</Tag>
+              ))}
+            </div>
+
             <Subtitle as={Dialog.Title} className='DialogTitle'>
               Criar coleção
             </Subtitle>

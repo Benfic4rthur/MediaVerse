@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
+
 import { LuFileVideo, LuHeading1, LuImagePlus, LuTag, LuX } from 'react-icons/lu';
 
 import { useNavigate } from 'react-router-dom';
@@ -18,13 +19,13 @@ import {
   Tag,
   Video,
 } from '../../styles/StyledPostForm';
+import { GetCollectionValues } from '../../utils/GetCollectionValues';
 
 import { where } from 'firebase/firestore';
 import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
 import { DialogPlay } from '../../components/ModalPlay';
 import { ButtonForm, Textaria } from '../../styles/formStyled';
 import { ContainerCenter, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
-import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { generateSearchTokens } from '../../utils/generateSearchTokens';
 import { mediaUpload } from '../../utils/mediaUpload';
 import { processSelectedFile } from '../../utils/processSelectedFile';
@@ -35,8 +36,10 @@ const CreatePost = () => {
   const [progressPercent, setProgressPercent] = useState(0);
   const [body, setBody] = useState('');
   const [tags, setTags] = useState([]);
+  // const { applicationTags } = UseAuthValue();
+  // const [tagList, setTagList] = useState([]);
   const [RenderTag, setRenderTag] = useState(0);
-  const { userEmail } = UseAuthValue();
+  const { userEmail, user, usarData } = UseAuthValue();
 
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
@@ -46,7 +49,9 @@ const CreatePost = () => {
     document.title = 'MediaVerse - Novo Post';
   }, []);
 
-  const { user } = UseAuthValue();
+  useEffect(() => {
+    console.log(usarData);
+  }, []);
 
   const { insertDocument, response } = useInsertDocument('posts');
   const navigate = useNavigate();
@@ -73,10 +78,10 @@ const CreatePost = () => {
       let VideoURL = '';
 
       setProgressPercent(5);
-      mediaUpload(mediaThumb, null, async mediaURL => {
+      mediaUpload(mediaThumb, 'posts', null, async ({ mediaURL }) => {
         setProgressPercent(34);
         ThumbURL = mediaURL;
-        mediaUpload(mediaVideo, null, async mediaURL => {
+        mediaUpload(mediaVideo, 'posts', null, async ({ mediaURL }) => {
           setProgressPercent(90);
           VideoURL = mediaURL;
           await savePost(VideoURL, ThumbURL);
@@ -102,7 +107,7 @@ const CreatePost = () => {
       thumbURL: ThumbURL,
       body,
       searchTokens: generateSearchTokens(title),
-      tags: '',
+      tags,
       uid: user.uid,
       createdBy: user.displayName,
       createdOn: Date.now().toString(),
@@ -126,6 +131,11 @@ const CreatePost = () => {
   }, [RenderTag]);
 
   if (formError) return null;
+  // function EdittagList(tag, addArr, removeArr) {
+  //   const add = [...addArr, tag];
+  //   const remove = removeArr.filter(e => e !== tag);
+  //   return [add, remove];
+  // }
 
   // function EditTags(tag, addArr, removeArr) {
   //   const add = [...addArr, tag];
@@ -145,6 +155,7 @@ const CreatePost = () => {
 
   //   setTags(add);
   //   setTagsList(remove);
+
   // }
 
   return (

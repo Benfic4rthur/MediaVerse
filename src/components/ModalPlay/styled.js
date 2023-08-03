@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default */
 import { Content } from '@radix-ui/react-dialog';
 import styled from 'styled-components';
 import { Error as ErrorStyled } from '../../styles/formStyled';
