@@ -19,7 +19,8 @@ function App() {
   const [user, setUser] = useState(undefined);
   const { auth } = UseAuthentication();
   const userEmail = user ? user.email : '';
-  const { userStatus, userName, deletedAt, userId, userGender, photoURL } = useUserInfo(userEmail);
+  const { userStatus, userName, deletedAt, userId, userGender, photoURL, usarData } =
+    useUserInfo(userEmail);
   const loadingUser = user === undefined;
   const [countdown, setCountdown] = useState(3600); // 3600 segundos
   const notClientTags = 'promotional';
@@ -35,7 +36,7 @@ function App() {
 
   const imgUser = {
     feminino: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    masculino: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    masculino: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
   };
 
   const usePageVisibility = () => {
@@ -117,6 +118,7 @@ function App() {
         applicationTags,
         notClientTags,
         imgUser,
+        usarData,
       }}
     >
       <RouterProvider router={router} />
