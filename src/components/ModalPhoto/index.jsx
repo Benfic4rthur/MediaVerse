@@ -129,7 +129,7 @@ export const DialogPhoto = ({
               {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
             </ContainerProgressPercent>
 
-            <Dialog.Close asChild>
+            <Dialog.Close asChild onClick={()=>{setUserImage([])}}>
               <IconButton aria-label='Close'>
                 <LuX />
               </IconButton>
