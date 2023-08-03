@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logonavinterno.png';
 import { UseAuthValue } from '../../context/AuthContext';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 
