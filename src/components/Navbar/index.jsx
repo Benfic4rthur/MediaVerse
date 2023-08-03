@@ -42,15 +42,19 @@ const Index = () => {
   }
 
   useEffect(() => {
-    if (photoURL) {
-      if (userGender === 'feminino') {
-        import(`../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`)
-          .then(image => setAvatar(image.default))
-          .catch(error => console.error(error));
-      } else {
-        import(`../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`)
-          .then(image => setAvatar(image.default))
-          .catch(error => console.error(error));
+    if (checkUrl(photoURL)) {
+      setAvatar(photoURL);
+    } else {
+      if (photoURL) {
+        if (userGender === 'feminino') {
+          import(`../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`)
+            .then(image => setAvatar(image.default))
+            .catch(error => console.error(error));
+        } else {
+          import(`../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`)
+            .then(image => setAvatar(image.default))
+            .catch(error => console.error(error));
+        }
       }
     }
   }, [user, auth.currentUser, userGender, photoURL]);

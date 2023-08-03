@@ -20,7 +20,6 @@ import { DialogPhoto } from '../../components/ModalPhoto';
 import { ButtonForm, ContainerForm, Error as ErrorStyled, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 import { ResetButton } from './styled';
-import { mediaUpload } from '../../utils/mediaUpload';
 
 export function Account() {
   const [displayName, setDisplayName] = useState('');
@@ -32,9 +31,9 @@ export function Account() {
   const [CurrentEmail, setCurrentEmail] = useState('');
   const [CurrentPassword, setCurrentPassword] = useState('');
   const [userGender, setUserGender] = useState('');
+  const [avatarName, setAvatarName] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [avatar, setAvatar] = useState('');
-  const [avatarName, setAvatarName] = useState('');
   const [UserData, setUserData] = useState({
     deletedAt: '',
     displayName: '',
@@ -138,7 +137,7 @@ export function Account() {
         displayName: displayName,
         userGender: userGender,
         photoURL: photoURL,
-        avatarName: avatarName,
+        avatarName,
       };
 
       if (CurrentEmail === user?.email) {
@@ -169,7 +168,7 @@ export function Account() {
 
         ResetForm();
         setLoading(false);
-        // window.location.reload();
+        window.location.reload();
       } else {
         // console.log('not email');
         throw new Error('E-mail incorreto. Por favor, verifique e tente novamente');
@@ -188,30 +187,30 @@ export function Account() {
       }
     }
   };
-
-  function checkUrl(string) {
-    try {
-      new URL(string);
-      return true;
-    } catch (err) {
-      return false;
-    }
-  }
-
-  useEffect(() => {
-    if (checkUrl(photoURL)) {
-      setAvatar(photoURL);
-    } else {
-      if (userGender === 'feminino') {
-        import(`../../assets/avatares/feminino/${photoURL}.jpg`)
-          .then(image => setAvatar(image.default))
-          .catch(error => console.error(error));
-      } else {
-        import(`../../assets/avatares/masculino/${photoURL}.jpg`)
-          .then(image => setAvatar(image.default))
-          .catch(error => console.error(error));
+    function checkUrl(string) {
+      try {
+        new URL(string);
+        return true;
+      } catch (err) {
+        return false;
       }
     }
+
+  useEffect(() => {
+
+     if (checkUrl(photoURL)) {
+       setAvatar(photoURL);
+     } else {
+       if (userGender === 'feminino') {
+         import(`../../assets/avatares/feminino/${photoURL}.jpg`)
+           .then(image => setAvatar(image.default))
+           .catch(error => console.error(error));
+       } else {
+         import(`../../assets/avatares/masculino/${photoURL}.jpg`)
+           .then(image => setAvatar(image.default))
+           .catch(error => console.error(error));
+       }
+     }
   }, [userGender, photoURL]);
 
   return (
