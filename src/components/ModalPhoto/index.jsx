@@ -17,6 +17,8 @@ import {
   DialogContent,
   ImageAvatar,
 } from './styled';
+import { getAuth, updateProfile } from 'firebase/auth';
+import { SetNewValueDocument } from '../../utils/SetNewValueDocument';
 
 export const DialogPhoto = ({
   children,
@@ -24,6 +26,7 @@ export const DialogPhoto = ({
   setPhotoURL,
   setAvatarName,
   avatarName,
+  collectionId,
   ...rest
 }) => {
   const [Images, setImages] = useState([]);
@@ -31,6 +34,8 @@ export const DialogPhoto = ({
   const [open, setOpen] = useState(false);
   const [userImage, setUserImage] = useState([]);
   const [progressPercent, setProgressPercent] = useState(0);
+    const auth = getAuth();
+    const user = auth.currentUser;
 
   useEffect(() => {
     const func = async () => {
@@ -58,6 +63,7 @@ export const DialogPhoto = ({
   }
 
   async function handlePhoto() {
+
     const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
     const storage = getStorage();
     if (avatarName) {
@@ -67,9 +73,19 @@ export const DialogPhoto = ({
 
     try {
       console.log(mediaThumb);
-      mediaUpload(mediaThumb, 'avatars', setProgressPercent, ({ mediaURL, name }) => {
+      mediaUpload(mediaThumb, 'avatars', setProgressPercent, async ({ mediaURL, name }) => {
         setPhotoURL(mediaURL);
         setAvatarName(name);
+
+        const newValue = {
+          photoURL: mediaURL,
+          avatarName: name,
+        };
+
+        await SetNewValueDocument('userInfo', collectionId, newValue);
+
+        await updateProfile(user, { photoURL: mediaURL });
+
         setOpen(false);
       });
     } catch (error) {

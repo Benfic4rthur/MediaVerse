@@ -6,7 +6,7 @@ import {
   updatePassword,
   updateProfile,
 } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { FaVenusMars } from 'react-icons/fa';
 import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
@@ -20,6 +20,7 @@ import { DialogPhoto } from '../../components/ModalPhoto';
 import { ButtonForm, ContainerForm, Error as ErrorStyled, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 import { ResetButton } from './styled';
+import { SetNewValueDocument } from '../../utils/SetNewValueDocument';
 
 export function Account() {
   const [displayName, setDisplayName] = useState('');
@@ -91,19 +92,12 @@ export function Account() {
     }
   }
 
-  const SetNewValueDocument = async (collectionPath = 'userInfo', collectionId, newValue) => {
-    const docCollection = doc(db, collectionPath, collectionId);
-
-    await updateDoc(docCollection, newValue);
-  };
-
   const ResetForm = () => {
     setDisplayName(UserData.displayName);
     setPhoneNumber(UserData.phoneNumber);
     setUserName(UserData.userName);
     setUserEmail(UserData.userId);
     setUserGender(UserData.userGender);
-    setPhotoURL(UserData.photoURL);
     setPassword('');
     setConfirmPassword('');
     setCurrentEmail('');
@@ -136,8 +130,6 @@ export function Account() {
         userId: userEmail,
         displayName: displayName,
         userGender: userGender,
-        photoURL: photoURL,
-        avatarName,
       };
 
       if (CurrentEmail === user?.email) {
@@ -146,14 +138,14 @@ export function Account() {
         const UserCredential = await reauthenticateWithCredential(user, EmailAuthCredential);
 
         if (
-          (phoneNumber || userName || userEmail || displayName || userGender || photoURL) &&
+          (phoneNumber || userName || userEmail || displayName || userGender) &&
           UserCredential?.user?.email
         ) {
           await SetNewValueDocument('userInfo', UserData.id, newValue);
         }
 
-        if (userName !== UserData.userName || photoURL !== UserData.photoURL) {
-          await updateProfile(UserCredential.user, { displayName: userName, photoURL });
+        if (userName !== UserData.userName) {
+          await updateProfile(UserCredential.user, { displayName: userName });
         }
 
         if (password === confirmPassword && password !== '') {
@@ -223,6 +215,7 @@ export function Account() {
           setAvatar={setAvatar}
           setAvatarName={setAvatarName}
           avatarName={avatarName}
+          collectionId={UserData.id}
         >
           <img
             src={avatar}
