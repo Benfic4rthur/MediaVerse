@@ -15,7 +15,6 @@ import {
 import { mediaUpload } from '../../utils/mediaUpload';
 import { deleteObject, ref, getStorage } from 'firebase/storage';
 
-
   const { imgUser } = UseAuthValue();
 
   const [open, setOpen] = useState(false);
@@ -94,7 +93,7 @@ import { deleteObject, ref, getStorage } from 'firebase/storage';
                   <ImageAvatar src={e?.url} alt='' />
                 </ButtonAvatar>
               ))}
-              <input type="file"  />
+              <input type='file' />
             </ContainerButtonAvatar>
 
             <form>

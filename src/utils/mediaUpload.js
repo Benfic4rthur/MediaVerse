@@ -1,3 +1,6 @@
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { generateRandomName } from './generateRandomName';
+import { storage } from '../firebase/config';
 
 
   const randomNameThumb = generateRandomName(media.name);
