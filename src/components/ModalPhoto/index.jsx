@@ -1,19 +1,22 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useState } from 'react';
-import { LuX } from 'react-icons/lu';
+import { LuImagePlus, LuX } from 'react-icons/lu';
 
+import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { UseAuthValue } from '../../context/AuthContext';
+import { Progress } from '../../styles/StyledPostForm';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { Subtitle } from '../../styles/styledGlobal';
+import { mediaUpload } from '../../utils/mediaUpload';
+import { CustomInputTypeFile } from '../CustomInputTypeFile';
 import {
   ButtonActive,
   ButtonAvatar,
   ContainerButtonAvatar,
+  ContainerProgressPercent,
   DialogContent,
   ImageAvatar,
 } from './styled';
-import { mediaUpload } from '../../utils/mediaUpload';
-import { deleteObject, ref, getStorage } from 'firebase/storage';
 
 export const DialogPhoto = ({
   children,
@@ -25,9 +28,9 @@ export const DialogPhoto = ({
 }) => {
   const [Images, setImages] = useState([]);
   const { imgUser } = UseAuthValue();
-
   const [open, setOpen] = useState(false);
-  const [userImage, setUserImage] = useState('');
+  const [userImage, setUserImage] = useState([]);
+  const [progressPercent, setProgressPercent] = useState(0);
 
   useEffect(() => {
     const func = async () => {
@@ -49,12 +52,9 @@ export const DialogPhoto = ({
   }, [userGender]);
 
   function handleGetUserImage(event) {
-    setUserImage(URL.createObjectURL(event.target.files[0]));
-    setImages(prevState => [
-      ...prevState,
+    setUserImage([
       { url: URL.createObjectURL(event.target.files[0]), nameImage: event.target.files[0].name },
     ]);
-    console.log(Images);
   }
 
   async function handlePhoto() {
@@ -67,9 +67,10 @@ export const DialogPhoto = ({
 
     try {
       console.log(mediaThumb);
-      mediaUpload(mediaThumb, 'avatars', null, ({ mediaURL, name }) => {
+      mediaUpload(mediaThumb, 'avatars', setProgressPercent, ({ mediaURL, name }) => {
         setPhotoURL(mediaURL);
         setAvatarName(name);
+        setOpen(false);
       });
     } catch (error) {
       console.error(error);
@@ -77,7 +78,6 @@ export const DialogPhoto = ({
   }
 
   return (
-    <>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
           <ButtonActive {...rest}>{children}</ButtonActive>
@@ -102,15 +102,32 @@ export const DialogPhoto = ({
                   <ImageAvatar src={e?.url} alt='' />
                 </ButtonAvatar>
               ))}
+              <>
+                {userImage.length > 0 && (
+                  <>
+                    {userImage.map((e, i) => (
+                      <ButtonAvatar key={i} onClick={handlePhoto}>
+                        <ImageAvatar src={e?.url} alt='' />
+                      </ButtonAvatar>
+                    ))}
+                  </>
+                )}
+              </>
             </ContainerButtonAvatar>
 
-            <form>
-              <label htmlFor='img'>Selecione sua foto</label>
-              <input type='file' id='mediaThumb' accept='image/*' onChange={handleGetUserImage} />
-              <button onClick={handlePhoto} type='button'>
-                Alterar
-              </button>
-            </form>
+            <CustomInputTypeFile
+              Svg={LuImagePlus}
+              placeholder='Adicionar Avatar'
+              title='Adicionar Avatar'
+              type='file'
+              id='mediaThumb'
+              accept='image/*'
+              onChange={handleGetUserImage}
+            />
+
+            <ContainerProgressPercent>
+              {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
+            </ContainerProgressPercent>
 
             <Dialog.Close asChild>
               <IconButton aria-label='Close'>
@@ -120,6 +137,5 @@ export const DialogPhoto = ({
           </DialogContent>
         </Dialog.Portal>
       </Dialog.Root>
-    </>
   );
 };

@@ -42,3 +42,10 @@ export const ImageAvatar = styled.img`
   width: 100%;
   height: 100%;
 `;
+
+export const ContainerProgressPercent = styled.div`
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  place-items: center;
+`;

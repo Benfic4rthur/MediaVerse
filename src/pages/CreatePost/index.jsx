@@ -78,18 +78,20 @@ const CreatePost = () => {
       let VideoURL = '';
 
       setProgressPercent(5);
-      mediaUpload(mediaThumb, 'posts', null, async ({mediaURL}) => {
+      mediaUpload(mediaThumb, 'posts', null, async ({ mediaURL }) => {
         setProgressPercent(34);
         ThumbURL = mediaURL;
-        mediaUpload(mediaVideo, 'posts', null, async ({mediaURL}) => {
+        mediaUpload(mediaVideo, 'posts', null, async ({ mediaURL }) => {
           setProgressPercent(90);
           VideoURL = mediaURL;
           await savePost(VideoURL, ThumbURL);
           setProgressPercent(100);
+          setProgressPercent(0);
         });
       });
     } catch (error) {
       console.error(error);
+      setProgressPercent(0);
     }
   }
 
@@ -239,7 +241,7 @@ const CreatePost = () => {
                 </NotTags>
               )}
             </ContainerTags>
-            <DialogPlay RenderTag={RenderTag} setRenderTag={setRenderTag} >
+            <DialogPlay RenderTag={RenderTag} setRenderTag={setRenderTag}>
               <ButtonForm type='button' className='red' disabled={progressPercent > 1}>
                 Adicionar coleção
               </ButtonForm>
