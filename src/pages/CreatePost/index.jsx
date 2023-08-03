@@ -1,5 +1,6 @@
-import { useLayoutEffect, useState } from 'react';
-import { LuFileVideo, LuHeading1, LuImagePlus, LuPlus, LuTag, LuX } from 'react-icons/lu';
+import { useEffect, useLayoutEffect, useState } from 'react';
+
+import { LuFileVideo, LuHeading1, LuImagePlus, LuTag, LuX } from 'react-icons/lu';
 
 import { useNavigate } from 'react-router-dom';
 import { CreateInput } from '../../components/CreateInput';
@@ -18,26 +19,39 @@ import {
   Tag,
   Video,
 } from '../../styles/StyledPostForm';
+import { GetCollectionValues } from '../../utils/GetCollectionValues';
 
+import { where } from 'firebase/firestore';
 import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
+import { DialogPlay } from '../../components/ModalPlay';
 import { ButtonForm, Textaria } from '../../styles/formStyled';
 import { ContainerCenter, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { generateSearchTokens } from '../../utils/generateSearchTokens';
 import { mediaUpload } from '../../utils/mediaUpload';
 import { processSelectedFile } from '../../utils/processSelectedFile';
+import { ContainerRow } from './styled';
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [progressPercent, setProgressPercent] = useState(0);
   const [body, setBody] = useState('');
   const [tags, setTags] = useState([]);
-  const { applicationTags } = UseAuthValue();
-  const [tagsList, setTagsList] = useState(applicationTags);
+  // const { applicationTags } = UseAuthValue();
+  // const [tagList, setTagList] = useState([]);
+  const [RenderTag, setRenderTag] = useState(0);
+  const { userEmail, user, usarData } = UseAuthValue();
+
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
 
-  const { user } = UseAuthValue();
+  useLayoutEffect(() => {
+    document.title = 'MediaVerse - Novo Post';
+  }, []);
+
+  useEffect(() => {
+    console.log(usarData);
+  }, []);
 
   const { insertDocument, response } = useInsertDocument('posts');
   const navigate = useNavigate();
@@ -64,10 +78,10 @@ const CreatePost = () => {
       let VideoURL = '';
 
       setProgressPercent(5);
-      mediaUpload(mediaThumb, null, async mediaURL => {
+      mediaUpload(mediaThumb, 'posts', null, async ({ mediaURL }) => {
         setProgressPercent(34);
         ThumbURL = mediaURL;
-        mediaUpload(mediaVideo, null, async mediaURL => {
+        mediaUpload(mediaVideo, 'posts', null, async ({ mediaURL }) => {
           setProgressPercent(90);
           VideoURL = mediaURL;
           await savePost(VideoURL, ThumbURL);
@@ -82,8 +96,6 @@ const CreatePost = () => {
   function resetForm() {
     setTitle('');
     setBody('');
-    setTagsList(applicationTags);
-    setTags([]);
     setSelectedThumb(null);
     setSelectedVideo(null);
   }
@@ -107,31 +119,44 @@ const CreatePost = () => {
     if (Document) navigate(`/posts/${Document?.id}`);
   }
 
-  useLayoutEffect(() => {
-    document.title = 'MediaVerse - Novo Post';
-  }, []);
+  useEffect(() => {
+    const func = async () => {
+      const Where = where('userId', '==', userEmail);
+
+      const val = await GetCollectionValues('collec', Where);
+      setTags(val);
+    };
+
+    func();
+  }, [RenderTag]);
 
   if (formError) return null;
+  // function EdittagList(tag, addArr, removeArr) {
+  //   const add = [...addArr, tag];
+  //   const remove = removeArr.filter(e => e !== tag);
+  //   return [add, remove];
+  // }
 
-  function EditTags(tag, addArr, removeArr) {
-    const add = [...addArr, tag];
-    const remove = removeArr.filter(e => e !== tag);
-    return [add, remove];
-  }
+  // function EditTags(tag, addArr, removeArr) {
+  //   const add = [...addArr, tag];
+  //   const remove = removeArr.filter(e => e !== tag);
+  //   return [add, remove];
+  // }
 
-  function RemoveTagArr(tag) {
-    const [add, remove] = EditTags(tag, tagsList, tags);
+  // function RemoveTagArr(tag) {
+  //   const [add, remove] = EditTags(tag, tagsList, tags);
 
-    setTags(remove);
-    setTagsList(add);
-  }
+  //   setTags(remove);
+  //   setTagsList(add);
+  // }
 
-  function AddTagArr(tag) {
-    const [add, remove] = EditTags(tag, tags, tagsList);
+  // function AddTagArr(tag) {
+  //   const [add, remove] = EditTags(tag, tags, tagsList);
 
-    setTags(add);
-    setTagsList(remove);
-  }
+  //   setTags(add);
+  //   setTagsList(remove);
+
+  // }
 
   return (
     <ContainerCenter>
@@ -142,7 +167,7 @@ const CreatePost = () => {
           <input type='hidden' name='createdBy' value={user.displayName} />
           <CreateInput
             Svg={LuHeading1}
-            aria-label='Título'
+            aria-label='Pense em um título de fácil entendimento...'
             type='text'
             name='title'
             value={title}
@@ -197,32 +222,29 @@ const CreatePost = () => {
             required
           />
 
-          <ContainerTags>
-            {tags.length > 0 ? (
-              tags?.map((e, i) => (
-                <Tag key={i}>
-                  {e}
-                  <ButtonTag type='button' onClick={() => RemoveTagArr(e)}>
-                    <LuX />
-                  </ButtonTag>
-                </Tag>
-              ))
-            ) : (
-              <NotTags>
-                <LuTag style={{ marginBottom: '-2px', fontWeight: 'bold' }} /> Adicione Tags
-              </NotTags>
-            )}
-          </ContainerTags>
-          <ContainerTags>
-            {tagsList?.map((e, i) => (
-              <Tag key={i}>
-                {e}
-                <ButtonTag type='button' onClick={() => AddTagArr(e)}>
-                  <LuPlus />
-                </ButtonTag>
-              </Tag>
-            ))}
-          </ContainerTags>
+          <ContainerRow>
+            <ContainerTags>
+              {tags.length > 0 ? (
+                tags?.map((e, i) => (
+                  <Tag key={i}>
+                    {e?.name}
+                    <ButtonTag type='button'>
+                      <LuX />
+                    </ButtonTag>
+                  </Tag>
+                ))
+              ) : (
+                <NotTags>
+                  <LuTag style={{ marginBottom: '-2px', fontWeight: 'bold' }} /> Adicione Tags
+                </NotTags>
+              )}
+            </ContainerTags>
+            <DialogPlay RenderTag={RenderTag} setRenderTag={setRenderTag}>
+              <ButtonForm type='button' className='red' disabled={progressPercent > 1}>
+                Adicionar coleção
+              </ButtonForm>
+            </DialogPlay>
+          </ContainerRow>
           <ContainerFlex>
             <ButtonForm
               className='red'

@@ -15,15 +15,7 @@ import {
 import { mediaUpload } from '../../utils/mediaUpload';
 import { deleteObject, ref, getStorage } from 'firebase/storage';
 
-export const DialogPhoto = ({
-  children,
-  userGender,
-  setPhotoURL,
-  setAvatarName,
-  avatarName,
-  ...rest
-}) => {
-  const [Images, setImages] = useState([]);
+
   const { imgUser } = UseAuthValue();
 
   const [open, setOpen] = useState(false);
@@ -91,7 +83,7 @@ export const DialogPhoto = ({
             </Subtitle>
 
             <ContainerButtonAvatar>
-              {Images.map((e, i) => (
+              {imageURL.map((e, i) => (
                 <ButtonAvatar
                   key={i}
                   onClick={() => {
@@ -102,6 +94,7 @@ export const DialogPhoto = ({
                   <ImageAvatar src={e?.url} alt='' />
                 </ButtonAvatar>
               ))}
+              <input type="file"  />
             </ContainerButtonAvatar>
 
             <form>

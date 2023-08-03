@@ -86,11 +86,11 @@ const EditPost = () => {
         let VideoURL = '';
 
         setProgressPercent(5);
-        mediaUpload(mediaThumb, null, async mediaURL => {
+        mediaUpload(mediaThumb,"posts", null, async ({mediaURL}) => {
           setProgressPercent(34);
           ThumbURL = mediaURL;
 
-          mediaUpload(mediaVideo, null, async mediaURL => {
+          mediaUpload(mediaVideo, 'posts', null, async ({mediaURL}) => {
             setProgressPercent(90);
             VideoURL = mediaURL;
             await savePost(VideoURL, ThumbURL);
@@ -98,11 +98,11 @@ const EditPost = () => {
           });
         });
       } else if (mediaVideo) {
-        mediaUpload(mediaVideo, setProgressPercent, async mediaURL => {
+        mediaUpload(mediaVideo, 'posts', setProgressPercent, async ({mediaURL}) => {
           await savePost(mediaURL, selectedThumb);
         });
       } else if (mediaThumb) {
-        mediaUpload(mediaThumb, setProgressPercent, async mediaURL => {
+        mediaUpload(mediaThumb, 'posts', setProgressPercent, async ({mediaURL}) => {
           await savePost(selectedVideo, mediaURL);
         });
       } else {

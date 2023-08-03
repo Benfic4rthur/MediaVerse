@@ -1,8 +1,5 @@
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { generateRandomName } from './generateRandomName';
-import { storage } from '../firebase/config';
 
-export function mediaUpload(media, storageRef, setProgress = () => {}, callback = () => {}) {
+
   const randomNameThumb = generateRandomName(media.name);
   const mediaStoraThumbRef = ref(storage, `${storageRef}/${randomNameThumb}`);
   const mediaUploadTask = uploadBytesResumable(mediaStoraThumbRef, media);

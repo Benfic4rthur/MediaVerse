@@ -43,6 +43,14 @@ export const ContainerFlex = styled.div`
   }
 `;
 
+export const ContainerRow = styled.div`
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+  width: 100%;
+  gap: 1.5rem;
+`;
+
 export const ContainerForm = styled.section`
   height: fit-content;
   width: min(100%, 75rem);

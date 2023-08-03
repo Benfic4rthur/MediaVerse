@@ -1,19 +1,23 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import { LuLogOut } from 'react-icons/lu';
 import logo from '../../assets/logo.png';
 import { UseAuthValue } from '../../context/AuthContext';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 
 import { getAuth } from 'firebase/auth';
+import { LuLogOut } from 'react-icons/lu';
 import {
+  ButtonMenuExpanded,
   ContainerAdaptiveMenu,
   ContainerMaxWidth,
+  ContainerMenu,
   Header,
   Logo,
-  MobileMenuToggle,
+  Menu,
   Nav,
   NavLinkLogo,
+  NavLinkMenuExpanded,
+  NavLinkRowMenu,
   NavLinkStyled,
   UserName,
 } from './styled.js';
@@ -38,19 +42,7 @@ const Index = () => {
   }
 
   useEffect(() => {
-    if (checkUrl(photoURL)) {
-      setAvatar(photoURL);
-    } else {
-      if (photoURL) {
-        if (userGender === 'feminino') {
-          import(`../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`)
-            .then(image => setAvatar(image.default))
-            .catch(error => console.error(error));
-        } else {
-          import(`../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`)
-            .then(image => setAvatar(image.default))
-            .catch(error => console.error(error));
-        }
+
       }
     }
   }, [user, auth.currentUser, userGender, photoURL]);
@@ -76,95 +68,130 @@ const Index = () => {
         <Nav>
           {user && (
             <>
-              <MobileMenuToggle onClick={toggleMenu}>
-                {/* {expanded ? <LuX /> : <LuMenu />} */}
-                <img
-                  src={avatar}
-                  alt=''
-                  style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-                />
-              </MobileMenuToggle>
-              <ContainerAdaptiveMenu $expanded={expanded}>
-                {/* <NavLinkStyled
-                  aria-label='home'
-                  className={isActive => (isActive ? 'active' : '')}
-                  to='/'
-                >
-                  Home
-                </NavLinkStyled> */}
-                {/* <NavLinkStyled
-                  aria-label='Catálogo de postagens'
-                  className={isActive => (isActive ? 'active' : '')}
-                  to='/catalog'
-                >
-                  Catalog
-                </NavLinkStyled> */}
-
-                <NavLinkStyled
-                  aria-label='Edição de Usuário'
-                  to='/account'
-                  className={isActive => (isActive ? 'active' : '')}
-                  onClick={() => setExpanded(false)}
-                >
-                  Edite seu Perfil
-                </NavLinkStyled>
-
-                {userStatus === 'funcionario' ||
-                  (userStatus === 'admin' && (
+              <ContainerMenu>
+                <>
+                  {(userStatus === 'funcionario' || userStatus === 'admin') && (
                     <>
-                      <NavLinkStyled
+                      <NavLinkRowMenu
                         aria-label='novo post'
                         to='/create-post'
-                        className={isActive => (isActive ? 'active' : '')}
+                        className={`${isActive => (isActive ? 'active' : '')} a1`}
                         onClick={() => setExpanded(false)}
                       >
                         Novo Post
-                      </NavLinkStyled>
-                      <NavLinkStyled
+                      </NavLinkRowMenu>
+                      <NavLinkRowMenu
                         aria-label='painel de postagens'
                         to='/dashboard'
-                        className={isActive => (isActive ? 'active' : '')}
+                        className={`${isActive => (isActive ? 'active' : '')} a2`}
                         onClick={() => setExpanded(false)}
                       >
                         {userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
-                      </NavLinkStyled>
+                      </NavLinkRowMenu>
                     </>
-                  ))}
-
-                {userStatus === 'admin' && (
-                  <>
+                  )}
+                  {userStatus === 'admin' && (
+                    <>
+                      <NavLinkRowMenu
+                        aria-label='painel de usuarios'
+                        to='/userspanel'
+                        className={`${isActive => (isActive ? 'active' : '')} a3`}
+                        onClick={() => setExpanded(false)}
+                      >
+                        Painel de Usuários
+                      </NavLinkRowMenu>
+                      <NavLinkRowMenu
+                        to='/register'
+                        aria-label='pagina de cadastro'
+                        className={`${isActive => (isActive ? 'active' : '')} a4`}
+                        onClick={() => setExpanded(false)}
+                      >
+                        Cadastro de Usuário
+                      </NavLinkRowMenu>
+                    </>
+                  )}
+                </>
+                <ButtonMenuExpanded onClick={toggleMenu}>
+                  <img
+                    src={avatar}
+                    alt=''
+                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                  />
+                </ButtonMenuExpanded>
+                <ContainerAdaptiveMenu>
+                  <ButtonMenuExpanded className='hidden' onClick={toggleMenu}>
+                    <img
+                      src={avatar}
+                      alt=''
+                      style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                    />
+                  </ButtonMenuExpanded>
+                  <Menu $expanded={expanded}>
                     <NavLinkStyled
-                      aria-label='painel de usuarios'
-                      to='/userspanel'
-                      className={isActive => (isActive ? 'active' : '')}
+                      aria-label='edite seu usuario'
+                      title='edite seu usuario'
+                      to='/account'
+                      className={`${isActive => (isActive ? 'active' : '')}`}
                       onClick={() => setExpanded(false)}
                     >
-                      Painel de Usuários
+                      Edite seu Perfil
                     </NavLinkStyled>
+                    {(userStatus === 'funcionario' || userStatus === 'admin') && (
+                      <>
+                        <NavLinkMenuExpanded
+                          aria-label='novo post'
+                          to='/create-post'
+                          className={`${isActive => (isActive ? 'active' : '')} a1`}
+                          onClick={() => setExpanded(false)}
+                        >
+                          Novo Post
+                        </NavLinkMenuExpanded>
+                        <NavLinkMenuExpanded
+                          aria-label='painel de postagens'
+                          to='/dashboard'
+                          className={`${isActive => (isActive ? 'active' : '')} a2`}
+                          onClick={() => setExpanded(false)}
+                        >
+                          {userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
+                        </NavLinkMenuExpanded>
+                      </>
+                    )}
+                    {userStatus === 'admin' && (
+                      <>
+                        <NavLinkMenuExpanded
+                          aria-label='painel de usuarios'
+                          to='/userspanel'
+                          className={`${isActive => (isActive ? 'active' : '')} a3`}
+                          onClick={() => setExpanded(false)}
+                        >
+                          Painel de Usuários
+                        </NavLinkMenuExpanded>
+                        <NavLinkMenuExpanded
+                          to='/register'
+                          aria-label='pagina de cadastro'
+                          className={`${isActive => (isActive ? 'active' : '')} a4`}
+                          onClick={() => setExpanded(false)}
+                        >
+                          Cadastro de Usuário
+                        </NavLinkMenuExpanded>
+                      </>
+                    )}
                     <NavLinkStyled
-                      to='/register'
-                      aria-label='pagina de cadastro'
-                      className={isActive => (isActive ? 'active' : '')}
-                      onClick={() => setExpanded(false)}
+                      title='Sair'
+                      to='/access'
+                      aria-label='logout'
+                      onClick={() => {
+                        logout(userEmail);
+                        setExpanded(false);
+                      }}
+                      className='active'
                     >
-                      Cadastro de Usuário
+                      {expanded && <span>Sair</span>}
+                      <LuLogOut size={18} />
                     </NavLinkStyled>
-                  </>
-                )}
-                <NavLinkStyled
-                  title='Sair'
-                  to='/access'
-                  aria-label='logout'
-                  onClick={() => {
-                    logout(userEmail);
-                    setExpanded(false);
-                  }}
-                  className='active'
-                >
-                  {expanded && <span>Sair</span>}
-                  <LuLogOut size={18} />
-                </NavLinkStyled>
-              </ContainerAdaptiveMenu>
+                  </Menu>
+                </ContainerAdaptiveMenu>
+              </ContainerMenu>
             </>
           )}
         </Nav>
