@@ -32,14 +32,23 @@ const Index = () => {
     setExpanded(!expanded);
   };
 
+  function checkUrl(string) {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
   useEffect(() => {
     if (photoURL) {
       if (userGender === 'feminino') {
-        import(`../../assets/avatares/feminino/${auth.currentUser?.photoURL}.jpg`)
+        import(`../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`)
           .then(image => setAvatar(image.default))
           .catch(error => console.error(error));
       } else {
-        import(`../../assets/avatares/masculino/${auth.currentUser?.photoURL}.jpg`)
+        import(`../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`)
           .then(image => setAvatar(image.default))
           .catch(error => console.error(error));
       }

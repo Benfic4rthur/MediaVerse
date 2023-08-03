@@ -21,6 +21,7 @@ import Post from '../pages/Post';
 import Register from '../pages/Register';
 import Search from '../pages/Search';
 import Public, { publicLoader } from '../pages/Public';
+import ImageTeste from '../pages/ImageTeste';
 
 //layouts
 import { Layout } from '../layouts/Layout';
@@ -59,6 +60,7 @@ export const router = createBrowserRouter(
             loader={catalogLoader}
             action={catalogAction}
           />
+          <Route path='/image-teste' element={<ImageTeste />} />
           <Route path='/account' element={<Account />} />
           <Route path='/Learning/:id' element={<Learning />} />
           {/* <Route path='/search' element={<Search />} /> */}

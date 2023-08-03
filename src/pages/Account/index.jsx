@@ -20,6 +20,7 @@ import { DialogPhoto } from '../../components/ModalPhoto';
 import { ButtonForm, ContainerForm, Error as ErrorStyled, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 import { ResetButton } from './styled';
+import { mediaUpload } from '../../utils/mediaUpload';
 
 export function Account() {
   const [displayName, setDisplayName] = useState('');
@@ -33,6 +34,7 @@ export function Account() {
   const [userGender, setUserGender] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [avatar, setAvatar] = useState('');
+  const [avatarName, setAvatarName] = useState('');
   const [UserData, setUserData] = useState({
     deletedAt: '',
     displayName: '',
@@ -84,6 +86,7 @@ export function Account() {
       setUserEmail(DocumentData.userId);
       setUserGender(DocumentData.userGender);
       setPhotoURL(DocumentData.photoURL);
+      setAvatarName(DocumentData.avatarName);
     } catch (error) {
       console.error(error.message);
     }
@@ -135,6 +138,7 @@ export function Account() {
         displayName: displayName,
         userGender: userGender,
         photoURL: photoURL,
+        avatarName: avatarName,
       };
 
       if (CurrentEmail === user?.email) {
@@ -185,8 +189,19 @@ export function Account() {
     }
   };
 
+  function checkUrl(string) {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
   useEffect(() => {
-    if (photoURL) {
+    if (checkUrl(photoURL)) {
+      setAvatar(photoURL);
+    } else {
       if (userGender === 'feminino') {
         import(`../../assets/avatares/feminino/${photoURL}.jpg`)
           .then(image => setAvatar(image.default))
@@ -203,7 +218,13 @@ export function Account() {
     <ContainerForm>
       <Subtitle>Edição de Usuário</Subtitle>
       <Form onSubmit={handleSubmit}>
-        <DialogPhoto userGender={userGender} setPhotoURL={setPhotoURL}>
+        <DialogPhoto
+          userGender={userGender}
+          setPhotoURL={setPhotoURL}
+          setAvatar={setAvatar}
+          setAvatarName={setAvatarName}
+          avatarName={avatarName}
+        >
           <img
             src={avatar}
             alt=''

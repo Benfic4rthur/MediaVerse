@@ -12,15 +12,18 @@ import {
   DialogContent,
   ImageAvatar,
 } from './styled';
+import { mediaUpload } from '../../utils/mediaUpload';
+import { deleteObject, ref, getStorage } from 'firebase/storage';
 
 export const DialogPhoto = ({ children, userGender, setPhotoURL, ...rest }) => {
-  const [imageURL, setImages] = useState([]);
+  const [Images, setImages] = useState([]);
   const { imgUser } = UseAuthValue();
 
   const [open, setOpen] = useState(false);
+  const [userImage, setUserImage] = useState('');
 
   useEffect(() => {
-    const func =  async () => {
+    const func = async () => {
       const ImageUrl = await Promise.all(
         imgUser?.[userGender]?.map(async image => {
           try {
@@ -31,13 +34,40 @@ export const DialogPhoto = ({ children, userGender, setPhotoURL, ...rest }) => {
             console.log(error);
           }
         }),
-      )
+      );
       setImages(ImageUrl.filter(e => e?.url));
     };
 
-    func()
-
+    func();
   }, [userGender]);
+
+  function handleGetUserImage(event) {
+    setUserImage(URL.createObjectURL(event.target.files[0]));
+    setImages(prevState => [
+      ...prevState,
+      { url: URL.createObjectURL(event.target.files[0]), nameImage: event.target.files[0].name },
+    ]);
+    console.log(Images);
+  }
+
+  async function handlePhoto() {
+    const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
+    const storage = getStorage();
+    if (avatarName) {
+      const desertRef = ref(storage, `avatars/${avatarName}`);
+      await deleteObject(desertRef);
+    }
+
+    try {
+      console.log(mediaThumb);
+      mediaUpload(mediaThumb, 'avatars', null, ({ mediaURL, name }) => {
+        setPhotoURL(mediaURL);
+        setAvatarName(name);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -65,8 +95,16 @@ export const DialogPhoto = ({ children, userGender, setPhotoURL, ...rest }) => {
                   <ImageAvatar src={e?.url} alt='' />
                 </ButtonAvatar>
               ))}
-              <input type="file"  />
+              <input type='file' />
             </ContainerButtonAvatar>
+
+            <form>
+              <label htmlFor='img'>Selecione sua foto</label>
+              <input type='file' id='mediaThumb' accept='image/*' onChange={handleGetUserImage} />
+              <button onClick={handlePhoto} type='button'>
+                Alterar
+              </button>
+            </form>
 
             <Dialog.Close asChild>
               <IconButton aria-label='Close'>
