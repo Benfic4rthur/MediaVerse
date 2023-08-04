@@ -3,7 +3,7 @@ import { keyframes } from 'styled-components';
 export const theme = {
   color: {
     first: 'hsl(228, 76%, 63%)',
-    firstHover: 'hsl(228, 56%, 40%)',
+    firstHover: 'hsl(211, 100%, 30%)',
     firstNav: 'hsl(211, 100%, 24%)',
     firstBg: 'hsl(228, 18%, 22%)',
     firstOpacity: 'hsl(228, 11%, 7%, 0.3)',

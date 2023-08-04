@@ -33,7 +33,7 @@ export const DialogButtonForm = styled(ButtonForm)`
   background-color: ${({ theme }) => theme.color.firstNav};
 
   &:hover {
-    background-color: ${({ theme }) => theme.color.firstNav};
+    background-color: ${({ theme }) => theme.color.firstHover};
   }
 `;
 
