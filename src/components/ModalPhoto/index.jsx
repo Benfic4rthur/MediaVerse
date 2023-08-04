@@ -97,7 +97,7 @@ export const DialogPhoto = ({
   async function handleAvatar({ e }) {
     const storageRef = 'avatars';
 
-    await deleteStorageMedia(storageRef, e.avatarName);
+    await deleteStorageMedia(storageRef, avatarName);
 
     try {
       const newValue = {
