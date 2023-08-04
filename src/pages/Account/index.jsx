@@ -173,15 +173,19 @@ export function Account() {
             setAvatar(AvatarURL.default);
           }
         } catch (error) {
-          import(`../../assets/notAvatar.jpg`)
-            .then(image => setAvatar(image.default))
-            .catch(error => console.error(error));
+          if (error.code === 'ENOENT') {
+            import(`../../assets/notAvatar.jpg`)
+          .then(image => setAvatar(image.default))
+          .catch(error => console.error(error));
+          } else {
+            console.error(error);
+          }
         }
       }
     };
 
     func();
-  }, [userGender, photoURL]);
+  }, [userGender,photoURL]); 
 
   return (
     <ContainerForm>
@@ -256,9 +260,9 @@ export function Account() {
           onChange={e => setUserGender(e.target.value)}
         >
           <option value=''>Selecionar sexo</option>
-          <hr />
+
           <option value='feminino'>feminino</option>
-          <hr />
+
           <option value='masculino'>masculino</option>
         </CreateInput>
 

@@ -74,19 +74,20 @@ export const DialogPhoto = ({
       mediaUpload(mediaThumb, storageRef, setProgressPercent, async ({ mediaURL, name }) => {
         setProgressPercent(0);
 
-         await Promise.all([
-           SetNewValueDocument('userInfo', collectionId, {
-             photoURL: mediaURL,
-             avatarName: name,
-           }),
-           updateProfile(user, { photoURL: mediaURL }),
-         ]);
+        await Promise.all([
+          SetNewValueDocument('userInfo', collectionId, {
+            photoURL: mediaURL,
+            avatarName: name,
+          }),
+          updateProfile(user, { photoURL: mediaURL }),
+        ]);
 
         setProgressPercent(0);
         setReload(e => ++e);
 
         setPhotoURL(mediaURL);
         setAvatarName(name);
+        setOpen(false);
       });
     } catch (error) {
       console.error(error);
@@ -94,15 +95,12 @@ export const DialogPhoto = ({
   }
 
   async function handleAvatar({ e }) {
-
-
     const storageRef = 'avatars';
 
     await deleteStorageMedia(storageRef, e.avatarName);
 
     try {
-
-       const newValue = {
+      const newValue = {
         photoURL: e?.nameImage,
         avatarName: '',
       };
@@ -112,7 +110,7 @@ export const DialogPhoto = ({
         SetNewValueDocument('userInfo', collectionId, newValue),
         updateProfile(user, { photoURL: e?.nameImage }),
       ]);
-      
+
       setReload(e => ++e);
       setOpen(false);
     } catch (error) {
