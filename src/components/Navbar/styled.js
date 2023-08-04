@@ -44,8 +44,8 @@ export const UserName = styled.span`
   color: transparent;
   font-family: ${({ theme }) => theme.font.family.second};
   /* font-size: clamp(1.9rem, 3vw, 2.8rem); */
-  font-size: 1.7rem;
-  margin-top: 1.1rem;
+  font-size: 1.77rem;
+  margin-top: 1.2rem;
   margin-left: -.5rem;
 `;
 
