@@ -93,6 +93,30 @@ export const DialogPhoto = ({
     }
   }
 
+  async function handleAvatar({e}) {
+    const storage = getStorage();
+    if (avatarName) {
+      const desertRef = ref(storage, `avatars/${avatarName}`);
+      await deleteObject(desertRef);
+    }
+
+    try {
+          const newValue = {
+          photoURL: e?.nameImage,
+          avatarName: "",
+        };
+
+        await SetNewValueDocument('userInfo', collectionId, newValue);
+
+        await updateProfile(user, { photoURL: "" });
+
+        setOpen(false);
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handleBackdropClick = (event) => {
     // Verifica se o clique foi diretamente no fundo e não dentro do modal
     if (event.target === event.currentTarget) {
@@ -120,10 +144,7 @@ export const DialogPhoto = ({
             {Images.map((e, i) => (
               <ButtonAvatar
                 key={i}
-                onClick={() => {
-                  setPhotoURL(e?.nameImage);
-                  setOpen(false);
-                }}
+                onClick={() => {handleAvatar({e})}}
               >
                 <ImageAvatar src={e?.url} alt='' />
               </ButtonAvatar>
