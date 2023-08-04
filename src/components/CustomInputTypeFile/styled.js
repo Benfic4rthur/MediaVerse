@@ -10,16 +10,17 @@ export const Label = styled.label`
   overflow: hidden;
   display: block;
 
-  & > span {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+`;
 
-  & > input {
-    opacity: 0;
-    position: absolute;
-    visibility: hidden;
-  }
+export const InputHidden = styled.input`
+  opacity: 0;
+  position: absolute;
+  visibility: hidden;
+`;
+
+export const InputPlaceholder = styled.span`
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;

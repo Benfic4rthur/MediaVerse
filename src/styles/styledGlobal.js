@@ -54,12 +54,12 @@ export const CreatePostButton = styled.a`
   text-decoration: none;
   color: ${({ theme }) => theme.color.fourth};
   white-space: nowrap;
-  font-size: ${({ theme }) => theme.font.size.base};
+  font-size: ${({ theme }) => theme.font.size.sm};
 
   border-radius: ${({ theme }) => theme.border.radius};
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow};
 
-  padding: 1.5rem 3rem;
+  padding: 1.2rem 2rem;
 
   display: flex;
   justify-content: center;

@@ -67,21 +67,24 @@ const CreatePost = () => {
     }
 
     try {
-      let ThumbURL = '';
-      let VideoURL = '';
-
       setProgressPercent(5);
-      mediaUpload(mediaThumb, 'posts', null, async ({ mediaURL }) => {
-        setProgressPercent(34);
-        ThumbURL = mediaURL;
-        mediaUpload(mediaVideo, 'posts', null, async ({ mediaURL }) => {
-          setProgressPercent(90);
-          VideoURL = mediaURL;
-          await savePost(VideoURL, ThumbURL);
-          setProgressPercent(100);
-          setProgressPercent(0);
-        });
-      });
+      mediaUpload(
+        mediaThumb,
+        null,
+        'posts',
+        null,
+        async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+          setProgressPercent(34);
+          mediaUpload(mediaVideo, null, 'posts', null, async ({ mediaURL, name: mediaURLName }) => {
+            setProgressPercent(90);
+
+            await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
+
+            setProgressPercent(100);
+            setProgressPercent(0);
+          });
+        },
+      );
     } catch (error) {
       console.error(error);
       setProgressPercent(0);
@@ -95,11 +98,13 @@ const CreatePost = () => {
     setSelectedVideo(null);
   }
 
-  async function savePost(VideoURL, ThumbURL) {
+  async function savePost(mediaURL = '', thumbURL = '', mediaURLName = '', thumbURLName = '') {
     const post = {
       title,
-      mediaURL: VideoURL,
-      thumbURL: ThumbURL,
+      mediaURL,
+      thumbURL,
+      mediaURLName,
+      thumbURLName,
       body,
       searchTokens: generateSearchTokens(title),
       colecs : selectedColec,

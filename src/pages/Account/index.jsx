@@ -50,7 +50,6 @@ export function Account() {
   const user = auth.currentUser;
 
   useEffect(() => {
-    console.log(user);
     setDisplayName(userData.displayName);
     setPhoneNumber(userData.phoneNumber);
     setUserName(userData.userName);
@@ -185,7 +184,7 @@ export function Account() {
     };
 
     func();
-  }, [userGender,photoURL]); 
+  }, [userGender,photoURL]);
 
   return (
     <ContainerForm>

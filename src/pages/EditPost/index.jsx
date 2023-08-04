@@ -86,27 +86,35 @@ const EditPost = () => {
 
         mediaUpload(
           mediaThumb,
+          null,
           'posts',
           null,
           async ({ mediaURL: thumbURL, name: thumbURLName }) => {
             setProgressPercent(34);
             await deleteStorageMedia('posts', post?.thumbURLName);
 
-            mediaUpload(mediaVideo, 'posts', null, async ({ mediaURL, name: mediaURLName }) => {
-              setProgressPercent(85);
-              await deleteStorageMedia('posts', post?.mediaURLName);
+            mediaUpload(
+              mediaVideo,
+              null,
+              'posts',
+              null,
+              async ({ mediaURL, name: mediaURLName }) => {
+                setProgressPercent(85);
+                await deleteStorageMedia('posts', post?.mediaURLName);
 
-              setProgressPercent(90);
-              await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
+                setProgressPercent(90);
+                await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
 
-              setProgressPercent(100);
-              setProgressPercent(0);
-            });
+                setProgressPercent(100);
+                setProgressPercent(0);
+              },
+            );
           },
         );
       } else if (mediaVideo) {
         mediaUpload(
           mediaVideo,
+          null,
           'posts',
           setProgressPercent,
           async ({ mediaURL, name: mediaURLName }) => {
@@ -119,6 +127,7 @@ const EditPost = () => {
       } else if (mediaThumb) {
         mediaUpload(
           mediaThumb,
+          null,
           'posts',
           setProgressPercent,
           async ({ mediaURL: thumbURL, name: thumbURLName }) => {
@@ -150,8 +159,8 @@ const EditPost = () => {
       title,
       mediaURL,
       thumbURL,
-      thumbURLName,
       mediaURLName,
+      thumbURLName,
       body,
       searchTokens: generateSearchTokens(title),
       tags,

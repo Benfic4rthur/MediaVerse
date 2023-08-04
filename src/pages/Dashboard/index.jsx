@@ -45,9 +45,9 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    const sortedPostsAd = postsadm?.filter(post => !post.tags.includes('promotional'));
+    const sortedPostsAd = postsadm?.filter(post => !post?.colecs?.includes('promotional'));
 
-    const postTags = postsadm?.filter(post => post.tags.includes('promotional'));
+    const postTags = postsadm?.filter(post => post?.colecs?.includes('promotional'));
 
     const valueAd = searchAll ? sortedPostsAd : postTags;
 

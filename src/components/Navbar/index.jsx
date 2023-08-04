@@ -44,29 +44,57 @@ const Index = () => {
   }
 
   useEffect(() => {
-    const func = async () => {
-      if (checkUrl(userData.photoURL)) {
-        setAvatar(userData.photoURL);
-      } else {
-        try {
-          if (userData.userGender === 'feminino') {
-            const AvatarURL = await import(
-              `../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`
-            );
-            setAvatar(AvatarURL.default);
-          } else {
-            const AvatarURL = await import(
-              `../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`
-            );
-            setAvatar(AvatarURL.default);
-          }
-        } catch (error) {
-          import(`../../assets/notAvatar.jpg`)
-            .then(image => setAvatar(image.default))
-            .catch(error => console.error(error));
-        }
-      }
-    };
+    // const func = async () => {
+    //   if (checkUrl(userData.photoURL)) {
+    //     setAvatar(userData.photoURL);
+    //   } else {
+    //     try {
+    //       if (userData.userGender === 'feminino') {
+    //         const AvatarURL = await import(
+    //           `../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`
+    //         );
+    //         setAvatar(AvatarURL.default);
+    //       } else {
+    //         const AvatarURL = await import(
+    //           `../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`
+    //         );
+    //         setAvatar(AvatarURL.default);
+    //       }
+    //     } catch (error) {
+    //       import(`../../assets/notAvatar.jpg`)
+    //         .then(image => setAvatar(image.default))
+    //         .catch(error => console.error(error));
+    //     }
+    //   }
+    // };
+
+     const func = async () => {
+       if (checkUrl(userData.photoURL)) {
+         setAvatar(userData.photoURL);
+       } else {
+         try {
+           if (userData.userGender === 'feminino') {
+             const AvatarURL = await import(
+               `../../assets/avatares/feminino/${userData.photoURL}.jpg`
+             );
+             setAvatar(AvatarURL.default);
+           } else {
+             const AvatarURL = await import(
+               `../../assets/avatares/masculino/${userData.photoURL}.jpg`
+             );
+             setAvatar(AvatarURL.default);
+           }
+         } catch (error) {
+           if (error.code === 'ENOENT') {
+             import(`../../assets/notAvatar.jpg`)
+               .then(image => setAvatar(image.default))
+               .catch(error => console.error(error));
+           } else {
+             console.error(error);
+           }
+         }
+       }
+     };
 
     func();
   }, [user, auth.currentUser, userData.userGender, userData.photoURL]);

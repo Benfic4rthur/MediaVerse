@@ -30,7 +30,7 @@ export const DialogPhoto = ({
   collectionId,
   ...rest
 }) => {
-  const { imgUser, setReload } = UseAuthValue();
+  const { imgUser, setReload, userData } = UseAuthValue();
   const [Images, setImages] = useState([]);
   const [open, setOpen] = useState(false);
   const [userImage, setUserImage] = useState([]);
@@ -71,24 +71,30 @@ export const DialogPhoto = ({
     await deleteStorageMedia(storageRef, avatarName);
 
     try {
-      mediaUpload(mediaThumb, storageRef, setProgressPercent, async ({ mediaURL, name }) => {
-        setProgressPercent(0);
+      mediaUpload(
+        mediaThumb,
+        userData.userName,
+        storageRef,
+        setProgressPercent,
+        async ({ mediaURL, name }) => {
+          setProgressPercent(0);
 
-        await Promise.all([
-          SetNewValueDocument('userInfo', collectionId, {
-            photoURL: mediaURL,
-            avatarName: name,
-          }),
-          updateProfile(user, { photoURL: mediaURL }),
-        ]);
+          await Promise.all([
+            SetNewValueDocument('userInfo', collectionId, {
+              photoURL: mediaURL,
+              avatarName: name,
+            }),
+            updateProfile(user, { photoURL: mediaURL }),
+          ]);
 
-        setProgressPercent(0);
-        setReload(e => ++e);
+          setProgressPercent(0);
+          setReload(e => ++e);
 
-        setPhotoURL(mediaURL);
-        setAvatarName(name);
-        setOpen(false);
-      });
+          setPhotoURL(mediaURL);
+          setAvatarName(name);
+          setOpen(false);
+        },
+      );
     } catch (error) {
       console.error(error);
     }

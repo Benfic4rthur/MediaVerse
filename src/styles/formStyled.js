@@ -13,15 +13,15 @@ export const InputError = styled.label`
 
 export const ContainerForm = styled.section`
   height: fit-content;
-  width: min(100%, 36rem);
+  width: min(100%, 34.5rem);
   display: flex;
-  padding: 3rem 2rem min(15vh, 4rem);
+  padding: 2.5rem 1.8rem min(15vh, 3rem);
   box-shadow: 0.2rem 0.2rem 0.5rem ${({ theme }) => theme.color.shadow};
 
   margin: 0 auto;
   justify-content: center;
   flex-direction: column;
-  gap: 2.3rem;
+  gap: 1.8rem;
   border-radius: ${({ theme }) => theme.border.radius};
   background-color: ${({ theme }) => theme.color.thirdOpacity03};
 
@@ -37,6 +37,8 @@ export const Form = styled.form`
   align-items: center;
   gap: 1.4rem;
 `;
+
+
 
 const TextariaOrInputStyled = css`
   background-color: ${({ theme }) => theme.color.fourthHover};
@@ -56,9 +58,10 @@ const TextariaOrInputStyled = css`
 `;
 
 export const InputStyled = css`
-  min-width: 100%;
-  height: 5.2rem;
   ${TextariaOrInputStyled}
+  min-width: 100%;
+  height: fit-content;
+  padding: ${props => (props.$svg ? '1.2rem 1.2rem 1.2rem 4.4rem' : '1.2rem')};
 `;
 
 export const Input = styled.input`
@@ -69,10 +72,23 @@ export const Input = styled.input`
   ${props => props.style}
 `;
 
+export const ContainerSvg = styled.div`
+  position: absolute;
+  left: 1.2rem;
+  z-index: 1;
+  top: 50%;
+  height: ${({ theme }) => theme.sizeSVG / 10}rem;
+  width: ${({ theme }) => theme.sizeSVG / 10}rem;
+  transform: translateY(-50%);
+`;
+
+export const SvgStyled = styled.svg``;
+
+
 export const Textaria = styled.textarea`
   width: 100%;
   height: 20rem;
-  padding: 1.6rem;
+  padding: 1.2rem;
 
   ${TextariaOrInputStyled}
 
@@ -94,7 +110,7 @@ export const ButtonForm = styled.button`
   width: 100%;
   font-weight: ${({ theme }) => theme.font.weight.bold};
   border: none;
-  padding: 1.5rem 2rem;
+  padding: 1.2rem 1.8rem;
   font-size: 1.6rem;
   transition: 300ms color, 300ms background-color;
 

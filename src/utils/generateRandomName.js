@@ -3,3 +3,4 @@ export const generateRandomName = fileName => {
   const extension = fileName.split('.').pop();
   return `${randomSuffix}.${extension}`;
 };
+

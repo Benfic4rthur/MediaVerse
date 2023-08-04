@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Container, ContainerSvg, SvgStyled } from '../CreateInput/styled';
-import { Label } from './styled';
+import { Container } from '../CreateInput/styled';
+import { InputHidden, InputPlaceholder, Label } from './styled';
+import { ContainerSvg, SvgStyled } from '../../styles/formStyled';
 
 const sizeSVG = 20;
 
@@ -36,13 +37,13 @@ export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', onCha
         htmlFor={id ? id : state}
         tabIndex='0'
         title={Placeholder ? Placeholder : 'Nenhum arquivo escolhido'}
-        style={{
-          padding: Svg ? '1.6rem 1.6rem 1.6rem 5.2rem' : '1.6rem',
-        }}
+        $svg={Svg}
         onKeyDown={handleLabelKeyDown}
       >
-        <span aria-hidden={true}>{Placeholder ? Placeholder : 'Nenhum arquivo escolhido'}</span>
-        <input
+        <InputPlaceholder aria-hidden={true}>
+          {Placeholder ? Placeholder : 'Nenhum arquivo escolhido'}
+        </InputPlaceholder>
+        <InputHidden
           type='file'
           ref={fileInputRef}
           onChange={e => {

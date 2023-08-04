@@ -1,5 +1,5 @@
-import { Input } from '../../styles/formStyled';
-import { Container, ContainerSvg, SvgStyled } from './styled';
+import { ContainerSvg, Input, SvgStyled } from '../../styles/formStyled';
+import { Container } from './styled';
 
 const sizeSVG = 20;
 
@@ -11,7 +11,7 @@ export function CreateInput({ Svg = '', ...rest }) {
           <SvgStyled as={Svg} size={sizeSVG} />
         </ContainerSvg>
       )}
-      <Input {...rest} style={{ padding: Svg ? '0.6rem 0.6rem 0.6rem 5.2rem' : '1.6rem' }} />
+      <Input {...rest} $svg={Svg} />
     </Container>
   );
 }

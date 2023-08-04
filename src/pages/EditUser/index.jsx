@@ -32,10 +32,6 @@ const Index = () => {
   const { user, loading, error: userError, successMessage, updateUser } = UseUserManagement(id);
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
-
-  useEffect(() => {
     if (user) {
       setDisplayName(user.displayName);
       setPhoneNumber(user.phoneNumber);
