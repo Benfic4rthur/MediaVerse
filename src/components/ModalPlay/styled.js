@@ -41,3 +41,19 @@ export const Error = styled(ErrorStyled)`
   width: fit-content;
   margin: 0 auto;
 `;
+export const Tag = styled.div`
+  background-color: ${({ theme }) => theme.color.third};
+  border-radius: ${({ theme }) => theme.border.radius};
+  color: ${({ theme }) => theme.color.first};
+  border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};
+  font-family: ${({ theme }) => theme.font.family.primary};
+  line-height: ${({ theme }) => theme.font.lineHeight};
+  font-size: ${({ theme }) => theme.font.size.sm};
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: .9rem;
+  justify-content: space-between;
+  height: 4rem;
+  margin-bottom: .5rem;
+`;

@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
-import { useState } from 'react';
-import { LuHeading1, LuX } from 'react-icons/lu';
+import { useState, useEffect } from 'react';
+import { LuHeading1, LuX, LuTrash, LuEdit } from 'react-icons/lu';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
 import { ButtonForm, Form } from '../../styles/formStyled';
@@ -10,29 +10,29 @@ import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { CreateInput } from '../CreateInput';
-import { ButtonActive, DialogContent, Error as ErrorStyled } from './styled';
+import { ButtonActive, Tag, DialogContent, Error as ErrorStyled } from './styled';
 
 export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, ...rest }) => {
   const [open, setOpen] = useState(false);
   const [Loader, setLoader] = useState(false);
   const [Error, setError] = useState('');
   const [Name, setName] = useState('');
-  // const [Collec, setCollec] = useState([]);
+  const [Collec, setCollec] = useState([]);
   const { insertDocument, response } = useInsertDocument('collec');
   const { userData } = UseAuthValue();
   const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
-  // const WhereEmail = where('userId', '==', userData.userId);
+  const WhereEmail = where('userId', '==', userData.userId);
 
-  // useEffect(() => {
-  //   const func = async () => {
-  //     const val = await GetCollectionValues('collec', WhereEmail);
-  //     // console.log(val);
-  //     setCollec(val);
-  //   };
+  useEffect(() => {
+    const func = async () => {
+      const val = await GetCollectionValues('collec', WhereEmail);
+      // console.log(val);
+      setCollec(val);
+    };
 
-  //   func();
-  // }, [RenderTag]);
-  // // >>>>>>> Stashed changes
+    func();
+  }, [RenderTag]);
+  // >>>>>>> Stashed changes
 
   const handleSubmit = async e => {
     e?.preventDefault();
@@ -73,11 +73,21 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
         <Dialog.Portal>
           <DialogOverlay />
           <DialogContent>
-            {/* <div>
+            <div>
               {Collec?.map(e => (
-                <Tag key={e?.id}>{e?.name}</Tag>
+                <div key={e?.id}>
+                  <Tag>
+                    {e?.name}
+                    <button onClick={() => e.id}>
+                      <LuEdit style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
+                    </button>
+                    <button onClick={() => e.id}>
+                      <LuTrash style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
+                    </button>
+                  </Tag>
+                </div>
               ))}
-            </div> */}
+            </div>
 
             <Subtitle as={Dialog.Title} className='DialogTitle'>
               Criar coleção

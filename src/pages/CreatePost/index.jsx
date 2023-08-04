@@ -92,6 +92,7 @@ const CreatePost = () => {
   function resetForm() {
     setTitle('');
     setBody('');
+    setSelectedColec('');
     setSelectedThumb(null);
     setSelectedVideo(null);
   }
@@ -202,6 +203,7 @@ const CreatePost = () => {
               onChange={handleColecChange}
             >
               <option value=''>Selecione uma Coleção</option>
+              <hr />
               {colecs.map((e, i) => (
                 <option key={i} value={e?.name}>
                   {e?.name}
