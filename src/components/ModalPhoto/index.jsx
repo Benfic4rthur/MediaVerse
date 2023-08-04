@@ -81,19 +81,19 @@ export const DialogPhoto = ({
           photoURL: mediaURL,
           avatarName: name,
         };
-
-        await SetNewValueDocument('userInfo', collectionId, newValue);
-
-        await updateProfile(user, { photoURL: mediaURL });
-
+        await Promise.all([
+          SetNewValueDocument('userInfo', collectionId, newValue),
+          updateProfile(user, { photoURL: mediaURL }),
+        ]);
         setOpen(false);
+        setProgressPercent(0);
       });
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function handleAvatar({e}) {
+  async function handleAvatar({ e }) {
     const storage = getStorage();
     if (avatarName) {
       const desertRef = ref(storage, `avatars/${avatarName}`);
@@ -101,23 +101,22 @@ export const DialogPhoto = ({
     }
 
     try {
-          const newValue = {
-          photoURL: e?.nameImage,
-          avatarName: "",
-        };
-
-        await SetNewValueDocument('userInfo', collectionId, newValue);
-
-        await updateProfile(user, { photoURL: "" });
-
-        setOpen(false);
-      
+      const newValue = {
+        photoURL: e?.nameImage,
+        avatarName: '',
+      };
+      setPhotoURL(e?.nameImage);
+      await Promise.all([
+        SetNewValueDocument('userInfo', collectionId, newValue),
+        updateProfile(user, { photoURL: e?.nameImage }),
+      ]);
+      setOpen(false);
     } catch (error) {
       console.error(error);
     }
   }
 
-  const handleBackdropClick = (event) => {
+  const handleBackdropClick = event => {
     // Verifica se o clique foi diretamente no fundo e não dentro do modal
     if (event.target === event.currentTarget) {
       setOpen(true);
@@ -127,67 +126,69 @@ export const DialogPhoto = ({
 
   return (
     <>
-      {open && <Backdrop onClick={handleBackdropClick} />}  
+      {open && <Backdrop onClick={handleBackdropClick} />}
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
           <ButtonActive {...rest}>{children}</ButtonActive>
         </Dialog.Trigger>
         <Dialog.Portal>
-        <DialogOverlay />
+          <DialogOverlay />
 
-        <DialogContent>
-          <Subtitle as={Dialog.Title} className='DialogTitle'>
-            Escolha seu Avatar:
-          </Subtitle>
+          <DialogContent>
+            <Subtitle as={Dialog.Title} className='DialogTitle'>
+              Escolha seu Avatar:
+            </Subtitle>
 
-          <ContainerButtonAvatar>
-            {Images.map((e, i) => (
-              <ButtonAvatar
-                key={i}
-                onClick={() => {handleAvatar({e})}}
-              >
-                <ImageAvatar src={e?.url} alt='' />
-              </ButtonAvatar>
-            ))}
-            <>
-              {userImage.length > 0 && (
-                <>
-                  {userImage.map((e, i) => (
-                    <ButtonAvatar key={i} onClick={handlePhoto}>
-                      <ImageAvatar src={e?.url} alt='' />
-                    </ButtonAvatar>
-                  ))}
-                </>
-              )}
-            </>
-          </ContainerButtonAvatar>
+            <ContainerButtonAvatar>
+              {Images.map((e, i) => (
+                <ButtonAvatar
+                  key={i}
+                  onClick={() => {
+                    handleAvatar({ e });
+                  }}
+                >
+                  <ImageAvatar src={e?.url} alt='' />
+                </ButtonAvatar>
+              ))}
+              <>
+                {userImage.length > 0 && (
+                  <>
+                    {userImage.map((e, i) => (
+                      <ButtonAvatar key={i} onClick={handlePhoto}>
+                        <ImageAvatar src={e?.url} alt='' />
+                      </ButtonAvatar>
+                    ))}
+                  </>
+                )}
+              </>
+            </ContainerButtonAvatar>
 
-          <CustomInputTypeFile
-            Svg={LuImagePlus}
-            placeholder='Adicione um avatar e aguarde o carregamento...'
-            title='Adicionar Avatar'
-            type='file'
-            id='mediaThumb'
-            accept='image/*'
-            onChange={handleGetUserImage}
-          />
+            <CustomInputTypeFile
+              Svg={LuImagePlus}
+              placeholder='Adicione um avatar e aguarde o carregamento...'
+              title='Adicionar Avatar'
+              type='file'
+              id='mediaThumb'
+              accept='image/*'
+              onChange={handleGetUserImage}
+            />
 
-          <ContainerProgressPercent>
-            {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
-          </ContainerProgressPercent>
+            <ContainerProgressPercent>
+              {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
+            </ContainerProgressPercent>
 
-          <Dialog.Close
-            asChild
-            onClick={() => {
-              setUserImage([]);
-            }}
-            title='Fechar'
-          >
-            <IconButton aria-label='Close'>
-              <LuX />
-            </IconButton>
-          </Dialog.Close>
-        </DialogContent>
+            <Dialog.Close
+              asChild
+              onClick={() => {
+                setUserImage([]);
+              }}
+              title='Fechar'
+            >
+              <IconButton aria-label='Close'>
+                <LuX />
+              </IconButton>
+            </Dialog.Close>
+          </DialogContent>
         </Dialog.Portal>
       </Dialog.Root>
     </>
