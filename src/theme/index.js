@@ -36,7 +36,7 @@ export const theme = {
     },
     lineHeight: '150%',
     family: {
-      second: '"AmpleSoft Pro", serif',
+      second: '"Spacetron", serif',
       primary: '"Roboto", sans-serif',
     },
     weight: {
