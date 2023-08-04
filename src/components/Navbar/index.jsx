@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import logo from '../../assets/logonavinterno.png';
+import logo from '../../assets/logo.png';
 import { UseAuthValue } from '../../context/AuthContext';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 
@@ -70,7 +70,6 @@ const Index = () => {
     func();
   }, [user, auth.currentUser, userData.userGender, userData.photoURL]);
 
-
   return (
     <Header>
       <ContainerMaxWidth>
@@ -82,12 +81,12 @@ const Index = () => {
             }}
           >
             <Logo src={logo} alt='logo' />
-            {!!user && <UserName>{'/' + userData.userName}</UserName>}
+            {!!user && <UserName>{' ' + userData.userName}</UserName>}
           </NavLinkLogo>
         ) : (
           <NavLinkLogo to='/access'>
             <Logo src={logo} alt='logo' />
-            {!!user && <UserName>{'/' + userData.userName}</UserName>}
+            {!!user && <UserName>{' ' + userData.userName}</UserName>}
           </NavLinkLogo>
         )}
         <Nav>

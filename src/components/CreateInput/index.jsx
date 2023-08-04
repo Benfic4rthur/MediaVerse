@@ -11,7 +11,7 @@ export function CreateInput({ Svg = '', ...rest }) {
           <SvgStyled as={Svg} size={sizeSVG} />
         </ContainerSvg>
       )}
-      <Input {...rest} style={{ padding: Svg ? '1.6rem 1.6rem 1.6rem 5.2rem' : '1.6rem' }} />
+      <Input {...rest} style={{ padding: Svg ? '0.6rem 0.6rem 0.6rem 5.2rem' : '1.6rem' }} />
     </Container>
   );
 }

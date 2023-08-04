@@ -46,7 +46,6 @@ export const UserName = styled.span`
   /* font-size: clamp(1.9rem, 3vw, 2.8rem); */
   font-size: 1.77rem;
   margin-top: 1.2rem;
-  margin-left: -.5rem;
 `;
 
 export const Nav = styled.nav`
@@ -190,11 +189,11 @@ const HiddenNavLink = css`
   visibility: hidden;
 `;
 
-const a1 = "660px"
-const a2 = "750px"
-const a3 = "870px"
-const a4 = "1020px"
-const a5 = "1100px"
+const a1 = '660px';
+const a2 = '750px';
+const a3 = '870px';
+const a4 = '1020px';
+const a5 = '1100px';
 
 export const NavLinkRowMenu = styled(NavLinkStyled)`
   border-radius: ${({ theme }) => theme.border.radius};

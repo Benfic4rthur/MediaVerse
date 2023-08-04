@@ -108,7 +108,7 @@ const animate = keyframes`
 export const ContainerPost = styled.a`
   animation: ${animate} 0.5s ease-in-out;
   height: fit-content;
-  width: min(100%, 45.5rem);
+  width: min(100%, 40rem);
   padding: 2rem 2rem;
   display: flex;
   flex-direction: column;
