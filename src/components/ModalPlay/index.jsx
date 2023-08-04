@@ -1,17 +1,15 @@
 /* eslint-disable import/no-unresolved */
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { LuHeading1, LuX } from 'react-icons/lu';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
-import { Tag } from '../../styles/StyledPostForm';
 import { ButtonForm, Form } from '../../styles/formStyled';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { CreateInput } from '../CreateInput';
-import MessageUrl from '../MessageUrl';
 import { ButtonActive, DialogContent, Error as ErrorStyled } from './styled';
 
 export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, ...rest }) => {
@@ -19,22 +17,22 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   const [Loader, setLoader] = useState(false);
   const [Error, setError] = useState('');
   const [Name, setName] = useState('');
-  const [Collec, setCollec] = useState([]);
+  // const [Collec, setCollec] = useState([]);
   const { insertDocument, response } = useInsertDocument('collec');
   const { userData } = UseAuthValue();
   const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
-  const WhereEmail = where('userId', '==', userData.userId);
+  // const WhereEmail = where('userId', '==', userData.userId);
 
-  useEffect(() => {
-    const func = async () => {
-      const val = await GetCollectionValues('collec', WhereEmail);
-      // console.log(val);
-      setCollec(val);
-    };
+  // useEffect(() => {
+  //   const func = async () => {
+  //     const val = await GetCollectionValues('collec', WhereEmail);
+  //     // console.log(val);
+  //     setCollec(val);
+  //   };
 
-    func();
-  }, [RenderTag]);
-  // >>>>>>> Stashed changes
+  //   func();
+  // }, [RenderTag]);
+  // // >>>>>>> Stashed changes
 
   const handleSubmit = async e => {
     e?.preventDefault();
@@ -49,6 +47,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
           await insertDocument({ name: Name, userId: userData.userId });
 
           setRenderTag(++RenderTag);
+          setOpen(false);
         } else {
           setError('Coleção ja existe');
         }
@@ -67,18 +66,18 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
 
   return (
     <>
-      <Dialog.Root>
+      <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
           <ButtonActive {...rest}>{children}</ButtonActive>
         </Dialog.Trigger>
         <Dialog.Portal>
           <DialogOverlay />
           <DialogContent>
-            <div>
+            {/* <div>
               {Collec?.map(e => (
                 <Tag key={e?.id}>{e?.name}</Tag>
               ))}
-            </div>
+            </div> */}
 
             <Subtitle as={Dialog.Title} className='DialogTitle'>
               Criar coleção
@@ -111,7 +110,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
           </DialogContent>
         </Dialog.Portal>
       </Dialog.Root>
-      <MessageUrl open={open} setOpen={setOpen} />
+      {/* <MessageUrl open={open} setOpen={setOpen} /> */}
     </>
   );
 };

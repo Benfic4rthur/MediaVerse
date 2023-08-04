@@ -1,26 +1,20 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-
-import { LuFileVideo, LuHeading1, LuImagePlus, LuTag, LuX } from 'react-icons/lu';
-
+import { LuFileVideo, LuHeading1, LuImagePlus} from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 import { CreateInput } from '../../components/CreateInput';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
 import {
-  ButtonTag,
   ContainerFlex,
   ContainerForm,
   ContainerTags,
   ContainerVideo,
   Error,
   Form,
-  NotTags,
   Progress,
-  Tag,
   Video,
 } from '../../styles/StyledPostForm';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
-
 import { where } from 'firebase/firestore';
 import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
 import { DialogPlay } from '../../components/ModalPlay';
@@ -35,9 +29,8 @@ const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [progressPercent, setProgressPercent] = useState(0);
   const [body, setBody] = useState('');
-  const [tags, setTags] = useState([]);
-  // const [tagList, setTagList] = useState([]);
-  const [RenderTag, setRenderTag] = useState(0);
+  const [colecs, setColecs] = useState([]);
+  const [selectedColec, setSelectedColec] = useState(''); // Novo estado para tag selecionada
   const { user, userData } = UseAuthValue();
 
   const [formError, setFormError] = useState('');
@@ -50,6 +43,11 @@ const CreatePost = () => {
 
   const { insertDocument, response } = useInsertDocument('posts');
   const navigate = useNavigate();
+
+  const handleColecChange = (event) => {
+    setSelectedColec(event.target.value);
+  };
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -104,7 +102,7 @@ const CreatePost = () => {
       thumbURL: ThumbURL,
       body,
       searchTokens: generateSearchTokens(title),
-      tags,
+      colecs : selectedColec,
       uid: user.uid,
       createdBy: user.displayName,
       createdOn: Date.now().toString(),
@@ -121,39 +119,13 @@ const CreatePost = () => {
       const Where = where('userId', '==', userData.userId);
 
       const val = await GetCollectionValues('collec', Where);
-      setTags(val);
+      setColecs(val);
     };
 
     func();
-  }, [RenderTag]);
+  }, [selectedColec]); // Atualize para monitorar selectedTag ao invés de RenderTag
 
   if (formError) return null;
-  // function EdittagList(tag, addArr, removeArr) {
-  //   const add = [...addArr, tag];
-  //   const remove = removeArr.filter(e => e !== tag);
-  //   return [add, remove];
-  // }
-
-  // function EditTags(tag, addArr, removeArr) {
-  //   const add = [...addArr, tag];
-  //   const remove = removeArr.filter(e => e !== tag);
-  //   return [add, remove];
-  // }
-
-  // function RemoveTagArr(tag) {
-  //   const [add, remove] = EditTags(tag, tagsList, tags);
-
-  //   setTags(remove);
-  //   setTagsList(add);
-  // }
-
-  // function AddTagArr(tag) {
-  //   const [add, remove] = EditTags(tag, tags, tagsList);
-
-  //   setTags(add);
-  //   setTagsList(remove);
-
-  // }
 
   return (
     <ContainerCenter>
@@ -221,22 +193,16 @@ const CreatePost = () => {
 
           <ContainerRow>
             <ContainerTags>
-              {tags.length > 0 ? (
-                tags?.map((e, i) => (
-                  <Tag key={i}>
+              <select value={selectedColec} onChange={handleColecChange}>
+                <option value=''>Selecione uma Coleção</option>
+                {colecs.map((e, i) => (
+                  <option key={i} value={e?.name}>
                     {e?.name}
-                    <ButtonTag type='button'>
-                      <LuX />
-                    </ButtonTag>
-                  </Tag>
-                ))
-              ) : (
-                <NotTags>
-                  <LuTag style={{ marginBottom: '-2px', fontWeight: 'bold' }} /> Adicione Tags
-                </NotTags>
-              )}
+                  </option>
+                ))}
+              </select>
             </ContainerTags>
-            <DialogPlay RenderTag={RenderTag} setRenderTag={setRenderTag}>
+            <DialogPlay RenderTag={selectedColec} setRenderTag={setSelectedColec}>
               <ButtonForm type='button' className='red' disabled={progressPercent > 1}>
                 Adicionar coleção
               </ButtonForm>
