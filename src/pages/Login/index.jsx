@@ -20,8 +20,9 @@ const Login = () => {
       email,
       password,
     };
+    // eslint-disable-next-line no-unused-vars
     const res = await login(user);
-    console.log(res);
+    // console.log(res);
     redirect('/');
   };
   useEffect(() => {

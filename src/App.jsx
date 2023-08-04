@@ -81,7 +81,7 @@ function App() {
   useEffect(() => {
     const func = async (email) => {
       const data = await fetchUserInfo(email);
-      console.log(data)
+      // console.log(data)
       setUserData(data);
     };
 

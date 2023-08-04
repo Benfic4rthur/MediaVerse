@@ -28,7 +28,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   useEffect(() => {
     const func = async () => {
       const val = await GetCollectionValues('collec', WhereEmail);
-      console.log(val);
+      // console.log(val);
       setCollec(val);
     };
 
