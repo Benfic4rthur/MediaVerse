@@ -6,7 +6,7 @@ import {
   updatePassword,
   updateProfile,
 } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { FaVenusMars } from 'react-icons/fa';
 import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
@@ -17,12 +17,20 @@ import { db } from '../../firebase/config';
 // import { UseUserManagement } from '../../hooks/useUserEdit';
 import { DialogCurrent } from '../../components/ModalAccount';
 import { DialogPhoto } from '../../components/ModalPhoto';
-import { ButtonForm, ContainerForm, Error as ErrorStyled, Form, Success } from '../../styles/formStyled';
+import { UseAuthValue } from '../../context/AuthContext';
+import {
+  ButtonForm,
+  ContainerForm,
+  Error as ErrorStyled,
+  Form,
+  Success,
+} from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
-import { ResetButton } from './styled';
 import { SetNewValueDocument } from '../../utils/SetNewValueDocument';
+import { ResetButton } from './styled';
 
 export function Account() {
+  const { userData, setReload } = UseAuthValue();
   const [displayName, setDisplayName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -35,28 +43,22 @@ export function Account() {
   const [avatarName, setAvatarName] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [avatar, setAvatar] = useState('');
-  const [UserData, setUserData] = useState({
-    deletedAt: '',
-    displayName: '',
-    id: '',
-    loggedAt: '',
-    loggedOutAt: '',
-    phoneNumber: '',
-    photoURL: '',
-    userGender: '',
-    userId: '',
-    userName: '',
-    userStatus: '',
-  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
   const auth = getAuth();
   const user = auth.currentUser;
 
   useEffect(() => {
     console.log(user);
-    getUserData(user.email);
-  }, [user]);
+    setDisplayName(userData.displayName);
+    setPhoneNumber(userData.phoneNumber);
+    setUserName(userData.userName);
+    setUserEmail(userData.userId);
+    setUserGender(userData.userGender);
+    setPhotoURL(userData.photoURL);
+    setAvatarName(userData.avatarName);
+  }, [userData]);
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição de usuário';
@@ -64,40 +66,12 @@ export function Account() {
 
   const successMessage = '';
 
-  async function getUserData(email) {
-    try {
-      const Collection = collection(db, 'userInfo');
-      const Where = where('userId', '==', email);
-
-      const querySnapshot = await getDocs(query(Collection, Where));
-      const IdUser = querySnapshot.docs[0].id;
-
-      const docRef = doc(db, 'userInfo', IdUser);
-
-      const Document = await getDoc(docRef);
-
-      const DocumentData = Document.data();
-
-      console.log({ DocumentData, Document }, { ...DocumentData, id: Document.id });
-      setUserData({ ...DocumentData, id: IdUser });
-      setDisplayName(DocumentData.displayName);
-      setPhoneNumber(DocumentData.phoneNumber);
-      setUserName(DocumentData.userName);
-      setUserEmail(DocumentData.userId);
-      setUserGender(DocumentData.userGender);
-      setPhotoURL(DocumentData.photoURL);
-      setAvatarName(DocumentData.avatarName);
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-
   const ResetForm = () => {
-    setDisplayName(UserData.displayName);
-    setPhoneNumber(UserData.phoneNumber);
-    setUserName(UserData.userName);
-    setUserEmail(UserData.userId);
-    setUserGender(UserData.userGender);
+    setDisplayName(userData.displayName);
+    setPhoneNumber(userData.phoneNumber);
+    setUserName(userData.userName);
+    setUserEmail(userData.userId);
+    setUserGender(userData.userGender);
     setPassword('');
     setConfirmPassword('');
     setCurrentEmail('');
@@ -115,12 +89,12 @@ export function Account() {
       const userIdQuery = query(collection(db, docCollection), where('userId', '==', userEmail));
       const userInfoSnapshot = await getDocs(userInfoQuery);
       const userIdSnapshot = await getDocs(userIdQuery);
-      console.log(!userInfoSnapshot.empty, userName, UserData.userName);
-      if (!userInfoSnapshot.empty && userName !== UserData.userName) {
+      console.log(!userInfoSnapshot.empty, userName, userData.userName);
+      if (!userInfoSnapshot.empty && userName !== userData.userName) {
         throw new Error('Nome de usuário já existe');
       }
 
-      if (!userIdSnapshot.empty && userEmail !== UserData.userId) {
+      if (!userIdSnapshot.empty && userEmail !== userData.userId) {
         throw new Error('Email já cadastrado!');
       }
 
@@ -141,10 +115,10 @@ export function Account() {
           (phoneNumber || userName || userEmail || displayName || userGender) &&
           UserCredential?.user?.email
         ) {
-          await SetNewValueDocument('userInfo', UserData.id, newValue);
+          await SetNewValueDocument('userInfo', userData.id, newValue);
         }
 
-        if (userName !== UserData.userName) {
+        if (userName !== userData.userName) {
           await updateProfile(UserCredential.user, { displayName: userName });
         }
 
@@ -156,13 +130,10 @@ export function Account() {
           await updateEmail(UserCredential.user, userEmail);
         }
 
-        getUserData(user?.email);
-
         ResetForm();
         setLoading(false);
-        window.location.reload();
+        setReload(e => ++e);
       } else {
-        // console.log('not email');
         throw new Error('E-mail incorreto. Por favor, verifique e tente novamente');
       }
     } catch (error) {
@@ -179,30 +150,37 @@ export function Account() {
       }
     }
   };
-    function checkUrl(string) {
-      try {
-        new URL(string);
-        return true;
-      } catch (err) {
-        return false;
-      }
+  function checkUrl(string) {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
     }
+  }
 
   useEffect(() => {
+    const func = async () => {
+      if (checkUrl(photoURL)) {
+        setAvatar(photoURL);
+      } else {
+        try {
+          if (userData.userGender === 'feminino') {
+            const AvatarURL = await import(`../../assets/avatares/feminino/${photoURL}.jpg`);
+            setAvatar(AvatarURL.default);
+          } else {
+            const AvatarURL = await import(`../../assets/avatares/masculino/${photoURL}.jpg`);
+            setAvatar(AvatarURL.default);
+          }
+        } catch (error) {
+          import(`../../assets/notAvatar.jpg`)
+            .then(image => setAvatar(image.default))
+            .catch(error => console.error(error));
+        }
+      }
+    };
 
-     if (checkUrl(photoURL)) {
-       setAvatar(photoURL);
-     } else {
-       if (userGender === 'feminino') {
-         import(`../../assets/avatares/feminino/${photoURL}.jpg`)
-           .then(image => setAvatar(image.default))
-           .catch(error => console.error(error));
-       } else {
-         import(`../../assets/avatares/masculino/${photoURL}.jpg`)
-           .then(image => setAvatar(image.default))
-           .catch(error => console.error(error));
-       }
-     }
+    func();
   }, [userGender, photoURL]);
 
   return (
@@ -215,7 +193,7 @@ export function Account() {
           setAvatar={setAvatar}
           setAvatarName={setAvatarName}
           avatarName={avatarName}
-          collectionId={UserData.id}
+          collectionId={userData.id}
         >
           <img
             src={avatar}

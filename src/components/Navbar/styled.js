@@ -5,6 +5,7 @@ import { MaxWidth } from '../../styles/styledGlobal';
 export const Header = styled.header`
   height: 7rem;
   padding: 0 2rem;
+  z-index: 1;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 10px 0px;
   background-color: ${({ theme }) => theme.color.fifth};
@@ -37,10 +38,15 @@ export const Logo = styled.img`
 `;
 
 export const UserName = styled.span`
-  color: rgb(255, 255, 255);
-  font-size: clamp(1.9rem, 3vw, 2.8rem);
-  color: white;
-  font-weight: bold;
+  /* color: ${({ theme }) => theme.color.first}; */
+  background: linear-gradient(to bottom, rgb(111, 135, 236), rgb(86, 112, 234), rgb(61, 91, 231));
+  -webkit-background-clip: text;
+  color: transparent;
+  font-family: ${({ theme }) => theme.font.family.second};
+  /* font-size: clamp(1.9rem, 3vw, 2.8rem); */
+  font-size: 1.7rem;
+  margin-top: 1.1rem;
+  margin-left: -.5rem;
 `;
 
 export const Nav = styled.nav`
@@ -184,7 +190,7 @@ const HiddenNavLink = css`
   visibility: hidden;
 `;
 
-const a1 = "650px"
+const a1 = "660px"
 const a2 = "750px"
 const a3 = "870px"
 const a4 = "1020px"

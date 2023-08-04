@@ -11,7 +11,6 @@ import { useUpdateDocument } from '../../hooks/useUpdateDocument';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuPlus, LuX } from 'react-icons/lu';
 
 import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
-import { ButtonForm, Textaria } from '../../styles/formStyled';
 import {
   ButtonTag,
   ContainerFlex,
@@ -25,7 +24,9 @@ import {
   Tag,
   Video,
 } from '../../styles/StyledPostForm';
+import { ButtonForm, Textaria } from '../../styles/formStyled';
 import { ContainerCenter, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
+import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
 import { generateSearchTokens } from '../../utils/generateSearchTokens';
 import { mediaUpload } from '../../utils/mediaUpload';
 import { processSelectedFile } from '../../utils/processSelectedFile';
@@ -37,7 +38,7 @@ const EditPost = () => {
   const [mediaURL, setMediaURL] = useState('');
   const [body, setBody] = useState('');
   const [tags, setTags] = useState([]);
-  const { applicationTags } = UseAuthValue();
+  const { applicationTags, user } = UseAuthValue();
   const [tagsList, setTagsList] = useState(applicationTags);
   const [formError, setFormError] = useState('');
   const [progressPercent, setProgressPercent] = useState(0);
@@ -59,7 +60,7 @@ const EditPost = () => {
       setTitle(post.title);
       setMediaURL();
       setSelectedThumb(post?.thumbURL);
-      setSelectedVideo(post.mediaURL);
+      setSelectedVideo(post?.mediaURL);
       setBody(post.body);
 
       const reduce = removeInitialValuesTags(post.tags, applicationTags);
@@ -69,7 +70,6 @@ const EditPost = () => {
     }
   }, [post]);
 
-  const { user } = UseAuthValue();
   const navigate = useNavigate();
   const { updateDocument, response } = useUpdateDocument('posts');
 
@@ -82,45 +82,76 @@ const EditPost = () => {
       const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
 
       if (mediaVideo && mediaThumb) {
-        let ThumbURL = '';
-        let VideoURL = '';
-
         setProgressPercent(5);
-        mediaUpload(mediaThumb,"posts", null, async ({mediaURL}) => {
-          setProgressPercent(34);
-          ThumbURL = mediaURL;
 
-          mediaUpload(mediaVideo, 'posts', null, async ({mediaURL}) => {
-            setProgressPercent(90);
-            VideoURL = mediaURL;
-            await savePost(VideoURL, ThumbURL);
-            setProgressPercent(100);
-          });
-        });
+        mediaUpload(
+          mediaThumb,
+          'posts',
+          null,
+          async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+            setProgressPercent(34);
+            await deleteStorageMedia('posts', post?.thumbURLName);
+
+            mediaUpload(mediaVideo, 'posts', null, async ({ mediaURL, name: mediaURLName }) => {
+              setProgressPercent(85);
+              await deleteStorageMedia('posts', post?.mediaURLName);
+
+              setProgressPercent(90);
+              await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
+
+              setProgressPercent(100);
+              setProgressPercent(0);
+            });
+          },
+        );
       } else if (mediaVideo) {
-        mediaUpload(mediaVideo, 'posts', setProgressPercent, async ({mediaURL}) => {
-          await savePost(mediaURL, selectedThumb);
-        });
+        mediaUpload(
+          mediaVideo,
+          'posts',
+          setProgressPercent,
+          async ({ mediaURL, name: mediaURLName }) => {
+            await deleteStorageMedia('posts', post?.mediaURLName);
+
+            await savePost(mediaURL, selectedThumb, mediaURLName, document?.thumbURLName);
+            setProgressPercent(0);
+          },
+        );
       } else if (mediaThumb) {
-        mediaUpload(mediaThumb, 'posts', setProgressPercent, async ({mediaURL}) => {
-          await savePost(selectedVideo, mediaURL);
-        });
+        mediaUpload(
+          mediaThumb,
+          'posts',
+          setProgressPercent,
+          async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+            await deleteStorageMedia('posts', post?.thumbURLName);
+
+            await savePost(selectedVideo, thumbURL, document?.mediaURLName, thumbURLName);
+            setProgressPercent(0);
+          },
+        );
       } else {
         setProgressPercent(5);
-        await savePost(selectedVideo, selectedThumb);
+        await savePost(
+          selectedVideo,
+          selectedThumb,
+          document?.thumbURLName,
+          document?.mediaURLName,
+        );
         setProgressPercent(100);
+        setProgressPercent(0);
       }
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function savePost(VideoURL, ThumbURL) {
+  async function savePost(mediaURL = '', thumbURL = '', mediaURLName = '', thumbURLName = '') {
     const { uid, displayName } = user;
     const postToUpdate = {
       title,
-      mediaURL: VideoURL,
-      thumbURL: ThumbURL,
+      mediaURL,
+      thumbURL,
+      thumbURLName,
+      mediaURLName,
       body,
       searchTokens: generateSearchTokens(title),
       tags,
@@ -130,7 +161,7 @@ const EditPost = () => {
       views: post?.views ?? 0,
     };
 
-   const Document =  await updateDocument(id, postToUpdate);
+    const Document = await updateDocument(id, postToUpdate);
 
     if (Document) navigate(`/posts/${id}`);
   }
@@ -272,11 +303,3 @@ const EditPost = () => {
 };
 
 export default EditPost;
-
-() => {
-  return (
-    <div>
-      <input type='file' name='' id='' />
-    </div>
-  );
-};

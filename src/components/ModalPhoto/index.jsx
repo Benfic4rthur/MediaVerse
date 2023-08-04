@@ -2,24 +2,24 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useState } from 'react';
 import { LuImagePlus, LuX } from 'react-icons/lu';
 
-import { deleteObject, getStorage, ref } from 'firebase/storage';
+import { getAuth, updateProfile } from 'firebase/auth';
 import { UseAuthValue } from '../../context/AuthContext';
 import { Progress } from '../../styles/StyledPostForm';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { Subtitle } from '../../styles/styledGlobal';
+import { SetNewValueDocument } from '../../utils/SetNewValueDocument';
+import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
 import { mediaUpload } from '../../utils/mediaUpload';
 import { CustomInputTypeFile } from '../CustomInputTypeFile';
 import {
+  Backdrop,
   ButtonActive,
   ButtonAvatar,
   ContainerButtonAvatar,
   ContainerProgressPercent,
   DialogContent,
   ImageAvatar,
-  Backdrop,
 } from './styled';
-import { getAuth, updateProfile } from 'firebase/auth';
-import { SetNewValueDocument } from '../../utils/SetNewValueDocument';
 
 export const DialogPhoto = ({
   children,
@@ -30,8 +30,8 @@ export const DialogPhoto = ({
   collectionId,
   ...rest
 }) => {
+  const { imgUser, setReload } = UseAuthValue();
   const [Images, setImages] = useState([]);
-  const { imgUser } = UseAuthValue();
   const [open, setOpen] = useState(false);
   const [userImage, setUserImage] = useState([]);
   const [progressPercent, setProgressPercent] = useState(0);
@@ -65,28 +65,28 @@ export const DialogPhoto = ({
 
   async function handlePhoto() {
     const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
-    const storage = getStorage();
-    if (avatarName) {
-      const desertRef = ref(storage, `avatars/${avatarName}`);
-      await deleteObject(desertRef);
-    }
+
+    const storageRef = 'avatars';
+
+    await deleteStorageMedia(storageRef, avatarName);
 
     try {
-      console.log(mediaThumb);
-      mediaUpload(mediaThumb, 'avatars', setProgressPercent, async ({ mediaURL, name }) => {
+      mediaUpload(mediaThumb, storageRef, setProgressPercent, async ({ mediaURL, name }) => {
+        setProgressPercent(0);
+
+         await Promise.all([
+           SetNewValueDocument('userInfo', collectionId, {
+             photoURL: mediaURL,
+             avatarName: name,
+           }),
+           updateProfile(user, { photoURL: mediaURL }),
+         ]);
+
+        setProgressPercent(0);
+        setReload(e => ++e);
+
         setPhotoURL(mediaURL);
         setAvatarName(name);
-
-        const newValue = {
-          photoURL: mediaURL,
-          avatarName: name,
-        };
-        await Promise.all([
-          SetNewValueDocument('userInfo', collectionId, newValue),
-          updateProfile(user, { photoURL: mediaURL }),
-        ]);
-        setOpen(false);
-        setProgressPercent(0);
       });
     } catch (error) {
       console.error(error);
@@ -94,22 +94,26 @@ export const DialogPhoto = ({
   }
 
   async function handleAvatar({ e }) {
-    const storage = getStorage();
-    if (avatarName) {
-      const desertRef = ref(storage, `avatars/${avatarName}`);
-      await deleteObject(desertRef);
-    }
+
+
+    const storageRef = 'avatars';
+
+    await deleteStorageMedia(storageRef, e.avatarName);
 
     try {
-      const newValue = {
+
+       const newValue = {
         photoURL: e?.nameImage,
         avatarName: '',
       };
+
       setPhotoURL(e?.nameImage);
       await Promise.all([
         SetNewValueDocument('userInfo', collectionId, newValue),
         updateProfile(user, { photoURL: e?.nameImage }),
       ]);
+      
+      setReload(e => ++e);
       setOpen(false);
     } catch (error) {
       console.error(error);

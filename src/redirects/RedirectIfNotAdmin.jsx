@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { UseAuthValue } from '../context/AuthContext';
 
 export function RedirectIfNotAdmin() {
-  const User = UseAuthValue();
+  const { userData } = UseAuthValue();
 
-  return User?.userStatus === 'admin' ? <Outlet /> : <Navigate to='/access' />;
+  return userData?.userStatus === 'admin' ? <Outlet /> : <Navigate to='/access' />;
 }

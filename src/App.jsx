@@ -12,15 +12,30 @@ import { AuthProvider } from './context/AuthContext';
 
 //hooks
 import { UseAuthentication } from './hooks/useAuthentication';
-import { useUserInfo } from './hooks/userName';
 import { ContainerSpinerLoading, SpinerLoading } from './styles/styledGlobal';
+import { fetchUserInfo } from './utils/fetchUserInfo';
 
 function App() {
   const [user, setUser] = useState(undefined);
+  const [Reload, setReload] = useState(0);
+  const [userData, setUserData] = useState({
+    avatarName: '',
+    deletedAt: '',
+    displayName: '',
+    id: '',
+    loggedAt: '',
+    loggedOutAt: '',
+    phoneNumber: '',
+    photoURL: '',
+    userGender: '',
+    userId: '',
+    userName: '',
+    userStatus: '',
+  });
+
   const { auth } = UseAuthentication();
   const userEmail = user ? user.email : '';
-  const { userStatus, userName, deletedAt, userId, userGender, photoURL, usarData } =
-    useUserInfo(userEmail);
+
   const loadingUser = user === undefined;
   const [countdown, setCountdown] = useState(3600); // 3600 segundos
   const notClientTags = 'promotional';
@@ -64,6 +79,18 @@ function App() {
   const isVisible = usePageVisibility();
 
   useEffect(() => {
+    const func = async (email) => {
+      const data = await fetchUserInfo(email);
+      console.log(data)
+      setUserData(data);
+    };
+
+    if (userEmail) {
+      func(userEmail);
+    }
+  }, [Reload, userEmail]);
+
+  useEffect(() => {
     const intervalId = setInterval(() => {
       setCountdown(prevCountdown => {
         if (prevCountdown % 60 === 0) {
@@ -89,14 +116,14 @@ function App() {
   }, [isVisible]);
 
   useEffect(() => {
-    if (deletedAt !== '' && userId === userEmail) {
+    if (userData.deletedAt !== '' && userData.userId === userEmail) {
       signOut(auth);
     }
     onAuthStateChanged(auth, user => {
       setUser(user);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth, deletedAt]);
+  }, [auth, userData.deletedAt]);
 
   if (loadingUser) {
     return (
@@ -110,15 +137,12 @@ function App() {
     <AuthProvider
       value={{
         user,
-        userStatus,
-        userName,
-        userEmail,
-        userGender,
-        photoURL,
         applicationTags,
         notClientTags,
         imgUser,
-        usarData,
+        userData,
+        Reload,
+        setReload,
       }}
     >
       <RouterProvider router={router} />

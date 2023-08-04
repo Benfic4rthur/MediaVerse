@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-irregular-whitespace */
 import { useLayoutEffect, useState } from 'react';
-import { LuEdit, LuPlus, LuUser, LuTrash2 } from 'react-icons/lu';
+import { LuEdit, LuPlus, LuTrash2, LuUser } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
+import { UseAuthValue } from '../../context/AuthContext';
 import { useAllUsersInfo } from '../../hooks/useAllUserInfo';
 import { useDeleteUserInfo } from '../../hooks/useDeleteUserInfo';
 import { useSoftDelete } from '../../hooks/useSoftDelete';
 import { CreatePostButton, Subtitle } from '../../styles/styledGlobal';
+import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
 import {
   Author,
   ButtonEvent,
@@ -25,7 +27,6 @@ import {
   CreatePostTitle,
   UserLoggedBall,
 } from './styled';
-import { UseAuthValue } from '../../context/AuthContext';
 
 const FormattedTimeDiff = (loggedAt = 0, loggedOutAt = 0) => {
   let formattedTime = '';
@@ -55,15 +56,15 @@ const FormattedTimeDiff = (loggedAt = 0, loggedOutAt = 0) => {
 
 const Index = () => {
   const { documents: usersInfo } = useAllUsersInfo('userInfo');
-  const { user, userName, userStatus, userEmail } = UseAuthValue();
+  const { user, userData } = UseAuthValue();
   const { deleteDocument } = useDeleteUserInfo();
   const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
   const dateUserTime = new Intl.DateTimeFormat('pt-BR', { timeStyle: 'short' });
   const { softRehabUser, softDeleteUser } = useSoftDelete();
-  const handleDelete = (userId, userName) => {
+  const handleDelete = (userId, userName, avatarName) => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário ${userName}?`);
     if (confirmDelete) {
-      deleteDocument(userId);
+      Promise.all([deleteDocument(userId), deleteStorageMedia('avatars', avatarName)]);
     }
   };
 
@@ -75,7 +76,7 @@ const Index = () => {
 
   const usersNoAdm = usersInfo?.filter(user => user.userStatus !== 'admin');
   const alluserInfo = usersInfo?.filter(user => user.userName !== 'administrador');
-  const filteredUsersInfo = userName !== 'administrador' ? usersNoAdm : alluserInfo;
+  const filteredUsersInfo = userData.userName !== 'administrador' ? usersNoAdm : alluserInfo;
 
   const handleToggleChange = (userId, checked) => {
     setUserToggles(prevState => ({ ...prevState, [userId]: checked }));

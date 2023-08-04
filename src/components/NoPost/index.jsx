@@ -8,12 +8,12 @@ import {
 } from '../../styles/styledGlobal';
 
 export const NoPost = ({ title }) => {
-  const { userStatus } = UseAuthValue();
+  const { userData } = UseAuthValue();
 
   return (
     <PostsNotFoundContainer>
       <PostsNotFoundTitle>{title}</PostsNotFoundTitle>
-      {(userStatus === 'funcionario' || userStatus === 'admin') && (
+      {(userData.userStatus === 'funcionario' || userData.userStatus === 'admin') && (
         <CreatePostButton as={Link} to='/create-post'>
           Criar postagem <LuPlus size={17} />
         </CreatePostButton>

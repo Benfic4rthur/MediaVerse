@@ -36,10 +36,9 @@ const CreatePost = () => {
   const [progressPercent, setProgressPercent] = useState(0);
   const [body, setBody] = useState('');
   const [tags, setTags] = useState([]);
-  // const { applicationTags } = UseAuthValue();
   // const [tagList, setTagList] = useState([]);
   const [RenderTag, setRenderTag] = useState(0);
-  const { userEmail, user, usarData } = UseAuthValue();
+  const { user, userData } = UseAuthValue();
 
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
@@ -47,10 +46,6 @@ const CreatePost = () => {
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Novo Post';
-  }, []);
-
-  useEffect(() => {
-    console.log(usarData);
   }, []);
 
   const { insertDocument, response } = useInsertDocument('posts');
@@ -123,7 +118,7 @@ const CreatePost = () => {
 
   useEffect(() => {
     const func = async () => {
-      const Where = where('userId', '==', userEmail);
+      const Where = where('userId', '==', userData.userId);
 
       const val = await GetCollectionValues('collec', Where);
       setTags(val);

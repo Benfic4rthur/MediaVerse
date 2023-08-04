@@ -20,5 +20,12 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   transition: background-color 300ms linear;
-  background-color: hsl(211, 90%, 18%);
+  background-color: rgb(5, 45, 87);
 }
+
+
+@font-face {
+  font-family: "Spacetron";
+  src: url('/src/assets/spacetron.otf');
+}
+

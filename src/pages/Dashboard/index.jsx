@@ -5,8 +5,8 @@ import { DialogDemo } from '../../components/Modal';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useDeleteDocument } from '../../hooks/useDeleteDocument';
 import { useFetchDocuments } from '../../hooks/useFetchDocuments';
-import { useUserInfo } from '../../hooks/userName';
 import { CreatePostButton, Subtitle } from '../../styles/styledGlobal';
+import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
 import {
   Author,
   ButtonEvent,
@@ -30,10 +30,8 @@ import {
 } from './styled';
 
 const Dashboard = () => {
-  const { user } = UseAuthValue();
+  const { user, userData } = UseAuthValue();
   const uid = user.uid;
-  const userEmail = user ? user.email : '';
-  const { userStatus } = useUserInfo(userEmail);
 
   const { documents: posts } = useFetchDocuments('posts', null, uid);
   const { documents: postsadm } = useFetchDocuments('posts');
@@ -53,23 +51,36 @@ const Dashboard = () => {
 
     const valueAd = searchAll ? sortedPostsAd : postTags;
 
-    // console.log(valueAd, posts);
-
-    setFilteredPosts(userStatus === 'admin' ? valueAd : posts);
+    setFilteredPosts(userData.userStatus === 'admin' ? valueAd : posts);
   }, [posts, postsadm, searchAll]);
+
+  const DeteleMedia = async postData => {
+    try {
+      // parte responsavel por apagar os arquivos da Storage e da Firestore Database
+      await Promise.all([
+        deleteDocument(postData.id),
+        deleteStorageMedia('posts', postData?.thumbURLName),
+        deleteStorageMedia('posts', postData?.mediaURLName),
+      ]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
       <ContainerHeader>
         <Subtitle>
-          {userStatus === 'admin' ? 'Gerencie todas as postagens' : 'Gerencie os seus posts'}
+          {userData.userStatus === 'admin'
+            ? 'Gerencie todas as postagens'
+            : 'Gerencie os seus posts'}
         </Subtitle>
 
         <CreatePostButton as={Link} to='/create-post'>
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
-      {postsadm?.length > 0 && userStatus === 'admin' && (
+      {postsadm?.length > 0 && userData.userStatus === 'admin' && (
         <ContainerPost>
           {
             <ContainerFormToggle as='form' action=''>
@@ -146,9 +157,7 @@ const Dashboard = () => {
                 <ButtonEvent
                   className='delete'
                   onClick={() =>
-                    window.confirm('Tem certeza que deseja excluir?')
-                      ? deleteDocument(post.id)
-                      : null
+                    window.confirm('Tem certeza que deseja excluir?') ? DeteleMedia(post) : null
                   }
                   title='excluir post'
                 >
@@ -160,7 +169,7 @@ const Dashboard = () => {
         </ContainerPost>
       )}
 
-      {posts?.length > 0 && userStatus !== 'admin' && (
+      {posts?.length > 0 && userData.userStatus !== 'admin' && (
         <ContainerPost>
           {posts?.map(post => (
             <Post key={post.id}>
@@ -212,9 +221,7 @@ const Dashboard = () => {
                 <ButtonEvent
                   className='delete'
                   onClick={() =>
-                    window.confirm('Tem certeza que deseja excluir?')
-                      ? deleteDocument(post.id)
-                      : null
+                    window.confirm('Tem certeza que deseja excluir?') ? DeteleMedia(post) : null
                   }
                   title='excluir post'
                 >
@@ -226,13 +233,13 @@ const Dashboard = () => {
         </ContainerPost>
       )}
 
-      {postsadm?.length === 0 && userStatus === 'admin' && (
+      {postsadm?.length === 0 && userData.userStatus === 'admin' && (
         <ContainerCreatePost>
           <CreatePostTitle>Não foram encontrados posts</CreatePostTitle>
         </ContainerCreatePost>
       )}
 
-      {posts?.length === 0 && userStatus !== 'admin' && (
+      {posts?.length === 0 && userData.userStatus !== 'admin' && (
         <ContainerCreatePost>
           <CreatePostTitle>Não foram encontrados posts</CreatePostTitle>
         </ContainerCreatePost>

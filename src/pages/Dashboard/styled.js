@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 export const ContainerHeader = styled.section`
   display: flex;
+  z-index: 0;
   justify-content: space-between;
   align-items: center;
   width: 100%;

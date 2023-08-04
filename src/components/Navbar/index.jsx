@@ -23,7 +23,8 @@ import {
 } from './styled.js';
 
 const Index = () => {
-  const { user, userName, userStatus, userEmail, userGender, photoURL } = UseAuthValue();
+  const { user, userData, setReload } = UseAuthValue();
+
   const { logout } = UseAuthentication();
   const [avatar, setAvatar] = useState('');
   const [expanded, setExpanded] = useState(false);
@@ -42,39 +43,51 @@ const Index = () => {
   }
 
   useEffect(() => {
-    if (checkUrl(photoURL)) {
-      setAvatar(photoURL);
-    } else {
-      if (photoURL) {
-        if (userGender === 'feminino') {
-          import(`../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`)
-            .then(image => setAvatar(image.default))
-            .catch(error => console.error(error));
-        } else {
-          import(`../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`)
+    const func = async () => {
+      if (checkUrl(userData.photoURL)) {
+        setAvatar(userData.photoURL);
+      } else {
+        try {
+          if (userData.userGender === 'feminino') {
+            const AvatarURL = await import(
+              `../../assets/avatares/feminino/${auth.currentUser.photoURL}.jpg`
+            );
+            setAvatar(AvatarURL.default);
+          } else {
+            const AvatarURL = await import(
+              `../../assets/avatares/masculino/${auth.currentUser.photoURL}.jpg`
+            );
+            setAvatar(AvatarURL.default);
+          }
+        } catch (error) {
+          import(`../../assets/notAvatar.jpg`)
             .then(image => setAvatar(image.default))
             .catch(error => console.error(error));
         }
       }
-    }
-  }, [user, auth.currentUser, userGender, photoURL]);
+    };
 
-  const atualizarTelaManualmente = () => {
-    this.forceUpdate();
-  };
+    func();
+  }, [user, auth.currentUser, userData.userGender, userData.photoURL]);
+
 
   return (
     <Header>
       <ContainerMaxWidth>
         {user ? (
-          <NavLinkLogo to='/' onClick={atualizarTelaManualmente}>
+          <NavLinkLogo
+            to='/'
+            onClick={() => {
+              setReload(e => ++e);
+            }}
+          >
             <Logo src={logo} alt='logo' />
-            {!!user && <UserName>{'@' + userName}</UserName>}
+            {!!user && <UserName>{'/' + userData.userName}</UserName>}
           </NavLinkLogo>
         ) : (
           <NavLinkLogo to='/access'>
             <Logo src={logo} alt='logo' />
-            {!!user && <UserName>{'@' + userName}</UserName>}
+            {!!user && <UserName>{'/' + userData.userName}</UserName>}
           </NavLinkLogo>
         )}
         <Nav>
@@ -82,7 +95,7 @@ const Index = () => {
             <>
               <ContainerMenu>
                 <>
-                  {(userStatus === 'funcionario' || userStatus === 'admin') && (
+                  {(userData.userStatus === 'funcionario' || userData.userStatus === 'admin') && (
                     <>
                       <NavLinkRowMenu
                         aria-label='novo post'
@@ -98,11 +111,11 @@ const Index = () => {
                         className={`${isActive => (isActive ? 'active' : '')} a2`}
                         onClick={() => setExpanded(false)}
                       >
-                        {userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
+                        {userData.userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
                       </NavLinkRowMenu>
                     </>
                   )}
-                  {userStatus === 'admin' && (
+                  {userData.userStatus === 'admin' && (
                     <>
                       <NavLinkRowMenu
                         aria-label='painel de usuarios'
@@ -148,7 +161,7 @@ const Index = () => {
                     >
                       Edite seu Perfil
                     </NavLinkStyled>
-                    {(userStatus === 'funcionario' || userStatus === 'admin') && (
+                    {(userData.userStatus === 'funcionario' || userData.userStatus === 'admin') && (
                       <>
                         <NavLinkMenuExpanded
                           aria-label='novo post'
@@ -164,11 +177,11 @@ const Index = () => {
                           className={`${isActive => (isActive ? 'active' : '')} a2`}
                           onClick={() => setExpanded(false)}
                         >
-                          {userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
+                          {userData.userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
                         </NavLinkMenuExpanded>
                       </>
                     )}
-                    {userStatus === 'admin' && (
+                    {userData.userStatus === 'admin' && (
                       <>
                         <NavLinkMenuExpanded
                           aria-label='painel de usuarios'
@@ -193,7 +206,7 @@ const Index = () => {
                       to='/access'
                       aria-label='logout'
                       onClick={() => {
-                        logout(userEmail);
+                        logout(userData.userId);
                         setExpanded(false);
                       }}
                       className='active'

@@ -8,7 +8,6 @@ import { DialogDemo } from '../../components/Modal';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useDeleteDocument } from '../../hooks/useDeleteDocument';
 import { useFetchDocuments } from '../../hooks/useFetchDocuments';
-import { useUserInfo } from '../../hooks/userName';
 import { CreatePostButton, Subtitle } from '../../styles/styledGlobal';
 import {
   Author,
@@ -29,10 +28,8 @@ import {
 } from './styled';
 
 const Dashboard = () => {
-  const { user } = UseAuthValue();
+  const {user, userData } = UseAuthValue();
   const uid = user.uid;
-  const userEmail = user ? user.email : '';
-  const { userStatus } = useUserInfo(userEmail);
 
   const { documents: posts } = useFetchDocuments('posts', null, uid);
   const { documents: postsadm } = useFetchDocuments('posts');
@@ -47,14 +44,14 @@ const Dashboard = () => {
     <div>
       <ContainerHeader>
         <Subtitle>
-          {userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
+          {userData.userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
         </Subtitle>
         <CreatePostButton as={Link} to='/create-post'>
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
 
-      {userStatus === 'admin' ? (
+      {userData.userStatus === 'admin' ? (
         <>
           {postsadm && postsadm.length === 0 && (
             <ContainerCreatePost>
@@ -218,7 +215,7 @@ export default Dashboard;
 //   const { user } = UseAuthValue();
 //   const uid = user.uid;
 //   const userEmail = user ? user.email : '';
-//   const { userStatus } = useUserInfo(userEmail);
+//   const { userData.userStatus } = useUserInfo(userEmail);
 
 //    const { documents: posts } = useFetchDocuments('posts', null, uid);
 //   const { documents: postsadm } = useFetchDocuments('posts');
@@ -234,14 +231,14 @@ export default Dashboard;
 
 //       <ContainerHeader>
 //         <Subtitle>
-//           {userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
+//           {userData.userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
 //         </Subtitle>
 //         <CreatePostButton as={Link} to='/create-post'>
 //           Criar Post <LuPlus size={17} />
 //         </CreatePostButton>
 //       </ContainerHeader>
 
-//       {userStatus === 'admin' ? (
+//       {userData.userStatus === 'admin' ? (
 //         <>
 //           {postsadm && postsadm.length === 0 && (
 //             <ContainerCreatePost>
@@ -364,17 +361,17 @@ export default Dashboard;
 //   const { user } = UseAuthValue();
 //   const uid = user.uid;
 //   const userEmail = user ? user.email : '';
-//   const { userStatus } = useUserInfo(userEmail);
+//   const { userData.userStatus } = useUserInfo(userEmail);
 
-//   const { documents } = useFetchDocuments('posts', null, userStatus === 'admin' ? uid : null);
+//   const { documents } = useFetchDocuments('posts', null, userData.userStatus === 'admin' ? uid : null);
 
 //   const { deleteDocument } = useDeleteDocument('posts');
 //   useEffect(() => {
 //     document.title = 'MediaVerse- Dashboard';
 //   }, []);
 
-//   if (!userStatus) {
-//     // Renderiza um estado de carregamento ou qualquer outro elemento enquanto o userStatus está sendo buscado
+//   if (!userData.userStatus) {
+//     // Renderiza um estado de carregamento ou qualquer outro elemento enquanto o userData.userStatus está sendo buscado
 //     return <div>Loading...</div>;
 //   }
 
@@ -382,7 +379,7 @@ export default Dashboard;
 //     <div>
 //       <ContainerHeader>
 //         <Subtitle>
-//           {userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
+//           {userData.userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
 //         </Subtitle>
 //         <CreatePostButton as={Link} to='/create-post'>
 //           Criar Post <LuPlus size={17} />
@@ -410,7 +407,7 @@ export default Dashboard;
 //                 <TitlePost> | Título: {post.title}</TitlePost>
 //               </ContainerTitlePost>
 
-//               {userStatus === 'admin' && <Author> | Autor: {post.createdBy}</Author>}
+//               {userData.userStatus === 'admin' && <Author> | Autor: {post.createdBy}</Author>}
 
 //               <ContainerButtonEvent>
 //                 <ButtonEvent as={Link} to={`/posts/${post.id}`}>

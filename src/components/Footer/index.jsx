@@ -22,7 +22,7 @@ const messageBoaTarde = 'Boa tarde! Tenho uma dúvida, você poderia me ajudar?'
 const messageBoaNoite = 'Boa noite! Tenho uma dúvida, você poderia me ajudar?'; // Texto pré-pronto para a mensagem de boa noite
 
 const index = () => {
-  const User = UseAuthValue();
+  const { user } = UseAuthValue();
   const now = new Date();
   const currentHour = now.getHours();
 
@@ -39,13 +39,13 @@ const index = () => {
 
   return (
     <Footer>
-      <ContainerMaxWidth $justify={User?.user}>
+      <ContainerMaxWidth $justify={user}>
         <LinkImgFooter>
           <ImgFooter src={logo} />
         </LinkImgFooter>
-        {User.user && <div />}
-        {User.user && <div />}
-        {User.user && (
+        {user && <div />}
+        {user && <div />}
+        {user && (
           <ContainerLink>
             <Invesible>
               <MdWhatsapp />

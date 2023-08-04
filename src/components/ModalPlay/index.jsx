@@ -21,9 +21,9 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   const [Name, setName] = useState('');
   const [Collec, setCollec] = useState([]);
   const { insertDocument, response } = useInsertDocument('collec');
-  const { userEmail } = UseAuthValue();
-  const Where = and(where('name', '==', Name), where('userId', '==', userEmail));
-  const WhereEmail = where('userId', '==', userEmail);
+  const { userData } = UseAuthValue();
+  const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
+  const WhereEmail = where('userId', '==', userData.userId);
 
   useEffect(() => {
     const func = async () => {
@@ -46,7 +46,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
         const val = await GetCollectionValues('collec', Where);
 
         if (val?.length == 0) {
-          await insertDocument({ name: Name, userId: userEmail });
+          await insertDocument({ name: Name, userId: userData.userId });
 
           setRenderTag(++RenderTag);
         } else {

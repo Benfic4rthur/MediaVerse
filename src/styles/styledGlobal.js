@@ -50,6 +50,7 @@ export const ContainerCenter = styled.div`
 export const CreatePostButton = styled.a`
   background-color: ${({ theme }) => theme.color.first};
   filter: saturate(0.95);
+  z-index: 0;
 
   text-decoration: none;
   color: ${({ theme }) => theme.color.fourth};
