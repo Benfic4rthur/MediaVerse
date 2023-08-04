@@ -15,7 +15,6 @@ import {
 
 const suporte = 'Suporte 24hrs';
 const instagram = 'Instagram';
-const site = 'www.genuinesistemas.com.br';
 
 const number = '5551991640517'; // Número de telefone do WhatsApp
 const messageBomDia = 'Bom dia! Tenho uma dúvida, você poderia me ajudar?'; // Texto pré-pronto para a mensagem de bom dia
@@ -41,7 +40,7 @@ const index = () => {
   return (
     <Footer>
       <ContainerMaxWidth $justify={User?.user}>
-        <LinkImgFooter href='https://ekorsolutions.vercel.app/' title={site} target=' _blank'>
+        <LinkImgFooter>
           <ImgFooter src={logo} />
         </LinkImgFooter>
         {User.user && <div />}
