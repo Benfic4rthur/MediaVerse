@@ -1,6 +1,6 @@
 import { Content } from '@radix-ui/react-dialog';
 import styled from 'styled-components';
-import { Error as ErrorStyled } from '../../styles/formStyled';
+import { ButtonForm, Error as ErrorStyled } from '../../styles/formStyled';
 import { DialogContentStyled } from '../../styles/styledDialog';
 
 export const DialogContent = styled(DialogContentStyled)`
@@ -22,10 +22,18 @@ export const ButtonActive = styled.button`
   white-space: nowrap;
   height: fit-content;
   border-radius: ${({ theme }) => theme.border.radius};
+  background-color: transparent;
 
   &:hover {
-    background-color: ${({ theme }) => theme.color.firstHover};
-    transform: scale(1.05);
+    transform: scale(1.03);
+  }
+`;
+
+export const DialogButtonForm = styled(ButtonForm)`
+  background-color: ${({ theme }) => theme.color.firstNav};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.firstNav};
   }
 `;
 

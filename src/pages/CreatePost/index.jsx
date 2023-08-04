@@ -1,29 +1,28 @@
+import { where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { LuFileVideo, LuHeading1, LuImagePlus} from 'react-icons/lu';
+import { LuFileVideo, LuHeading1, LuImagePlus } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 import { CreateInput } from '../../components/CreateInput';
+import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
+import { DialogPlay } from '../../components/ModalPlay';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
 import {
   ContainerFlex,
   ContainerForm,
-  ContainerTags,
   ContainerVideo,
   Error,
   Form,
   Progress,
   Video,
 } from '../../styles/StyledPostForm';
-import { GetCollectionValues } from '../../utils/GetCollectionValues';
-import { where } from 'firebase/firestore';
-import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
-import { DialogPlay } from '../../components/ModalPlay';
 import { ButtonForm, Textaria } from '../../styles/formStyled';
 import { ContainerCenter, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
+import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { generateSearchTokens } from '../../utils/generateSearchTokens';
 import { mediaUpload } from '../../utils/mediaUpload';
 import { processSelectedFile } from '../../utils/processSelectedFile';
-import { ContainerRow } from './styled';
+import { DialogButtonForm } from '../../components/ModalPlay/styled';
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -44,10 +43,9 @@ const CreatePost = () => {
   const { insertDocument, response } = useInsertDocument('posts');
   const navigate = useNavigate();
 
-  const handleColecChange = (event) => {
+  const handleColecChange = event => {
     setSelectedColec(event.target.value);
   };
-
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -107,7 +105,7 @@ const CreatePost = () => {
       thumbURLName,
       body,
       searchTokens: generateSearchTokens(title),
-      colecs : selectedColec,
+      colecs: selectedColec,
       uid: user.uid,
       createdBy: user.displayName,
       createdOn: Date.now().toString(),
@@ -196,23 +194,26 @@ const CreatePost = () => {
             required
           />
 
-          <ContainerRow>
-            <ContainerTags>
-              <select value={selectedColec} onChange={handleColecChange}>
-                <option value=''>Selecione uma Coleção</option>
-                {colecs.map((e, i) => (
-                  <option key={i} value={e?.name}>
-                    {e?.name}
-                  </option>
-                ))}
-              </select>
-            </ContainerTags>
-            <DialogPlay RenderTag={selectedColec} setRenderTag={setSelectedColec}>
-              <ButtonForm type='button' className='red' disabled={progressPercent > 1}>
+          <ContainerFlex>
+            <CreateInput
+              as='select'
+              className='red'
+              value={selectedColec}
+              onChange={handleColecChange}
+            >
+              <option value=''>Selecione uma Coleção</option>
+              {colecs.map((e, i) => (
+                <option key={i} value={e?.name}>
+                  {e?.name}
+                </option>
+              ))}
+            </CreateInput>
+            <DialogPlay RenderTag={selectedColec} className='red' setRenderTag={setSelectedColec}>
+              <DialogButtonForm type='button' disabled={progressPercent > 1}>
                 Adicionar coleção
-              </ButtonForm>
+              </DialogButtonForm>
             </DialogPlay>
-          </ContainerRow>
+          </ContainerFlex>
           <ContainerFlex>
             <ButtonForm
               className='red'

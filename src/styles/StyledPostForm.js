@@ -79,6 +79,7 @@ export const ContainerVideo = styled.div`
 export const Video = styled.video`
   max-height: 400px;
   width: 100%;
+  aspect-ratio: 16 / 9;
   background-color: black;
 `;
 
