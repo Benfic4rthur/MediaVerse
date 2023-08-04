@@ -57,7 +57,7 @@ const TextariaOrInputStyled = css`
 
 export const InputStyled = css`
   min-width: 100%;
-  height: 3.7rem;
+  height: 5.2rem;
   ${TextariaOrInputStyled}
 `;
 

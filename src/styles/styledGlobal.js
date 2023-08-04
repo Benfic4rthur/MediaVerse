@@ -44,12 +44,12 @@ export const ContainerCenter = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  margin: 0 auto;
 `;
 
 export const CreatePostButton = styled.a`
   background-color: ${({ theme }) => theme.color.first};
   filter: saturate(0.95);
-  z-index: 0;
 
   text-decoration: none;
   color: ${({ theme }) => theme.color.fourth};
@@ -86,7 +86,7 @@ export const SearchInput = styled.input`
   min-width: 100%;
   border-bottom-left-radius: ${({ theme }) => theme.border.radius};
   border-top-left-radius: ${({ theme }) => theme.border.radius};
-  padding: 1.2rem 1.2rem 1.2rem 2.3rem;
+  padding: 1.8rem 1.8rem 1.8rem 2.3rem;
   background-color: ${({ theme }) => theme.color.fourth};
 `;
 
@@ -175,11 +175,7 @@ export const Title = styled.h2`
 
 export const Subtitle = styled.h2`
   color: ${({ theme }) => theme.color.fourthOpacity};
-  font-size: clamp(
-    ${({ theme }) => theme.font.size.lgs},
-    5vw,
-    ${({ theme }) => theme.font.size.lg}
-  );
+  font-size: clamp(${({ theme }) => theme.font.size.lgs}, 5vw, ${({ theme }) => theme.font.size.lg});
   line-height: ${({ theme }) => theme.font.lineHeight};
   font-family: ${({ theme }) => theme.font.family.primary};
   font-weight: ${({ theme }) => theme.font.weight.medium};

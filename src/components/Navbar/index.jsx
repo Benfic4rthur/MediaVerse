@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import logo from '../../assets/logo.png';
+import logonav from '../../assets/logonavinterno.png';
 import { UseAuthValue } from '../../context/AuthContext';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 
@@ -81,11 +82,11 @@ const Index = () => {
             }}
           >
             <Logo src={logo} alt='logo' />
-            {!!user && <UserName>{' ' + userData.userName}</UserName>}
+            {!!user && <UserName>{userData.userName}</UserName>}
           </NavLinkLogo>
         ) : (
           <NavLinkLogo to='/access'>
-            <Logo src={logo} alt='logo' />
+            <Logo src={logonav} alt='logo' />
             {!!user && <UserName>{' ' + userData.userName}</UserName>}
           </NavLinkLogo>
         )}
