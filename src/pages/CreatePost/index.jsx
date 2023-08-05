@@ -202,6 +202,7 @@ const CreatePost = () => {
               value={selectedCollec}
               onChange={handleCollecChange}
             >
+              
               <option value=''>Selecione uma Coleção</option>
               <hr />
               {collec.map((e, i) => (

@@ -69,9 +69,9 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   const handleDelete = async e => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${e.name}?`);
     if (confirmDelete) {
-      await deleteDocument(e.id, e.name);
+      const vall = await deleteDocument(e.id, e.name);
       // Atualize o estado 'Collec' se a exclusão for bem-sucedida
-      if (!error) {
+      if (vall) {
         const updatedCollec = Collec.filter(item => item.id !== e.id);
         setCollec(updatedCollec);
       }else{
@@ -79,7 +79,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
       }
     }
   };
-  
+
 
   return (
     <>
