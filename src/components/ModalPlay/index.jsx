@@ -23,7 +23,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   const { userData } = UseAuthValue();
   const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
   const WhereEmail = where('userId', '==', userData.userId);
-  const { deleteDocument, error } = useDeleteCollec();
+  const { deleteDocument } = useDeleteCollec();
 
   useEffect(() => {
     const func = async () => {
@@ -52,17 +52,18 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
           setOpen(false);
         } else {
           setError('Coleção ja existe');
+          setOpen(true);
         }
       } else {
         setError('Selecione o nome de uma coleção');
+        setOpen(true);
       }
 
       setLoader(false);
-      setOpen(false);
     } catch (error) {
       console.error(error);
       setLoader(false);
-      setOpen(false);
+      setOpen(true);
     }
   };
 
@@ -74,12 +75,15 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
       if (vall) {
         const updatedCollec = Collec.filter(item => item.id !== e.id);
         setCollec(updatedCollec);
-      }else{
-        alert(error);
+      } else {
+        alert(`Não é possível excluir a coleção. Existem posts associados a "${e.name}".`);
       }
     }
   };
-
+  const handleReset = () => {
+    setName('');
+    setError('');
+  };
 
   return (
     <>
@@ -90,6 +94,9 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
         <Dialog.Portal>
           <DialogOverlay />
           <DialogContent>
+            <Subtitle as={Dialog.Title} className='DialogTitle'>
+              Coleções Disponíveis
+            </Subtitle>
             <div>
               {Collec?.map(e => (
                 <div key={e?.id}>
@@ -119,15 +126,18 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
                 placeholder='Nome para adicionar coleção'
                 required
               />
+              <ButtonForm className='red' onClick={handleReset}>
+                {Loader ? <SpinerLoading size={18} /> : 'Reset'}
+              </ButtonForm>
               <ButtonForm type='submit' className='red' onClick={handleSubmit}>
-                {Loader ? <SpinerLoading size={18} /> : 'Postar'}
+                {Loader ? <SpinerLoading size={18} /> : 'Salvar'}
               </ButtonForm>
             </Form>
             {Error && <ErrorStyled>{Error}</ErrorStyled>}
             {response.error && <ErrorStyled>{response.error}</ErrorStyled>}
 
             <Dialog.Close asChild>
-              <IconButton aria-label='Close'>
+              <IconButton aria-label='Close' onClick={() => setError('')}>
                 <LuX />
               </IconButton>
             </Dialog.Close>
