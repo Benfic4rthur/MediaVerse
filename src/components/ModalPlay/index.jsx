@@ -74,6 +74,8 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
       if (!error) {
         const updatedCollec = Collec.filter(item => item.id !== e.id);
         setCollec(updatedCollec);
+      }else{
+        alert(error);
       }
     }
   };

@@ -28,8 +28,8 @@ const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [progressPercent, setProgressPercent] = useState(0);
   const [body, setBody] = useState('');
-  const [colecs, setColecs] = useState([]);
-  const [selectedColec, setSelectedColec] = useState(''); // Novo estado para tag selecionada
+  const [collec, setCollec] = useState([]);
+  const [selectedCollec, setSelectedCollec] = useState(''); // Novo estado para tag selecionada
   const { user, userData } = UseAuthValue();
 
   const [formError, setFormError] = useState('');
@@ -43,8 +43,8 @@ const CreatePost = () => {
   const { insertDocument, response } = useInsertDocument('posts');
   const navigate = useNavigate();
 
-  const handleColecChange = event => {
-    setSelectedColec(event.target.value);
+  const handleCollecChange = event => {
+    setSelectedCollec(event.target.value);
   };
 
   async function handleSubmit(e) {
@@ -92,7 +92,7 @@ const CreatePost = () => {
   function resetForm() {
     setTitle('');
     setBody('');
-    setSelectedColec('');
+    setSelectedCollec('');
     setSelectedThumb(null);
     setSelectedVideo(null);
   }
@@ -106,7 +106,7 @@ const CreatePost = () => {
       thumbURLName,
       body,
       searchTokens: generateSearchTokens(title),
-      colecs: selectedColec,
+      collec: selectedCollec,
       uid: user.uid,
       createdBy: user.displayName,
       createdOn: Date.now().toString(),
@@ -123,11 +123,11 @@ const CreatePost = () => {
       const Where = where('userId', '==', userData.userId);
 
       const val = await GetCollectionValues('collec', Where);
-      setColecs(val);
+      setCollec(val);
     };
 
     func();
-  }, [selectedColec]); // Atualize para monitorar selectedTag ao invés de RenderTag
+  }, [selectedCollec]); // Atualize para monitorar selectedTag ao invés de RenderTag
 
   if (formError) return null;
 
@@ -199,18 +199,18 @@ const CreatePost = () => {
             <CreateInput
               as='select'
               className='red'
-              value={selectedColec}
-              onChange={handleColecChange}
+              value={selectedCollec}
+              onChange={handleCollecChange}
             >
               <option value=''>Selecione uma Coleção</option>
               <hr />
-              {colecs.map((e, i) => (
-                <option key={i} value={e?.name}>
+              {collec.map((e, i) => (
+                <option key={i} value={e?.id}>
                   {e?.name}
                 </option>
               ))}
             </CreateInput>
-            <DialogPlay RenderTag={selectedColec} className='red' setRenderTag={setSelectedColec}>
+            <DialogPlay RenderTag={selectedCollec} className='red' setRenderTag={setSelectedCollec}>
               <DialogButtonForm type='button' disabled={progressPercent > 1}>
                 Adicionar coleção
               </DialogButtonForm>
