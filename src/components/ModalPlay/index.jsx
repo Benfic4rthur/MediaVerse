@@ -2,7 +2,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
-import { LuHeading1, LuX, LuTrash, LuEdit } from 'react-icons/lu';
+import { LuHeading1, LuX, LuTrash } from 'react-icons/lu';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
 import { ButtonForm, Form } from '../../styles/formStyled';
@@ -78,9 +78,6 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
                 <div key={e?.id}>
                   <Tag>
                     {e?.name}
-                    <button onClick={() => e.id}>
-                      <LuEdit style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
-                    </button>
                     <button onClick={() => e.id}>
                       <LuTrash style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
                     </button>
