@@ -11,6 +11,7 @@ import { SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { CreateInput } from '../CreateInput';
 import { ButtonActive, Tag, DialogContent, Error as ErrorStyled } from './styled';
+import { useDeleteCollec } from '../../hooks/useDeleteCollec';
 
 export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, ...rest }) => {
   const [open, setOpen] = useState(false);
@@ -22,6 +23,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   const { userData } = UseAuthValue();
   const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
   const WhereEmail = where('userId', '==', userData.userId);
+  const { deleteDocument, error } = useDeleteCollec();
 
   useEffect(() => {
     const func = async () => {
@@ -64,6 +66,19 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
     }
   };
 
+  const handleDelete = async e => {
+    const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${e.name}?`);
+    if (confirmDelete) {
+      await deleteDocument(e.id, e.name);
+      // Atualize o estado 'Collec' se a exclusão for bem-sucedida
+      if (!error) {
+        const updatedCollec = Collec.filter(item => item.id !== e.id);
+        setCollec(updatedCollec);
+      }
+    }
+  };
+  
+
   return (
     <>
       <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -78,7 +93,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
                 <div key={e?.id}>
                   <Tag>
                     {e?.name}
-                    <button onClick={() => e.id}>
+                    <button onClick={() => handleDelete(e)}>
                       <LuTrash style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
                     </button>
                   </Tag>
