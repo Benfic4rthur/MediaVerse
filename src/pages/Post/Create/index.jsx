@@ -114,6 +114,7 @@ export const CreatePost = () => {
       body,
       searchTokens: generateSearchTokens(title),
       collec: id,
+      collecName: name,
       isPublic: IsValidTrueOrFalse(isPublic),
       uid: user.uid,
       createdBy: user.displayName,

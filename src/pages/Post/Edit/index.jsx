@@ -28,6 +28,7 @@ import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
+import { where } from 'firebase/firestore';
 
 export const EditPost = () => {
   const { id : postId } = useParams();
@@ -66,18 +67,26 @@ export const EditPost = () => {
       setSelectedVideo(post?.mediaURL);
       setBody(post.body);
       setIsPublic(post?.isPublic);
-
       const func = async () => {
-        const val = await GetCollectionValues('collec', null, post.collec);
-        setSelectedCollec(val);
-        setSelectedCollecInit(val);
+        try {
+          const collecData = await GetCollectionValues('collec', null, post?.collec);
+          console.log(collecData);
+          if (collecData.length > 0) {
+            setSelectedCollec(collecData[0]);
+            setSelectedCollecInit(collecData[0]);
+          } else {
+            console.error('Collection document not found');
+          }
+        } catch (error) {
+          console.error('Error fetching collection document:', error);
+        }
       };
       func();
     }
   }, [post]);
 
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError('');
@@ -180,6 +189,7 @@ export const EditPost = () => {
       body,
       searchTokens: generateSearchTokens(title),
       collec: selectedCollec.id,
+      collecName: selectedCollec.name,
       isPublic: IsValidTrueOrFalse(isPublic),
       uid: uid,
       createdBy: displayName,
@@ -189,11 +199,28 @@ export const EditPost = () => {
 
     const Document = await updateDocument(postId, postToUpdate);
     
-    if (IsValidTrueOrFalse(isPublic)) {
-      await updateCollec(id, { name, userId, publicPost: publicPost + 1 });
-    } else {
-      await updateCollec(id, { name, userId, publicPost: publicPost - 1 });
+    if (isPublic !== post?.isPublic) {
+      // Visibilidade mudou
+      if (IsValidTrueOrFalse(isPublic)) {
+        // Post se tornou público
+        await updateCollec(id, { publicPost: publicPost + 1 });
+      } else {
+        // Post se tornou privado
+        await updateCollec(id, { publicPost: publicPost - 1 });
+      }
+    } else if (post.collec !== selectedCollec) {
+      // Coleção mudou, mas a visibilidade é a mesma
+      if (IsValidTrueOrFalse(isPublic)) {
+        // Post é público, atualiza as coleções
+        await updateCollec(selectedCollec, { publicPost: publicPost + 1 });
+        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
+      } else {
+        // Post é privado, atualiza as coleções
+        await updateCollec(selectedCollec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
+        await updateCollec(post.collec, { publicPost: publicPost + 1 });
+      }
     }
+    
     if (Document) navigate(`/post/${postId}`);
   }
 
@@ -291,7 +318,7 @@ export const EditPost = () => {
               setSelectedCollec={setSelectedCollec}
             >
               <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
-                {selectedCollec?.name ? selectedCollec?.name : 'Adicionar coleção'}
+                {selectedCollec.name ? selectedCollec.name : 'Adicionar coleção'}
               </CreateInput>
             </DialogPlay>
           </ContainerFlex>
