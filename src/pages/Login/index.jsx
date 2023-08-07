@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { RxEnvelopeClosed, RxLockClosed } from 'react-icons/rx';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CreateInput } from '../../components/CreateInput';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 import { ButtonForm, ContainerForm, Error, Form } from '../../styles/formStyled';
 import { ContainerCenter, LinkStyled, Subtitle } from '../../styles/styledGlobal';
 
-const Login = () => {
+export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate()
 
   const { login, error: authError, loading } = UseAuthentication();
 
@@ -20,11 +21,17 @@ const Login = () => {
       email,
       password,
     };
-    // eslint-disable-next-line no-unused-vars
-    const res = await login(user);
-    // console.log(res);
-    redirect('/');
+
+    try {
+
+      await login(user);
+      console.log("dfjnsdfs");
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
     if (authError) {
       setError(authError);
@@ -62,7 +69,7 @@ const Login = () => {
           />
           <ButtonForm disabled={loading}>{loading ? ' Aguarde...' : 'Entrar'}</ButtonForm>
           {error && <Error>{error}</Error>}
-          <h4 style={{color: 'hsl(0, 0%, 95%, 0.7)'}}>
+          <h4 style={{ color: 'hsl(0, 0%, 95%, 0.7)' }}>
             Esqueceu sua senha?{' '}
             <LinkStyled to='/forgot-password' style={{ textDecoration: 'none' }}>
               Clique aqui!
@@ -74,5 +81,3 @@ const Login = () => {
     </ContainerCenter>
   );
 };
-
-export default Login;

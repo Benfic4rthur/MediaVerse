@@ -56,13 +56,13 @@ export const Nav = styled.nav`
   min-height: 100%;
   display: flex;
   padding: 1rem 0;
+  z-index: 1;
 
   @media (max-width: 1000px) {
     position: absolute;
     right: 0;
     top: 0;
     gap: 1rem;
-    z-index: 1;
     align-items: end;
     flex-direction: column;
   }
@@ -71,7 +71,6 @@ export const Nav = styled.nav`
 export const ContainerMenu = styled.section`
   height: 100%;
   display: flex;
-
   gap: 1rem;
   position: relative;
   flex-flow: row;
@@ -114,27 +113,26 @@ export const ContainerAdaptiveMenu = styled.div`
 //   }
 // `;
 
-export const RowMenu = styled.section`
-  display: flex;
-  gap: 1rem;
-  z-index: 1;
-  flex-flow: row;
-  width: fit-content;
+// export const RowMenu = styled.section`
+//   display: flex;
+//   gap: 1rem;
+//   flex-flow: row;
+//   width: fit-content;
 
-  justify-content: center;
-  align-items: center;
-  @media (max-width: 1000px) {
-    padding-bottom: 1rem;
-    gap: 0.8rem;
-    flex-flow: column;
-    border-end-end-radius: ${({ theme }) => theme.border.radius};
-    border-end-start-radius: ${({ theme }) => theme.border.radius};
+//   justify-content: center;
+//   align-items: center;
+//   @media (max-width: 1000px) {
+//     padding-bottom: 1rem;
+//     gap: 0.8rem;
+//     flex-flow: column;
+//     border-end-end-radius: ${({ theme }) => theme.border.radius};
+//     border-end-start-radius: ${({ theme }) => theme.border.radius};
 
-    transform-origin: top right;
-    transform: scaleY(0);
-    visibility: hidden;
-  }
-`;
+//     transform-origin: top right;
+//     transform: scaleY(0);
+//     visibility: hidden;
+//   }
+// `;
 
 export const Menu = styled.div`
   width: ${props => (props.$expanded ? '24rem' : '4rem')};
@@ -160,6 +158,7 @@ export const NavLinkStyled = styled(NavLink)`
   padding: 0.5rem;
   border-radius: ${({ theme }) => theme.border.radius};
   display: flex;
+  z-index: 3;
   white-space: nowrap;
   justify-content: center;
   align-items: center;

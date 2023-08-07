@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuEdit, LuEye, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
-import { DialogDemo } from '../../components/Modal';
-import { UseAuthValue } from '../../context/AuthContext';
-import { useDeleteDocument } from '../../hooks/useDeleteDocument';
-import { useFetchDocuments } from '../../hooks/useFetchDocuments';
-import { CreatePostButton, Subtitle } from '../../styles/styledGlobal';
-import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
+import { DialogDemo } from '../../../components/Modal';
+import { UseAuthValue } from '../../../context/AuthContext';
+import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
+import { useFetchDocuments } from '../../../hooks/useFetchDocuments';
+import { CreatePostButton, Subtitle } from '../../../styles/styledGlobal';
+import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import {
   Author,
   ButtonEvent,
@@ -29,7 +29,7 @@ import {
   Views,
 } from './styled';
 
-const Dashboard = () => {
+export const DashboardPost = () => {
   const { user, userData } = UseAuthValue();
   const uid = user.uid;
 
@@ -76,7 +76,7 @@ const Dashboard = () => {
             : 'Gerencie os seus posts'}
         </Subtitle>
 
-        <CreatePostButton as={Link} to='/create-post'>
+        <CreatePostButton as={Link} to='/post/create'>
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
@@ -148,10 +148,10 @@ const Dashboard = () => {
                 </Deta>
               </ContainerDate>
               <ContainerButtonEvent>
-                <ButtonEvent as={Link} to={`/posts/${post.id}`} title='ver post'>
+                <ButtonEvent as={Link} to={`/post/${post.id}`} title='ver post'>
                   <LuEye />
                 </ButtonEvent>
-                <ButtonEvent as={Link} to={`/posts/editpost/${post.id}`} title='editar post'>
+                <ButtonEvent as={Link} to={`/post/edit/${post.id}`} title='editar post'>
                   <LuEdit />
                 </ButtonEvent>
                 <ButtonEvent
@@ -212,10 +212,10 @@ const Dashboard = () => {
                 </Deta>
               </ContainerDate>
               <ContainerButtonEvent>
-                <ButtonEvent as={Link} to={`/posts/${post.id}`} title='ver post'>
+                <ButtonEvent as={Link} to={`/post/${post.id}`} title='ver post'>
                   <LuEye />
                 </ButtonEvent>
-                <ButtonEvent as={Link} to={`/posts/editpost/${post.id}`} title='editar post'>
+                <ButtonEvent as={Link} to={`/post/edit/${post.id}`} title='editar post'>
                   <LuEdit />
                 </ButtonEvent>
                 <ButtonEvent
@@ -247,5 +247,3 @@ const Dashboard = () => {
     </div>
   );
 };
-
-export default Dashboard;

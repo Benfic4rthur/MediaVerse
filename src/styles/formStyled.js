@@ -38,8 +38,6 @@ export const Form = styled.form`
   gap: 1.4rem;
 `;
 
-
-
 const TextariaOrInputStyled = css`
   background-color: ${({ theme }) => theme.color.fourthHover};
   border-radius: ${({ theme }) => theme.border.radius};
@@ -61,6 +59,7 @@ export const InputStyled = css`
   ${TextariaOrInputStyled}
   min-width: 100%;
   height: fit-content;
+  text-align: left;
   padding: ${props => (props.$svg ? '1.2rem 1.2rem 1.2rem 4.4rem' : '1.2rem')};
 `;
 
@@ -77,13 +76,13 @@ export const ContainerSvg = styled.div`
   left: 1.2rem;
   z-index: 1;
   top: 50%;
-  height: ${({ theme }) => theme.sizeSVG / 10}rem;
-  width: ${({ theme }) => theme.sizeSVG / 10}rem;
   transform: translateY(-50%);
 `;
 
-export const SvgStyled = styled.svg``;
-
+export const SvgStyled = styled.svg`
+  height: ${({ theme }) => theme.sizeSVG};
+  width: ${({ theme }) => theme.sizeSVG};
+`;
 
 export const Textaria = styled.textarea`
   width: 100%;
@@ -101,35 +100,45 @@ export const Textaria = styled.textarea`
   }
 `;
 
-export const ButtonForm = styled.button`
+export const StyledButton = styled.button`
+  width: 100%;
+  padding: 1.2rem 1.8rem;
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  font-size: 1.6rem;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: 300ms color, 400ms background-color;
+`;
+
+export const ButtonForm = styled(StyledButton)`
   background-color: ${({ theme }) => theme.color.first};
   color: ${({ theme }) => theme.color.fourth};
-  text-align: center;
-  cursor: pointer;
-  border-radius: 1rem;
-  width: 100%;
-  font-weight: ${({ theme }) => theme.font.weight.bold};
-  border: none;
-  padding: 1.2rem 1.8rem;
-  font-size: 1.6rem;
-  transition: 300ms color, 300ms background-color;
 
   &:hover {
     background-color: ${({ theme }) => theme.color.firstHover};
-    transition: 0.5s;
-    border-radius: 1rem;
   }
 
   &:disabled {
     background-color: ${({ theme }) => theme.color.first};
     color: ${({ theme }) => theme.color.fourth};
   }
-  :focus {
-    outline: 0.2rem solid ${({ theme }) => theme.color.fourth};
-    outline-offset: 0.3rem;
+`;
+
+export const ButtonResetForm = styled(StyledButton)`
+  background-color: ${({ theme }) => theme.color.fifth};
+  color: ${({ theme }) => theme.color.error};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.fifthHover};
+    color: ${({ theme }) => theme.color.errorHover};
   }
-  :hover {
-    text-decoration: underline;
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.color.fifthHover};
+    color: ${({ theme }) => theme.color.errorDisabled};
   }
 `;
 
@@ -140,6 +149,7 @@ export const jhh = styled.p`
   border-radius: 1rem;
   background: hsl(0, 80%, 90%);
 `;
+
 export const Error = styled.p`
   padding: 0.8rem;
   font-size: 1.2rem;
@@ -147,12 +157,13 @@ export const Error = styled.p`
   border-radius: 1rem;
   background: hsl(0, 80%, 90%);
 `;
+
 export const Success = styled.p`
   padding: 0.8rem;
   font-size: 1.2rem;
-  color: green; /*hsl(125.71428571428572, 49.60629921259843%, 50.19607843137255%)*/
+  color: hsl(125, 49%, 50%);
   border-radius: 1rem;
-  background-color: hsl(126.81818181818183, 23.157894736842117%, 62.745098039215684%);
+  background-color: hsl(126, 23%, 62%);
 `;
 
 // export const Description = styled.p`

@@ -8,7 +8,7 @@ import { UseAuthentication } from '../../hooks/useAuthentication';
 import { ButtonForm, ContainerForm, Error, Form } from '../../styles/formStyled';
 import { ContainerCenter, LinkStyled, Subtitle } from '../../styles/styledGlobal';
 
-const Login = () => {
+export const Login = () => {
   const [userCnpj, setUserCnpj] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -81,5 +81,3 @@ const Login = () => {
     </ContainerCenter>
   );
 };
-
-export default Login;

@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
-import { UseAuthValue } from '../../context/AuthContext';
-import { useAllUsersInfo } from '../../hooks/useAllUserInfo';
-import { useDeleteUserInfo } from '../../hooks/useDeleteUserInfo';
-import { useSoftDelete } from '../../hooks/useSoftDelete';
-import { CreatePostButton, Subtitle } from '../../styles/styledGlobal';
-import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
+import { UseAuthValue } from '../../../context/AuthContext';
+import { useAllUsersInfo } from '../../../hooks/useAllUserInfo';
+import { useDeleteUserInfo } from '../../../hooks/useDeleteUserInfo';
+import { useSoftDelete } from '../../../hooks/useSoftDelete';
+import { CreatePostButton, Subtitle } from '../../../styles/styledGlobal';
+import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import {
   Author,
   ButtonEvent,
@@ -54,7 +54,7 @@ const FormattedTimeDiff = (loggedAt = 0, loggedOutAt = 0) => {
   return formattedTime;
 };
 
-const Index = () => {
+export const DashboardUser = () => {
   const { documents: usersInfo } = useAllUsersInfo('userInfo');
   const { user, userData } = UseAuthValue();
   const { deleteDocument } = useDeleteUserInfo();
@@ -128,7 +128,7 @@ const Index = () => {
                   </Author>
                 </ContRowInit>
                 <ContRowDate className='edit'>
-                  <ButtonEvent as={Link} to={`/editUser/${id}`} title='editar usuário'>
+                  <ButtonEvent as={Link} to={`/user/edit/${id}`} title='editar usuário'>
                     <LuEdit />
                   </ButtonEvent>
                   <ButtonEvent onClick={() => handleDelete(id, userName)} title='Apagar usuário'>
@@ -175,5 +175,3 @@ const Index = () => {
     </div>
   );
 };
-
-export default Index;

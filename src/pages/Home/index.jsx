@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
-import { Await, Form, Link, defer, useLoaderData, useSearchParams } from 'react-router-dom';
+import { Await, Form, defer, useLoaderData, useSearchParams } from 'react-router-dom';
 
 //components
 
@@ -10,10 +10,9 @@ import { NoPost } from '../../components/NoPost';
 import { PostDetailsHome } from '../../components/PostDetailsHome';
 import { SearchButton, SearchForm, SearchInput } from '../../styles/styledGlobal';
 import { FetchDocuments } from '../../utils/FetchDocuments';
-import { FetchTags } from '../../utils/FetchTags';
-import { ButtonSystem, ContainerButton, ContainerHome, PostsContainer } from './styled';
+import { ContainerButton, ContainerHome, PostsContainer } from './styled';
 
-const Index = () => {
+export const Home = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
@@ -59,7 +58,7 @@ const Index = () => {
                   {posts.data
                     ?.filter(e => !e?.tags?.includes?.('aprendendo-o-sistema'))
                     .map(post => (
-                      <PostDetailsHome key={post.id} to={'/posts/'} post={post} />
+                      <PostDetailsHome key={post.id} to={'/post/'} post={post} />
                     ))}
                 </PostsContainer>
               </>
@@ -72,8 +71,6 @@ const Index = () => {
     </ContainerHome>
   );
 };
-
-export default Index;
 
 export async function homeLoader({ request }) {
   const paramsUrl = new URL(request.url).searchParams;

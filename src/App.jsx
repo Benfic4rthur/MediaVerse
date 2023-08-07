@@ -79,9 +79,8 @@ function App() {
   const isVisible = usePageVisibility();
 
   useEffect(() => {
-    const func = async (email) => {
+    const func = async email => {
       const data = await fetchUserInfo(email);
-      // console.log(data)
       setUserData(data);
     };
 
@@ -91,26 +90,27 @@ function App() {
   }, [Reload, userEmail]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCountdown(prevCountdown => {
-        if (prevCountdown % 60 === 0) {
-          console.log(`A página será atualizada em ${prevCountdown / 60} minutos...`);
-        }
-        return prevCountdown - 1;
-      });
-    }, 1000);
+    // const intervalId = setInterval(() => {
+    //   setCountdown(prevCountdown => {
+    //     if (prevCountdown % 60 === 0) {
+    //       console.log(`A página será atualizada em ${prevCountdown / 60} minutos...`);
+    //     }
+    //     return prevCountdown - 1;
+    //   });
+    // }, 1000);
 
     const timeoutId = setTimeout(() => {
-      window.location.reload();
+      setReload(e => ++e);
+      console.log("69898");
     }, 3600000);
 
     if (!isVisible) {
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
       clearTimeout(timeoutId);
     }
 
     return () => {
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
       clearTimeout(timeoutId);
     };
   }, [isVisible]);
@@ -209,7 +209,7 @@ export default App;
 //                 <Route path='/catalog' element={user ? <Catalog /> : <Navigate to='/login' />} />
 //                 <Route path='/about' element={<About /> }/>
 //                 <Route path='/search' element={user ? <Search /> : <Navigate to='/login' />} />
-//                 <Route path='/posts/:id' element={<Post />} />
+//                 <Route path='/post/:id' element={<Post />} />
 //                 <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
 //                 <Route path='/forgot-password' element={!user ? <ForgotPassword /> : <Navigate to='/' />} />
 //                 <Route path='/register' element={user && userStatus === 'admin' ? <Register /> : <Navigate to='/login' />} />
@@ -218,11 +218,11 @@ export default App;
 //                   element={user && userStatus === 'admin' || userStatus === 'funcionario'? <Dashboard /> : <Navigate to='/login' />}
 //                 />
 //                 <Route
-//                   path='/create-post'
+//                   path='/post/create'
 //                   element={user && userStatus === 'admin' || userStatus === 'funcionario'? <CreatePost /> : <Navigate to='/login' />}
 //                 />
 //                 <Route
-//                   path='/posts/editpost/:id'
+//                   path='/post/edit/:id'
 //                   element={user && userStatus === 'admin' || userStatus === 'funcionario'? <EditPost /> : <Navigate to='/login' />}
 //                 />
 //                 {/* pagina não encontrada */}

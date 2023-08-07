@@ -7,7 +7,7 @@ import { PostDetailsHome } from '../../components/PostDetailsHome';
 import { FetchTags } from '../../utils/FetchTags';
 import { ContainerHome, PostsContainer, ContainerTitle } from './styled';
 
-const Index = () => {
+export const Public = () => {
   const data = useLoaderData();
 
   useLayoutEffect(() => {
@@ -27,7 +27,7 @@ const Index = () => {
             posts?.length ? (
               <PostsContainer>
                 {posts.map(post => (
-                  <PostDetailsHome key={post.id} to={'/public-post/'} post={post} />
+                  <PostDetailsHome key={post.id} to={'/post/public'} post={post} />
                 ))}
               </PostsContainer>
             ) : (
@@ -39,8 +39,6 @@ const Index = () => {
     </ContainerHome>
   );
 };
-
-export default Index;
 
 export async function publicLoader() {
   return defer({

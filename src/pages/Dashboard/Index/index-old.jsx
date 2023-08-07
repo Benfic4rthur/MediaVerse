@@ -4,11 +4,11 @@
 import { useLayoutEffect } from 'react';
 import { LuEdit, LuEye, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
-import { DialogDemo } from '../../components/Modal';
-import { UseAuthValue } from '../../context/AuthContext';
-import { useDeleteDocument } from '../../hooks/useDeleteDocument';
-import { useFetchDocuments } from '../../hooks/useFetchDocuments';
-import { CreatePostButton, Subtitle } from '../../styles/styledGlobal';
+import { DialogDemo } from '../../../components/Modal';
+import { UseAuthValue } from '../../../context/AuthContext';
+import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
+import { useFetchDocuments } from '../../../hooks/useFetchDocuments';
+import { CreatePostButton, Subtitle } from '../../../styles/styledGlobal';
 import {
   Author,
   ButtonEvent,
@@ -28,7 +28,7 @@ import {
 } from './styled';
 
 const Dashboard = () => {
-  const {user, userData } = UseAuthValue();
+  const { user, userData } = UseAuthValue();
   const uid = user.uid;
 
   const { documents: posts } = useFetchDocuments('posts', null, uid);
@@ -44,9 +44,11 @@ const Dashboard = () => {
     <div>
       <ContainerHeader>
         <Subtitle>
-          {userData.userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
+          {userData.userStatus === 'admin'
+            ? 'Gerencie Todas as postagens'
+            : 'Gerencie os seus posts'}
         </Subtitle>
-        <CreatePostButton as={Link} to='/create-post'>
+        <CreatePostButton as={Link} to='/post/create'>
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
@@ -96,10 +98,10 @@ const Dashboard = () => {
                     </Deta>
                   </ContainerDate>
                   <ContainerButtonEvent>
-                    <ButtonEvent as={Link} to={`/posts/${post.id}`} title='ver post'>
+                    <ButtonEvent as={Link} to={`/post/${post.id}`} title='ver post'>
                       <LuEye />
                     </ButtonEvent>
-                    <ButtonEvent as={Link} to={`/posts/editpost/${post.id}`} title='editar post'>
+                    <ButtonEvent as={Link} to={`/post/edit/${post.id}`} title='editar post'>
                       <LuEdit />
                     </ButtonEvent>
                     <ButtonEvent
@@ -153,10 +155,10 @@ const Dashboard = () => {
                     </TitlePost>
                   </ContainerTitlePost>
                   <ContainerButtonEvent>
-                    <ButtonEvent as={Link} to={`/posts/${post.id}`}>
+                    <ButtonEvent as={Link} to={`/post/${post.id}`}>
                       <LuEye />
                     </ButtonEvent>
-                    <ButtonEvent as={Link} to={`/posts/editpost/${post.id}`}>
+                    <ButtonEvent as={Link} to={`/post/edit/${post.id}`}>
                       <LuEdit />
                     </ButtonEvent>
                     <ButtonEvent
@@ -233,7 +235,7 @@ export default Dashboard;
 //         <Subtitle>
 //           {userData.userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
 //         </Subtitle>
-//         <CreatePostButton as={Link} to='/create-post'>
+//         <CreatePostButton as={Link} to='/post/create'>
 //           Criar Post <LuPlus size={17} />
 //         </CreatePostButton>
 //       </ContainerHeader>
@@ -273,10 +275,10 @@ export default Dashboard;
 //                   <Author>|  Autor: {post.createdBy}</Author>
 
 //                   <ContainerButtonEvent>
-//                     <ButtonEvent as={Link} to={`/posts/${post.id}`}>
+//                     <ButtonEvent as={Link} to={`/post/${post.id}`}>
 //                       <LuEye />
 //                     </ButtonEvent>
-//                     <ButtonEvent as={Link} to={`/posts/editpost/${post.id}`}>
+//                     <ButtonEvent as={Link} to={`/post/edit/${post.id}`}>
 //                       <LuEdit />
 //                     </ButtonEvent>
 //                     <ButtonEvent
@@ -328,10 +330,10 @@ export default Dashboard;
 //                     <TitlePost> |  Título: {post.title}</TitlePost>
 //                   </ContainerTitlePost>
 //                   <ContainerButtonEvent>
-//                     <ButtonEvent as={Link} to={`/posts/${post.id}`}>
+//                     <ButtonEvent as={Link} to={`/post/${post.id}`}>
 //                       <LuEye />
 //                     </ButtonEvent>
-//                     <ButtonEvent as={Link} to={`/posts/editpost/${post.id}`}>
+//                     <ButtonEvent as={Link} to={`/post/edit/${post.id}`}>
 //                       <LuEdit />
 //                     </ButtonEvent>
 //                     <ButtonEvent
@@ -381,7 +383,7 @@ export default Dashboard;
 //         <Subtitle>
 //           {userData.userStatus === 'admin' ? 'Gerencie Todas as postagens' : 'Gerencie os seus posts'}
 //         </Subtitle>
-//         <CreatePostButton as={Link} to='/create-post'>
+//         <CreatePostButton as={Link} to='/post/create'>
 //           Criar Post <LuPlus size={17} />
 //         </CreatePostButton>
 //       </ContainerHeader>
@@ -410,10 +412,10 @@ export default Dashboard;
 //               {userData.userStatus === 'admin' && <Author> | Autor: {post.createdBy}</Author>}
 
 //               <ContainerButtonEvent>
-//                 <ButtonEvent as={Link} to={`/posts/${post.id}`}>
+//                 <ButtonEvent as={Link} to={`/post/${post.id}`}>
 //                   <LuEye />
 //                 </ButtonEvent>
-//                 <ButtonEvent as={Link} to={`/posts/editpost/${post.id}`}>
+//                 <ButtonEvent as={Link} to={`/post/edit/${post.id}`}>
 //                   <LuEdit />
 //                 </ButtonEvent>
 //                 <ButtonEvent

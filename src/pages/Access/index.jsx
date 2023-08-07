@@ -9,7 +9,7 @@ import { TargetSectors } from '../../components/Access/TargetSectors';
 import { Video } from '../../components/Access/Video';
 import { Container } from './styled';
 
-export default function Access() {
+export const Access = () => {
   const data = useLoaderData();
 
   useEffect(() => {

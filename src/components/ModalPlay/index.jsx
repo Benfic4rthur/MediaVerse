@@ -1,21 +1,32 @@
 /* eslint-disable import/no-unresolved */
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
-import { LuHeading1, LuX, LuTrash } from 'react-icons/lu';
+import { useEffect, useState } from 'react';
+import { LuTrash, LuX } from 'react-icons/lu';
+import { MdOutlineAddBox, MdOutlineLibraryAdd } from 'react-icons/md';
 import { UseAuthValue } from '../../context/AuthContext';
+import { useDeleteCollec } from '../../hooks/useDeleteCollec';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
-import { ButtonForm, Form } from '../../styles/formStyled';
+import { ButtonForm, ButtonResetForm, Form, SvgStyled } from '../../styles/formStyled';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { CreateInput } from '../CreateInput';
-import { ButtonActive, Tag, DialogContent, Error as ErrorStyled } from './styled';
-import { useDeleteCollec } from '../../hooks/useDeleteCollec';
+import {
+  ButtonActive,
+  ButtonEvent,
+  ContainerBetween,
+  ContainerTag,
+  DialogContent,
+  Error as ErrorStyled,
+  Tag,
+  TextTag,
+} from './styled';
 
-export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, ...rest }) => {
+export const DialogPlay = ({ children, RenderTag, setSelectedCollec = () => {}, ...rest }) => {
   const [open, setOpen] = useState(false);
   const [Loader, setLoader] = useState(false);
+  const [Reload, setReload] = useState(0);
   const [Error, setError] = useState('');
   const [Name, setName] = useState('');
   const [Collec, setCollec] = useState([]);
@@ -28,12 +39,11 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
   useEffect(() => {
     const func = async () => {
       const val = await GetCollectionValues('collec', WhereEmail);
-      // console.log(val);
       setCollec(val);
     };
 
     func();
-  }, [RenderTag]);
+  }, [RenderTag, Reload]);
   // >>>>>>> Stashed changes
 
   const handleSubmit = async e => {
@@ -46,33 +56,28 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
         const val = await GetCollectionValues('collec', Where);
 
         if (val?.length == 0) {
-          await insertDocument({ name: Name, userId: userData.userId });
-
-          setRenderTag(++RenderTag);
-          setOpen(false);
+          await insertDocument({ name: Name, userId: userData.userId, publicPost: 0 });
+          setReload(e => ++e);
         } else {
           setError('Coleção ja existe');
-          setOpen(true);
         }
       } else {
         setError('Selecione o nome de uma coleção');
-        setOpen(true);
       }
 
       setLoader(false);
     } catch (error) {
       console.error(error);
       setLoader(false);
-      setOpen(true);
     }
   };
 
   const handleDelete = async e => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${e.name}?`);
     if (confirmDelete) {
-      const vall = await deleteDocument(e.id, e.name);
+      const val = await deleteDocument(e.id, e.name);
       // Atualize o estado 'Collec' se a exclusão for bem-sucedida
-      if (vall) {
+      if (val) {
         const updatedCollec = Collec.filter(item => item.id !== e.id);
         setCollec(updatedCollec);
       } else {
@@ -97,18 +102,33 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
             <Subtitle as={Dialog.Title} className='DialogTitle'>
               Coleções Disponíveis
             </Subtitle>
-            <div>
+            <ContainerTag>
               {Collec?.map(e => (
-                <div key={e?.id}>
-                  <Tag>
-                    {e?.name}
-                    <button onClick={() => handleDelete(e)}>
+                <Tag key={e?.id}>
+                  <SvgStyled
+                    as={MdOutlineAddBox}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      setSelectedCollec(e);
+                      setOpen(e => !e);
+                    }}
+                  />
+                  <ContainerBetween>
+                    <TextTag>{e?.name}</TextTag>
+                    <ButtonEvent
+                      className='delete'
+                      title='deleter coleção'
+                      aria-label='deleter coleção'
+                      onClick={() => {handleDelete(e)
+                        setSelectedCollec({})
+                      }}
+                    >
                       <LuTrash style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
-                    </button>
-                  </Tag>
-                </div>
+                    </ButtonEvent>
+                  </ContainerBetween>
+                </Tag>
               ))}
-            </div>
+            </ContainerTag>
 
             <Subtitle as={Dialog.Title} className='DialogTitle'>
               Criar coleção
@@ -116,7 +136,7 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
 
             <Form>
               <CreateInput
-                Svg={LuHeading1}
+                Svg={MdOutlineLibraryAdd}
                 aria-label='Título'
                 type='text'
                 name='name'
@@ -126,9 +146,9 @@ export const DialogPlay = ({ children, RenderTag = 0, setRenderTag = () => {}, .
                 placeholder='Nome para adicionar coleção'
                 required
               />
-              <ButtonForm className='red' onClick={handleReset}>
-                {Loader ? <SpinerLoading size={18} /> : 'Reset'}
-              </ButtonForm>
+              <ButtonResetForm type='button' className='red' onClick={handleReset}>
+                Reset
+              </ButtonResetForm>
               <ButtonForm type='submit' className='red' onClick={handleSubmit}>
                 {Loader ? <SpinerLoading size={18} /> : 'Salvar'}
               </ButtonForm>

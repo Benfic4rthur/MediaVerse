@@ -3,7 +3,7 @@ import { Container, Image } from './styled';
 import erro404 from '../../assets/404.png';
 import { useEffect } from 'react';
 
-const Index = () => {
+export const NotFound = () => {
   useEffect(() => {
     document.title = 'MediaVerse - Not Found';
   });
@@ -13,5 +13,3 @@ const Index = () => {
     </Container>
   );
 };
-
-export default Index;

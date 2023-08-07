@@ -1,4 +1,4 @@
-import { ContainerSidebar } from '../../pages/Post/styled';
+import { ContainerSidebar } from '../../pages/Post/Index/styled';
 import { Subtitle as SubtitleGlobal } from '../../styles/styledGlobal';
 import { CardSidebar } from '../CardSidebar';
 import { Subtitle } from '../CardSidebar/styled';

@@ -14,7 +14,7 @@ export const NoPost = ({ title }) => {
     <PostsNotFoundContainer>
       <PostsNotFoundTitle>{title}</PostsNotFoundTitle>
       {(userData.userStatus === 'funcionario' || userData.userStatus === 'admin') && (
-        <CreatePostButton as={Link} to='/create-post'>
+        <CreatePostButton as={Link} to='/post/create'>
           Criar postagem <LuPlus size={17} />
         </CreatePostButton>
       )}

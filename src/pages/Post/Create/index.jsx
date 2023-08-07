@@ -1,12 +1,13 @@
-import { where } from 'firebase/firestore';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { LuFileVideo, LuHeading1, LuImagePlus } from 'react-icons/lu';
+import { useLayoutEffect, useState } from 'react';
+import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
+import { MdOutlineVideoLibrary } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import { CreateInput } from '../../components/CreateInput';
-import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
-import { DialogPlay } from '../../components/ModalPlay';
-import { UseAuthValue } from '../../context/AuthContext';
-import { useInsertDocument } from '../../hooks/useInsertDocument';
+import { CreateInput } from '../../../components/CreateInput';
+import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
+import { DialogPlay } from '../../../components/ModalPlay';
+import { UseAuthValue } from '../../../context/AuthContext';
+import { useInsertDocument } from '../../../hooks/useInsertDocument';
+import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 import {
   ContainerFlex,
   ContainerForm,
@@ -15,26 +16,31 @@ import {
   Form,
   Progress,
   Video,
-} from '../../styles/StyledPostForm';
-import { ButtonForm, Textaria } from '../../styles/formStyled';
-import { ContainerCenter, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
-import { GetCollectionValues } from '../../utils/GetCollectionValues';
-import { generateSearchTokens } from '../../utils/generateSearchTokens';
-import { mediaUpload } from '../../utils/mediaUpload';
-import { processSelectedFile } from '../../utils/processSelectedFile';
-import { DialogButtonForm } from '../../components/ModalPlay/styled';
+} from '../../../styles/StyledPostForm';
+import { ButtonForm, ButtonResetForm, Textaria } from '../../../styles/formStyled';
+import { ContainerCenter, SpinerLoading, Subtitle } from '../../../styles/styledGlobal';
+import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
+import { generateSearchTokens } from '../../../utils/generateSearchTokens';
+import { mediaUpload } from '../../../utils/mediaUpload';
+import { processSelectedFile } from '../../../utils/processSelectedFile';
 
-const CreatePost = () => {
+export const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [progressPercent, setProgressPercent] = useState(0);
   const [body, setBody] = useState('');
-  const [collec, setCollec] = useState([]);
-  const [selectedCollec, setSelectedCollec] = useState(''); // Novo estado para tag selecionada
-  const { user, userData } = UseAuthValue();
-
+  const [isPublic, setIsPublic] = useState('false');
+  const [selectedCollec, setSelectedCollec] = useState({
+    name: '',
+    id: '',
+    userId: '',
+    publicPost: 0,
+  }); // Novo estado para tag selecionada
+  const { user } = UseAuthValue();
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
+
+  const { updateDocument, response: responseCollec } = useUpdateDocument('collec');
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Novo Post';
@@ -43,13 +49,19 @@ const CreatePost = () => {
   const { insertDocument, response } = useInsertDocument('posts');
   const navigate = useNavigate();
 
-  const handleCollecChange = event => {
-    setSelectedCollec(event.target.value);
-  };
-
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError('');
+
+    if (!selectedCollec.id) {
+      setFormError('Selecione uma coleção');
+      return;
+    }
+
+    if (IsValidTrueOrFalse(isPublic) && selectedCollec.publicPost === 3) {
+      setFormError('so e posivel ter 3 coleção publicas');
+      return;
+    }
 
     const mediaVideo = document.getElementById('mediaVideo')?.files?.[0];
     const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
@@ -60,7 +72,7 @@ const CreatePost = () => {
     }
 
     if (!mediaThumb) {
-      setFormError('Selecione uma image.');
+      setFormError('Selecione uma imagem.');
       return;
     }
 
@@ -89,15 +101,9 @@ const CreatePost = () => {
     }
   }
 
-  function resetForm() {
-    setTitle('');
-    setBody('');
-    setSelectedCollec('');
-    setSelectedThumb(null);
-    setSelectedVideo(null);
-  }
-
   async function savePost(mediaURL = '', thumbURL = '', mediaURLName = '', thumbURLName = '') {
+    const { id, name, publicPost, userId } = selectedCollec;
+
     const post = {
       title,
       mediaURL,
@@ -106,7 +112,8 @@ const CreatePost = () => {
       thumbURLName,
       body,
       searchTokens: generateSearchTokens(title),
-      collec: selectedCollec,
+      collec: id,
+      isPublic: IsValidTrueOrFalse(isPublic),
       uid: user.uid,
       createdBy: user.displayName,
       createdOn: Date.now().toString(),
@@ -115,21 +122,21 @@ const CreatePost = () => {
 
     const Document = await insertDocument(post);
 
-    if (Document) navigate(`/posts/${Document?.id}`);
+    if (IsValidTrueOrFalse(isPublic)) {
+      await updateDocument(id, { name, userId, publicPost: publicPost + 1 });
+    }
+
+    if (Document) navigate(`/post/${Document?.id}`);
   }
 
-  useEffect(() => {
-    const func = async () => {
-      const Where = where('userId', '==', userData.userId);
-
-      const val = await GetCollectionValues('collec', Where);
-      setCollec(val);
-    };
-
-    func();
-  }, [selectedCollec]); // Atualize para monitorar selectedTag ao invés de RenderTag
-
-  if (formError) return null;
+  const Reset = () => {
+    setTitle('');
+    setBody('');
+    setSelectedThumb('');
+    setSelectedVideo('');
+    setSelectedCollec({});
+    setIsPublic('false');
+  };
 
   return (
     <ContainerCenter>
@@ -197,45 +204,51 @@ const CreatePost = () => {
 
           <ContainerFlex>
             <CreateInput
+              Svg={LuLock}
               as='select'
               className='red'
-              value={selectedCollec}
-              onChange={handleCollecChange}
+              value={isPublic}
+              onChange={event => {
+                setIsPublic(event.target.value);
+                console.log(isPublic);
+              }}
+              title='define se a postagem vai ser publica ou privada'
+              aria-label='define se a postagem vai ser publica ou privada'
             >
-              
-              <option value=''>Selecione uma Coleção</option>
+              <option value={"false"}>Privado</option>
               <hr />
-              {collec.map((e, i) => (
-                <option key={i} value={e?.id}>
-                  {e?.name}
-                </option>
-              ))}
+              <option value={"true"}>Publico</option>
             </CreateInput>
-            <DialogPlay RenderTag={selectedCollec} className='red' setRenderTag={setSelectedCollec}>
-              <DialogButtonForm type='button' disabled={progressPercent > 1}>
-                Adicionar coleção
-              </DialogButtonForm>
+            <DialogPlay
+              RenderTag={selectedCollec}
+              className='red'
+              setSelectedCollec={setSelectedCollec}
+            >
+              <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
+                {selectedCollec?.name ? selectedCollec?.name : 'Adicionar coleção'}
+              </CreateInput>
             </DialogPlay>
           </ContainerFlex>
+
           <ContainerFlex>
-            <ButtonForm
+            <ButtonResetForm
               className='red'
               type='reset'
-              onClick={resetForm}
+              onClick={Reset}
               disabled={progressPercent > 1}
             >
               Limpar
-            </ButtonForm>
+            </ButtonResetForm>
             <ButtonForm className='red' disabled={progressPercent > 1}>
               {progressPercent < 1 ? 'Postar' : <SpinerLoading size={18} />}
             </ButtonForm>
           </ContainerFlex>
           {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
-          {(response.error || formError) && <Error>{response.error || formError}</Error>}
+          {(responseCollec.error || response.error || formError) && (
+            <Error>{response.error || formError || responseCollec.error}</Error>
+          )}
         </Form>
       </ContainerForm>
     </ContainerCenter>
   );
 };
-
-export default CreatePost;

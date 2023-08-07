@@ -23,6 +23,10 @@
   background-color: rgb(5, 45, 87);
 }
 
+option{
+  color: hsl(1, 85%, 64%);
+}
+
 
 @font-face {
   font-family: "Spacetron";

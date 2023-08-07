@@ -127,7 +127,7 @@ const Index = () => {
                     <>
                       <NavLinkRowMenu
                         aria-label='novo post'
-                        to='/create-post'
+                        to='/post/create'
                         className={`${isActive => (isActive ? 'active' : '')} a1`}
                         onClick={() => setExpanded(false)}
                       >
@@ -135,7 +135,7 @@ const Index = () => {
                       </NavLinkRowMenu>
                       <NavLinkRowMenu
                         aria-label='painel de postagens'
-                        to='/dashboard'
+                        to='/dashboard/'
                         className={`${isActive => (isActive ? 'active' : '')} a2`}
                         onClick={() => setExpanded(false)}
                       >
@@ -147,7 +147,7 @@ const Index = () => {
                     <>
                       <NavLinkRowMenu
                         aria-label='painel de usuarios'
-                        to='/userspanel'
+                        to='/dashboard/user'
                         className={`${isActive => (isActive ? 'active' : '')} a3`}
                         onClick={() => setExpanded(false)}
                       >
@@ -193,7 +193,7 @@ const Index = () => {
                       <>
                         <NavLinkMenuExpanded
                           aria-label='novo post'
-                          to='/create-post'
+                          to='/post/create'
                           className={`${isActive => (isActive ? 'active' : '')} a1`}
                           onClick={() => setExpanded(false)}
                         >
@@ -201,7 +201,7 @@ const Index = () => {
                         </NavLinkMenuExpanded>
                         <NavLinkMenuExpanded
                           aria-label='painel de postagens'
-                          to='/dashboard'
+                        to='/dashboard/'
                           className={`${isActive => (isActive ? 'active' : '')} a2`}
                           onClick={() => setExpanded(false)}
                         >
@@ -213,7 +213,7 @@ const Index = () => {
                       <>
                         <NavLinkMenuExpanded
                           aria-label='painel de usuarios'
-                          to='/userspanel'
+                          to='/dashboard/user'
                           className={`${isActive => (isActive ? 'active' : '')} a3`}
                           onClick={() => setExpanded(false)}
                         >

@@ -8,7 +8,7 @@ import { UseAuthentication } from '../../hooks/useAuthentication';
 import { ButtonForm, ContainerForm, Error, Form } from '../../styles/formStyled';
 import { ContainerCenter } from '../../styles/styledGlobal';
 
-const Index = () => {
+export const Register = () => {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -129,5 +129,3 @@ const Index = () => {
     </ContainerCenter>
   );
 };
-
-export default Index;

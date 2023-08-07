@@ -17,7 +17,7 @@ import {
   SpaceShare,
   Title,
   VideoStyled,
-} from '../Post/styled';
+} from '../Post/Index/styled';
 
 import { useEffect, useState } from 'react';
 import { Sidebar } from '../../components/Sidebar';

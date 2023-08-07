@@ -2,44 +2,54 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CreateInput } from '../../components/CreateInput';
+import { CreateInput } from '../../../components/CreateInput';
 
-import { UseAuthValue } from '../../context/AuthContext';
-import { useFetchDocument } from '../../hooks/useFetchDocument';
-import { useUpdateDocument } from '../../hooks/useUpdateDocument';
+import { UseAuthValue } from '../../../context/AuthContext';
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
+import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 
-import { LuFileVideo, LuHeading1, LuImagePlus, LuPlus, LuX } from 'react-icons/lu';
+import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 
-import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
+import { MdOutlineVideoLibrary } from 'react-icons/md';
+import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
+import { DialogPlay } from '../../../components/ModalPlay';
 import {
-  ButtonTag,
   ContainerFlex,
   ContainerForm,
-  ContainerTags,
   ContainerVideo,
   Error,
   Form as FormStyled,
-  NotTags,
   Progress,
-  Tag,
   Video,
-} from '../../styles/StyledPostForm';
-import { ButtonForm, Textaria } from '../../styles/formStyled';
-import { ContainerCenter, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
-import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
-import { generateSearchTokens } from '../../utils/generateSearchTokens';
-import { mediaUpload } from '../../utils/mediaUpload';
-import { processSelectedFile } from '../../utils/processSelectedFile';
+} from '../../../styles/StyledPostForm';
+import { ButtonForm, ButtonResetForm, Textaria } from '../../../styles/formStyled';
+import { ContainerCenter, SpinerLoading, Subtitle } from '../../../styles/styledGlobal';
+import { GetCollectionValues } from '../../../utils/GetCollectionValues';
+import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
+import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
+import { generateSearchTokens } from '../../../utils/generateSearchTokens';
+import { mediaUpload } from '../../../utils/mediaUpload';
+import { processSelectedFile } from '../../../utils/processSelectedFile';
 
-const EditPost = () => {
+export const EditPost = () => {
   const { id } = useParams();
   const { document: post, loading } = useFetchDocument('posts', id);
   const [title, setTitle] = useState('');
-  const [mediaURL, setMediaURL] = useState('');
   const [body, setBody] = useState('');
-  const [tags, setTags] = useState([]);
-  const { applicationTags, user } = UseAuthValue();
-  const [tagsList, setTagsList] = useState(applicationTags);
+  const { user } = UseAuthValue();
+  const [selectedCollec, setSelectedCollec] = useState({
+    name: '',
+    id: '',
+    userId: '',
+    publicPost: 0,
+  });
+  const [selectedCollecInit, setSelectedCollecInit] = useState({
+    name: '',
+    id: '',
+    userId: '',
+    publicPost: 0,
+  });
+  const [isPublic, setIsPublic] = useState('false');
   const [formError, setFormError] = useState('');
   const [progressPercent, setProgressPercent] = useState(0);
   const [selectedThumb, setSelectedThumb] = useState('');
@@ -49,24 +59,20 @@ const EditPost = () => {
     document.title = 'MediaVerse - Edição';
   }, []);
 
-  function removeInitialValuesTags(params, initArray) {
-    return params.reduce((acc, tag) => {
-      return (acc = acc.filter(e => e !== tag));
-    }, initArray);
-  }
-
   useEffect(() => {
     if (post) {
       setTitle(post.title);
-      setMediaURL();
       setSelectedThumb(post?.thumbURL);
       setSelectedVideo(post?.mediaURL);
       setBody(post.body);
+      setIsPublic(post?.isPublic);
 
-      const reduce = removeInitialValuesTags(post.tags, applicationTags);
-
-      setTags(post.tags);
-      setTagsList(reduce);
+      const func = async () => {
+        const val = await GetCollectionValues('collec', null, post.collec);
+        setSelectedCollec(val);
+        setSelectedCollecInit(val);
+      };
+      func();
     }
   }, [post]);
 
@@ -163,7 +169,8 @@ const EditPost = () => {
       thumbURLName,
       body,
       searchTokens: generateSearchTokens(title),
-      tags,
+      collec: selectedCollec.id,
+      isPublic: IsValidTrueOrFalse(isPublic),
       uid: uid,
       createdBy: displayName,
       createdOn: Date.now().toString(),
@@ -172,7 +179,7 @@ const EditPost = () => {
 
     const Document = await updateDocument(id, postToUpdate);
 
-    if (Document) navigate(`/posts/${id}`);
+    if (Document) navigate(`/post/${id}`);
   }
 
   const Reset = () => {
@@ -180,32 +187,9 @@ const EditPost = () => {
     setBody(post.body);
     setSelectedThumb(post?.thumbURL);
     setSelectedVideo(post.mediaURL);
-
-    const reduce = removeInitialValuesTags(post.tags, applicationTags);
-
-    setTags(post.tags);
-    setTagsList(reduce);
+    setSelectedCollec(selectedCollecInit);
+    setIsPublic(post?.isPublic);
   };
-
-  function EditTags(tag, addArr, removeArr) {
-    const add = [...addArr, tag];
-    const remove = removeArr.filter(e => e !== tag);
-    return [add, remove];
-  }
-
-  function RemoveTagArr(tag) {
-    const [add, remove] = EditTags(tag, tagsList, tags);
-
-    setTags(remove);
-    setTagsList(add);
-  }
-
-  function AddTagArr(tag) {
-    const [add, remove] = EditTags(tag, tags, tagsList);
-
-    setTags(add);
-    setTagsList(remove);
-  }
 
   return (
     <ContainerCenter>
@@ -269,36 +253,44 @@ const EditPost = () => {
             placeholder='Descrição...'
             required
           />
-          <ContainerTags>
-            {tags.length > 0 ? (
-              tags?.map((e, i) => (
-                <Tag key={i}>
-                  {e}
-                  <ButtonTag type='button' onClick={() => RemoveTagArr(e)}>
-                    <LuX />
-                  </ButtonTag>
-                </Tag>
-              ))
-            ) : (
-              <NotTags>Adicione Tags</NotTags>
-            )}
-          </ContainerTags>
-
-          <ContainerTags>
-            {tagsList?.map((e, i) => (
-              <Tag key={i}>
-                {e}
-                <ButtonTag type='button' onClick={() => AddTagArr(e)}>
-                  <LuPlus />
-                </ButtonTag>
-              </Tag>
-            ))}
-          </ContainerTags>
 
           <ContainerFlex>
-            <ButtonForm onClick={Reset} className='red' type='reset' disabled={progressPercent > 1}>
+            <CreateInput
+              Svg={LuLock}
+              as='select'
+              className='red'
+              value={isPublic}
+              onChange={event => {
+                setIsPublic(event.target.value);
+                console.log(isPublic);
+              }}
+              title='define se a postagem vai ser publica ou privada'
+              aria-label='define se a postagem vai ser publica ou privada'
+            >
+              <option value={'false'}>Privado</option>
+              <hr />
+              <option value={'true'}>Publico</option>
+            </CreateInput>
+            <DialogPlay
+              RenderTag={selectedCollec}
+              className='red'
+              setSelectedCollec={setSelectedCollec}
+            >
+              <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
+                {selectedCollec?.name ? selectedCollec?.name : 'Adicionar coleção'}
+              </CreateInput>
+            </DialogPlay>
+          </ContainerFlex>
+
+          <ContainerFlex>
+            <ButtonResetForm
+              onClick={Reset}
+              className='red'
+              type='reset'
+              disabled={progressPercent > 1}
+            >
               Resetar
-            </ButtonForm>
+            </ButtonResetForm>
             <ButtonForm className='red' disabled={progressPercent > 1}>
               {progressPercent < 1 ? 'Enviar' : <SpinerLoading size={18} />}
             </ButtonForm>
@@ -310,5 +302,3 @@ const EditPost = () => {
     </ContainerCenter>
   );
 };
-
-export default EditPost;

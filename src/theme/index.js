@@ -2,7 +2,7 @@ import { keyframes } from 'styled-components';
 
 export const theme = {
   color: {
-    first: 'hsl(228, 76%, 63%)',
+    first: 'hsl(229, 78%, 61%)',
     firstHover: 'hsl(211, 100%, 30%)',
     firstNav: 'hsl(211, 100%, 24%)',
     firstBg: 'hsl(228, 18%, 22%)',
@@ -13,16 +13,18 @@ export const theme = {
     secondOpacity03: 'hsl(228, 11%, 20%)',
 
     third: 'hsl(228, 11%, 28%, 0.3)',
-    thirdBg: '#1C1B1E',
+    thirdBg: 'hsl(260, 5%, 11%)',
     thirdOpacity03: 'hsl(228, 11%, 38%, 0.3)',
-    // firstBg
     fourth: 'hsl(0, 0%, 90%)',
     fourthHover: 'hsl(0, 0%, 95%, 0.3)',
-    fourthBg: '#0D0C0F',
+    fourthBg: 'hsl(260, 11%, 5%)',
     fourthOpacity: 'hsl(0, 0%, 95%, 0.7)',
 
-    fifth: '#202024',
-    error: '#f15856',
+    fifth: 'hsl(228, 6%, 10%)',
+    fifthHover: 'hsl(228, 6%, 7%)',
+    error: 'hsl(1, 55%, 54%)',
+    errorHover: 'hsl(1, 55%, 49%)',
+    errorDisabled: 'hsl(1, 55%, 34%)',
   },
   font: {
     size: {
@@ -53,7 +55,7 @@ export const theme = {
     scale: 'scale(1)',
     visible: 'visible',
   },
-
+  sizeSVG: "2rem",
   animation: {
     balancinho: keyframes`
     100% {

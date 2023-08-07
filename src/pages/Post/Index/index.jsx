@@ -1,7 +1,7 @@
 import { LuEye, LuShare, LuUser } from 'react-icons/lu';
 import { useParams } from 'react-router-dom';
-import { useFetchDocument } from '../../hooks/useFetchDocument';
-import { ContainerSpinerLoading, SpinerLoading } from '../../styles/styledGlobal';
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
+import { ContainerSpinerLoading, SpinerLoading } from '../../../styles/styledGlobal';
 import {
   Author,
   Body,
@@ -17,13 +17,13 @@ import {
 } from './styled';
 
 import { useEffect, useState } from 'react';
-import { Sidebar } from '../../components/Sidebar';
-import { useIncrementViews } from '../../hooks/useIncrementViews';
-import { FetchTags } from '../../utils/FetchTags';
-import { getElapsedTime } from '../../utils/getElapsedTime';
-import { DialogDemo } from '../../components/ModalShare';
+import { DialogDemo } from '../../../components/ModalShare';
+import { Sidebar } from '../../../components/Sidebar';
+import { useIncrementViews } from '../../../hooks/useIncrementViews';
+import { FetchTags } from '../../../utils/FetchTags';
+import { getElapsedTime } from '../../../utils/getElapsedTime';
 
-const Post = () => {
+export const Post = () => {
   const { id } = useParams();
   const [tagsVal, setTagsVal] = useState([]);
   const { document: post } = useFetchDocument('posts', id);
@@ -106,5 +106,3 @@ const Post = () => {
     </ContainerMain>
   );
 };
-
-export default Post;

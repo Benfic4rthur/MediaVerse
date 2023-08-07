@@ -10,7 +10,7 @@ import { UseAuthentication } from '../../hooks/useAuthentication';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
 
-const Index = () => {
+export const Register = () => {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -187,5 +187,3 @@ const Index = () => {
     </ContainerForm>
   );
 };
-
-export default Index;

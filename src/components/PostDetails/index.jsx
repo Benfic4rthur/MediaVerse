@@ -9,7 +9,7 @@ export const PostDetails = ({ post }) => {
       : post.body;
 
   return (
-    <Container as={Link} to={`/posts/${post.id}`}>
+    <Container as={Link} to={`/post/${post.id}`}>
       {post.mediaURL && (post.mediaURL.includes('.mp4') || post.mediaURL.includes('.webm')) ? (
         // eslint-disable-next-line jsx-a11y/media-has-caption
         <ContainerMidia>
@@ -26,4 +26,3 @@ export const PostDetails = ({ post }) => {
     </Container>
   );
 };
-

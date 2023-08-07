@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { keyframes, styled } from 'styled-components';
-import { MidiaStyled } from '../../pages/Post/styled';
+import { MidiaStyled } from '../../pages/Post/Index/styled';
 
 const animate = keyframes`
     0% {

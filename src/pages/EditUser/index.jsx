@@ -13,7 +13,7 @@ import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/fo
 import { useParams } from 'react-router-dom';
 import { Subtitle } from '../../styles/styledGlobal';
 
-const Index = () => {
+export const EditUser = () => {
   const [displayName, setDisplayName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [userGmail, setUserGmail] = useState('');
@@ -167,5 +167,3 @@ const Index = () => {
     </ContainerForm>
   );
 };
-
-export default Index;
