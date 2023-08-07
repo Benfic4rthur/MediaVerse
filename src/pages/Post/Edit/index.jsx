@@ -3,13 +3,11 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInput';
-
 import { UseAuthValue } from '../../../context/AuthContext';
 import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
-
+import { useUpdateCollec } from '../../../hooks/useUpdateCollec';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
-
 import { MdOutlineVideoLibrary } from 'react-icons/md';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
 import { DialogPlay } from '../../../components/ModalPlay';
@@ -32,8 +30,8 @@ import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
 
 export const EditPost = () => {
-  const { id } = useParams();
-  const { document: post, loading } = useFetchDocument('posts', id);
+  const { id : postId } = useParams();
+  const { document: post, loading } = useFetchDocument('posts', postId);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const { user } = UseAuthValue();
@@ -54,6 +52,8 @@ export const EditPost = () => {
   const [progressPercent, setProgressPercent] = useState(0);
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
+  const { updateDocument, response } = useUpdateDocument('posts');
+  const { updateCollec } = useUpdateCollec('collec');
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição';
@@ -77,11 +77,20 @@ export const EditPost = () => {
   }, [post]);
 
   const navigate = useNavigate();
-  const { updateDocument, response } = useUpdateDocument('posts');
 
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError('');
+
+    if (!selectedCollec.id) {
+      setFormError('Selecione uma coleção');
+      return;
+    }
+
+    if (IsValidTrueOrFalse(isPublic) && selectedCollec.publicPost === 3) {
+      setFormError('Só é possível publicar 3 vídeos publicos '); 
+      return;
+    }
 
     try {
       const mediaVideo = document.getElementById('mediaVideo')?.files?.[0];
@@ -160,6 +169,7 @@ export const EditPost = () => {
   }
 
   async function savePost(mediaURL = '', thumbURL = '', mediaURLName = '', thumbURLName = '') {
+    const { id, name, publicPost, userId } = selectedCollec;
     const { uid, displayName } = user;
     const postToUpdate = {
       title,
@@ -177,9 +187,14 @@ export const EditPost = () => {
       views: post?.views ?? 0,
     };
 
-    const Document = await updateDocument(id, postToUpdate);
-
-    if (Document) navigate(`/post/${id}`);
+    const Document = await updateDocument(postId, postToUpdate);
+    
+    if (IsValidTrueOrFalse(isPublic)) {
+      await updateCollec(id, { name, userId, publicPost: publicPost + 1 });
+    } else {
+      await updateCollec(id, { name, userId, publicPost: publicPost - 1 });
+    }
+    if (Document) navigate(`/post/${postId}`);
   }
 
   const Reset = () => {
@@ -262,14 +277,13 @@ export const EditPost = () => {
               value={isPublic}
               onChange={event => {
                 setIsPublic(event.target.value);
-                console.log(isPublic);
               }}
               title='define se a postagem vai ser publica ou privada'
               aria-label='define se a postagem vai ser publica ou privada'
             >
-              <option value={'false'}>Privado</option>
+              <option value={"false"}>Privado</option>
               <hr />
-              <option value={'true'}>Publico</option>
+              <option value={"true"}>Publico</option>
             </CreateInput>
             <DialogPlay
               RenderTag={selectedCollec}

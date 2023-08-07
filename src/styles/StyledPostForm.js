@@ -24,7 +24,7 @@ export const Error = styled.p`
   font-size: 1.2rem;
   color: hsl(0, 50%, 50%);
   border-radius: 1rem;
-  width: min-content;
+  width: max-content;
   margin: 0 auto;
   background-color: hsl(0, 80%, 90%);
 `;

@@ -7,7 +7,7 @@ import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
 import { DialogPlay } from '../../../components/ModalPlay';
 import { UseAuthValue } from '../../../context/AuthContext';
 import { useInsertDocument } from '../../../hooks/useInsertDocument';
-import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
+import { useUpdateCollec } from '../../../hooks/useUpdateCollec';
 import {
   ContainerFlex,
   ContainerForm,
@@ -40,7 +40,7 @@ export const CreatePost = () => {
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
 
-  const { updateDocument, response: responseCollec } = useUpdateDocument('collec');
+  const { updateCollec, response: responseCollec } = useUpdateCollec('collec');
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Novo Post';
@@ -59,9 +59,10 @@ export const CreatePost = () => {
     }
 
     if (IsValidTrueOrFalse(isPublic) && selectedCollec.publicPost === 3) {
-      setFormError('so e posivel ter 3 coleção publicas');
+      setFormError('Só é possível publicar 3 vídeos publicos '); 
       return;
     }
+  
 
     const mediaVideo = document.getElementById('mediaVideo')?.files?.[0];
     const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
@@ -123,12 +124,11 @@ export const CreatePost = () => {
     const Document = await insertDocument(post);
 
     if (IsValidTrueOrFalse(isPublic)) {
-      await updateDocument(id, { name, userId, publicPost: publicPost + 1 });
+      await updateCollec(id, { name, userId, publicPost: publicPost + 1 });
     }
 
     if (Document) navigate(`/post/${Document?.id}`);
   }
-
   const Reset = () => {
     setTitle('');
     setBody('');
@@ -210,7 +210,6 @@ export const CreatePost = () => {
               value={isPublic}
               onChange={event => {
                 setIsPublic(event.target.value);
-                console.log(isPublic);
               }}
               title='define se a postagem vai ser publica ou privada'
               aria-label='define se a postagem vai ser publica ou privada'
