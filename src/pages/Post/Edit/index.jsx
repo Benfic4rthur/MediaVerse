@@ -210,7 +210,7 @@ export const EditPost = () => {
         await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
         await updateCollec(id, {  publicPost: publicPost + 1 });
       } else {
-        await updateCollec(post.collecc, { publicPost: publicPost - 1 });
+        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
       }
     } else if ( isPublic !== post?.isPublic && post.collec !== selectedCollec.id) {
       if (IsValidTrueOrFalse(isPublic)) {
@@ -231,6 +231,7 @@ export const EditPost = () => {
     setSelectedVideo(post.mediaURL);
     setSelectedCollec(selectedCollecInit);
     setIsPublic(post?.isPublic);
+    setFormError('');
   };
 
   return (
