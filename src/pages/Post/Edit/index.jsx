@@ -69,7 +69,7 @@ export const EditPost = () => {
       setIsPublic(post?.isPublic);
       const func = async () => {
         try {
-          const collecData = await GetCollectionValues('collec', null, post?.collec);
+          const collecData = await GetCollectionValues('collec', where('id', '==', post?.collec));
           console.log(collecData);
           if (collecData.length > 0) {
             setSelectedCollec(collecData[0]);
@@ -97,7 +97,7 @@ export const EditPost = () => {
     }
 
     if (IsValidTrueOrFalse(isPublic) && selectedCollec.publicPost === 3) {
-      setFormError('Só é possível publicar 3 vídeos publicos '); 
+      setFormError('Só é possível publicar 3 vídeos publicos ');
       return;
     }
 
@@ -198,7 +198,7 @@ export const EditPost = () => {
     };
 
     const Document = await updateDocument(postId, postToUpdate);
-    
+
     if (isPublic !== post?.isPublic) {
       // Visibilidade mudou
       if (IsValidTrueOrFalse(isPublic)) {
@@ -220,7 +220,7 @@ export const EditPost = () => {
         await updateCollec(post.collec, { publicPost: publicPost + 1 });
       }
     }
-    
+
     if (Document) navigate(`/post/${postId}`);
   }
 
