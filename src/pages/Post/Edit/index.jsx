@@ -70,7 +70,6 @@ export const EditPost = () => {
       const func = async () => {
         try {
           const collecData = await GetCollectionValues('collec', where('id', '==', post?.collec));
-          console.log(collecData);
           if (collecData.length > 0) {
             setSelectedCollec(collecData[0]);
             setSelectedCollecInit(collecData[0]);
@@ -96,7 +95,7 @@ export const EditPost = () => {
       return;
     }
 
-    if (IsValidTrueOrFalse(isPublic) && selectedCollec.publicPost === 3) {
+    if (IsValidTrueOrFalse(isPublic) && selectedCollec?.publicPost === 3) {
       setFormError('Só é possível publicar 3 vídeos publicos ');
       return;
     }
@@ -198,29 +197,30 @@ export const EditPost = () => {
     };
 
     const Document = await updateDocument(postId, postToUpdate);
-
-    if (isPublic !== post?.isPublic) {
-      // Visibilidade mudou
+    
+    if (isPublic !== post?.isPublic && post.collec === selectedCollec.id) { // Verifica se o valor foi alterado
       if (IsValidTrueOrFalse(isPublic)) {
-        // Post se tornou público
         await updateCollec(id, { publicPost: publicPost + 1 });
       } else {
-        // Post se tornou privado
-        await updateCollec(id, { publicPost: publicPost - 1 });
-      }
-    } else if (post.collec !== selectedCollec) {
-      // Coleção mudou, mas a visibilidade é a mesma
-      if (IsValidTrueOrFalse(isPublic)) {
-        // Post é público, atualiza as coleções
-        await updateCollec(selectedCollec, { publicPost: publicPost + 1 });
-        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
-      } else {
-        // Post é privado, atualiza as coleções
-        await updateCollec(selectedCollec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
-        await updateCollec(post.collec, { publicPost: publicPost + 1 });
+        await updateCollec(id, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
       }
     }
-
+    else if (isPublic === post?.isPublic && post.collec !== selectedCollec.id) {
+      if (IsValidTrueOrFalse(isPublic)) {
+        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
+        await updateCollec(id, {  publicPost: publicPost + 1 });
+      } else {
+        await updateCollec(post.collecc, { publicPost: publicPost - 1 });
+      }
+    } else if ( isPublic !== post?.isPublic && post.collec !== selectedCollec.id) {
+      if (IsValidTrueOrFalse(isPublic)) {
+        await updateCollec(id, { publicPost: publicPost + 1 });
+        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
+      } else {
+        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
+      }
+    }
+    
     if (Document) navigate(`/post/${postId}`);
   }
 
