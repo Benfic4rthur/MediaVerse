@@ -25,7 +25,7 @@ export const Login = () => {
     try {
 
       await login(user);
-      console.log("dfjnsdfs");
+      console.log("Logado com sucesso!");
       navigate('/');
     } catch (error) {
       console.log(error);

@@ -88,7 +88,7 @@ export function Account() {
       const userIdQuery = query(collection(db, docCollection), where('userId', '==', userEmail));
       const userInfoSnapshot = await getDocs(userInfoQuery);
       const userIdSnapshot = await getDocs(userIdQuery);
-      console.log(!userInfoSnapshot.empty, userName, userData.userName);
+      // console.log(!userInfoSnapshot.empty, userName, userData.userName);
       if (!userInfoSnapshot.empty && userName !== userData.userName) {
         throw new Error('Nome de usuário já existe');
       }
