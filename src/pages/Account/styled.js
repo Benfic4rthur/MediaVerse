@@ -3,7 +3,7 @@ import { ButtonForm } from '../../styles/formStyled';
 
 export const ContainerForm = styled.section`
   height: fit-content;
-  width: min(100%, 75rem);
+  width: min(100%, 70rem);
   display: flex;
   padding: 3rem 2rem min(15vh, 4rem);
   box-shadow: 0.2rem 0.2rem 0.5rem ${({ theme }) => theme.color.shadow};

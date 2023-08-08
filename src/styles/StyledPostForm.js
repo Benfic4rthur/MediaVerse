@@ -45,7 +45,7 @@ export const ContainerFlex = styled.div`
 
 export const ContainerForm = styled.section`
   height: fit-content;
-  width: min(100%, 75rem);
+  width: min(100%, 70rem);
   display: flex;
   margin: 0 auto;
   justify-content: center;
