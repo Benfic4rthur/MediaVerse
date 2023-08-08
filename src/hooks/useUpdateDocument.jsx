@@ -42,8 +42,6 @@ export const useUpdateDocument = (docCollection) => {
 
       const updatedDocument = await updateDoc(docRef, data);
 
-      // console.log(updateDocument);
-
       checkCancelBeforeDispatch({
         type: "UPDATED_DOC",
         payload: updatedDocument,

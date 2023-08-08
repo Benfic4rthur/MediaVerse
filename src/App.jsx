@@ -23,6 +23,8 @@ function App() {
     deletedAt: '',
     displayName: '',
     id: '',
+    collec: '',
+    collecName: '',
     loggedAt: '',
     loggedOutAt: '',
     phoneNumber: '',
@@ -37,7 +39,6 @@ function App() {
   const userEmail = user ? user.email : '';
 
   const loadingUser = user === undefined;
-  const [countdown, setCountdown] = useState(3600); // 3600 segundos
   const notClientTags = 'promotional';
   const applicationTags = [
     'iso',
@@ -101,7 +102,7 @@ function App() {
 
     const timeoutId = setTimeout(() => {
       setReload(e => ++e);
-      console.log("69898");
+      console.log('69898');
     }, 3600000);
 
     if (!isVisible) {

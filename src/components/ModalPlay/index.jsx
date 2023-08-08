@@ -7,11 +7,11 @@ import { MdOutlineAddBox, MdOutlineLibraryAdd } from 'react-icons/md';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useDeleteCollec } from '../../hooks/useDeleteCollec';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
-import { useUpdateDocument } from '../../hooks/useUpdateDocument';
 import { ButtonForm, ButtonResetForm, Form, SvgStyled } from '../../styles/formStyled';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
+import { UpdateDocument } from '../../utils/UpdateDocument';
 import { CreateInput } from '../CreateInput';
 import {
   ButtonActive,
@@ -32,21 +32,27 @@ export const DialogPlay = ({ children, RenderTag, setSelectedCollec = () => {}, 
   const [Name, setName] = useState('');
   const [Collec, setCollec] = useState([]);
   const { insertDocument, response } = useInsertDocument('collec');
-  const { updateDocument } = useUpdateDocument('collec');
   const { userData } = UseAuthValue();
   const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
-  const WhereEmail = where('userId', '==', userData.userId);
   const { deleteDocument } = useDeleteCollec();
 
   useEffect(() => {
-    const func = async () => {
-      const val = await GetCollectionValues('collec', WhereEmail);
-      setCollec(val);
+    const func = async Where => {
+      try {
+        const val = await GetCollectionValues('collec', Where);
+        setCollec(val);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    func();
+    if (userData.userStatus === 'admin') {
+      func();
+    } else {
+      const Where = where('userId', '==', userData.userId);
+      func(Where);
+    }
   }, [RenderTag, Reload]);
-  // >>>>>>> Stashed changes
 
   const handleSubmit = async e => {
     e?.preventDefault();
@@ -60,7 +66,7 @@ export const DialogPlay = ({ children, RenderTag, setSelectedCollec = () => {}, 
         if (val?.length == 0) {
           const vall = await insertDocument({ name: Name, userId: userData.userId, publicPost: 0 });
 
-          await updateDocument(vall.id, { id: vall.id });
+          await UpdateDocument('collec', vall.id, { id: vall.id });
           setReload(e => ++e);
         } else {
           setError('Coleção ja existe');

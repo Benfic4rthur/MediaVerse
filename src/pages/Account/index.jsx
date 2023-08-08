@@ -26,8 +26,8 @@ import {
   Success,
 } from '../../styles/formStyled';
 import { Subtitle } from '../../styles/styledGlobal';
-import { SetNewValueDocument } from '../../utils/SetNewValueDocument';
 import { ResetButton } from './styled';
+import { UpdateDocument } from '../../utils/UpdateDocument';
 
 export function Account() {
   const { userData, setReload } = UseAuthValue();
@@ -114,7 +114,7 @@ export function Account() {
           (phoneNumber || userName || userEmail || displayName || userGender) &&
           UserCredential?.user?.email
         ) {
-          await SetNewValueDocument('userInfo', userData.id, newValue);
+          await UpdateDocument('userInfo', userData.id, newValue);
         }
 
         if (userName !== userData.userName) {

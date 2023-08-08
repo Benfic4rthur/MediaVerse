@@ -1,15 +1,9 @@
-import { db } from "../firebase/config";
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 export async function FetchDocument(docCollection, id) {
-  try {
-    const fetchDocument = await db.collection(docCollection).doc(id).get();
+  const q = doc(db, docCollection, id);
 
-    return {
-      type: 'FETCH_DOC',
-      successMessage: fetchDocument,
-      error: '',
-    };
-  } catch (error) {
-    return { type: 'ERROR', error: error.message, successMessage: '' };
-  }
+  return await getDoc(q);
 }
+// .data()

@@ -1,17 +1,15 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { CreateInput } from '../../../components/CreateInput';
-import { UseAuthValue } from '../../../context/AuthContext';
-import { useFetchDocument } from '../../../hooks/useFetchDocument';
-import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
-import { useUpdateCollec } from '../../../hooks/useUpdateCollec';
-import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
+import { CreateInput } from '../../../components/CreateInput';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
 import { DialogPlay } from '../../../components/ModalPlay';
+import { UseAuthValue } from '../../../context/AuthContext';
+import { countPublicCollecs } from '../../../hooks/useCountCollecs';
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import {
   ContainerFlex,
   ContainerForm,
@@ -23,17 +21,17 @@ import {
 } from '../../../styles/StyledPostForm';
 import { ButtonForm, ButtonResetForm, Textaria } from '../../../styles/formStyled';
 import { ContainerCenter, SpinerLoading, Subtitle } from '../../../styles/styledGlobal';
-import { GetCollectionValues } from '../../../utils/GetCollectionValues';
+import { FetchDocument } from '../../../utils/FetchDocument';
 import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
+import { UpdateDocument } from '../../../utils/UpdateDocument';
 import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
-import { where } from 'firebase/firestore';
 
 export const EditPost = () => {
   const { id: postId } = useParams();
-  const { document: post, loading } = useFetchDocument('posts', postId);
+  const { document: post } = useFetchDocument('posts', postId);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const { user } = UseAuthValue();
@@ -54,8 +52,6 @@ export const EditPost = () => {
   const [progressPercent, setProgressPercent] = useState(0);
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
-  const { updateDocument, response } = useUpdateDocument('posts');
-  const { updateCollec } = useUpdateCollec('collec');
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição';
@@ -70,13 +66,9 @@ export const EditPost = () => {
       setIsPublic(post?.isPublic);
       const func = async () => {
         try {
-          const collecData = await GetCollectionValues('collec', where('id', '==', post?.collec));
-          if (collecData.length > 0) {
-            setSelectedCollec(collecData[0]);
-            setSelectedCollecInit(collecData[0]);
-          } else {
-            console.error('Collection document not found');
-          }
+          const collecData = await FetchDocument('collec', post?.collec);
+          setSelectedCollec(collecData.data());
+          setSelectedCollecInit(collecData.data());
         } catch (error) {
           console.error('Error fetching collection document:', error);
         }
@@ -85,14 +77,12 @@ export const EditPost = () => {
     }
   }, [post]);
 
-  const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError('');
 
     if (IsValidTrueOrFalse(isPublic) === true) {
       const publicValue = await countPublicCollecs(selectedCollec.id);
-      console.log(publicValue);
       if (publicValue >= 3) {
         setFormError(`Você já postou 3 vídeos públicos na coleção "${selectedCollec?.name}"`);
         console.log('Só é possível publicar 3 vídeos publicos ');
@@ -187,7 +177,6 @@ export const EditPost = () => {
   }
 
   async function savePost(mediaURL = '', thumbURL = '', mediaURLName = '', thumbURLName = '') {
-    const { id, name, publicPost, userId } = selectedCollec;
     const { uid, displayName } = user;
     const postToUpdate = {
       title,
@@ -206,8 +195,12 @@ export const EditPost = () => {
       views: post?.views ?? 0,
     };
 
-    const Document = await updateDocument(postId, postToUpdate);
-    // if (Document) navigate(`/post/${postId}`);
+    try {
+      await UpdateDocument('posts', postId, postToUpdate);
+      // navigate(`/post/${postId}`);}
+    } catch (error) {
+      setFormError(error);
+    }
   }
 
   const Reset = () => {
@@ -324,7 +317,7 @@ export const EditPost = () => {
             </ButtonForm>
           </ContainerFlex>
           {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
-          {(response.error || formError) && <Error>{response.error || formError}</Error>}
+          {formError && <Error>{formError}</Error>}
         </FormStyled>
       </ContainerForm>
     </ContainerCenter>

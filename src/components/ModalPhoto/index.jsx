@@ -7,7 +7,7 @@ import { UseAuthValue } from '../../context/AuthContext';
 import { Progress } from '../../styles/StyledPostForm';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { Subtitle } from '../../styles/styledGlobal';
-import { SetNewValueDocument } from '../../utils/SetNewValueDocument';
+import { UpdateDocument } from '../../utils/UpdateDocument';
 import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
 import { mediaUpload } from '../../utils/mediaUpload';
 import { CustomInputTypeFile } from '../CustomInputTypeFile';
@@ -47,7 +47,7 @@ export const DialogPhoto = ({
 
             return { url: url.default, nameImage: image };
           } catch (error) {
-            console.log(error);
+            // console.log(error);
           }
         }),
       );
@@ -80,7 +80,7 @@ export const DialogPhoto = ({
           setProgressPercent(0);
 
           await Promise.all([
-            SetNewValueDocument('userInfo', collectionId, {
+            UpdateDocument('userInfo', collectionId, {
               photoURL: mediaURL,
               avatarName: name,
             }),
@@ -113,7 +113,7 @@ export const DialogPhoto = ({
 
       setPhotoURL(e?.nameImage);
       await Promise.all([
-        SetNewValueDocument('userInfo', collectionId, newValue),
+        UpdateDocument('userInfo', collectionId, newValue),
         updateProfile(user, { photoURL: e?.nameImage }),
       ]);
 
