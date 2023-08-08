@@ -7,6 +7,7 @@ import { UseAuthValue } from '../../../context/AuthContext';
 import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 import { useUpdateCollec } from '../../../hooks/useUpdateCollec';
+import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
@@ -31,7 +32,7 @@ import { processSelectedFile } from '../../../utils/processSelectedFile';
 import { where } from 'firebase/firestore';
 
 export const EditPost = () => {
-  const { id : postId } = useParams();
+  const { id: postId } = useParams();
   const { document: post, loading } = useFetchDocument('posts', postId);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -84,21 +85,30 @@ export const EditPost = () => {
     }
   }, [post]);
 
-
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError('');
+
+    if (IsValidTrueOrFalse(isPublic) === true) {
+      const publicValue = await countPublicCollecs(selectedCollec.id);
+      console.log(publicValue);
+      if (publicValue >= 3) {
+        setFormError(`Você já postou 3 vídeos públicos na coleção "${selectedCollec?.name}"`);
+        console.log('Só é possível publicar 3 vídeos publicos ');
+        return;
+      }
+    }
 
     if (!selectedCollec.id) {
       setFormError('Selecione uma coleção');
       return;
     }
 
-    if (IsValidTrueOrFalse(isPublic) && selectedCollec?.publicPost === 3) {
-      setFormError('Só é possível publicar 3 vídeos publicos ');
-      return;
-    }
+    // if (IsValidTrueOrFalse(isPublic) && selectedCollec?.publicPost === 3) {
+    //   setFormError(`Você já postou 3 vídeos públicos na coleção "${selectedCollec?.name}"`);
+    //   return;
+    // }
 
     try {
       const mediaVideo = document.getElementById('mediaVideo')?.files?.[0];
@@ -197,31 +207,7 @@ export const EditPost = () => {
     };
 
     const Document = await updateDocument(postId, postToUpdate);
-    
-    if (isPublic !== post?.isPublic && post.collec === selectedCollec.id) { // Verifica se o valor foi alterado
-      if (IsValidTrueOrFalse(isPublic)) {
-        await updateCollec(id, { publicPost: publicPost + 1 });
-      } else {
-        await updateCollec(id, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
-      }
-    }
-    else if (isPublic === post?.isPublic && post.collec !== selectedCollec.id) {
-      if (IsValidTrueOrFalse(isPublic)) {
-        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
-        await updateCollec(id, {  publicPost: publicPost + 1 });
-      } else {
-        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
-      }
-    } else if ( isPublic !== post?.isPublic && post.collec !== selectedCollec.id) {
-      if (IsValidTrueOrFalse(isPublic)) {
-        await updateCollec(id, { publicPost: publicPost + 1 });
-        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
-      } else {
-        await updateCollec(post.collec, { publicPost: publicPost === 0 ? 0 : publicPost - 1 });
-      }
-    }
-    
-    if (Document) navigate(`/post/${postId}`);
+    // if (Document) navigate(`/post/${postId}`);
   }
 
   const Reset = () => {
@@ -309,9 +295,9 @@ export const EditPost = () => {
               title='define se a postagem vai ser publica ou privada'
               aria-label='define se a postagem vai ser publica ou privada'
             >
-              <option value={"false"}>Privado</option>
+              <option value={'false'}>Privado</option>
               <hr />
-              <option value={"true"}>Publico</option>
+              <option value={'true'}>Publico</option>
             </CreateInput>
             <DialogPlay
               RenderTag={selectedCollec}

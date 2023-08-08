@@ -6,6 +6,7 @@ import { CreateInput } from '../../../components/CreateInput';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
 import { DialogPlay } from '../../../components/ModalPlay';
 import { UseAuthValue } from '../../../context/AuthContext';
+import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { useInsertDocument } from '../../../hooks/useInsertDocument';
 import { useUpdateCollec } from '../../../hooks/useUpdateCollec';
 import {
@@ -40,6 +41,7 @@ export const CreatePost = () => {
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
 
+  // eslint-disable-next-line no-unused-vars
   const { updateCollec, response: responseCollec } = useUpdateCollec('collec');
 
   useLayoutEffect(() => {
@@ -58,9 +60,14 @@ export const CreatePost = () => {
       return;
     }
 
-    if (IsValidTrueOrFalse(isPublic) && selectedCollec.publicPost === 3) {
-      setFormError('Só é possível publicar 3 vídeos publicos '); 
-      return;
+    if (IsValidTrueOrFalse(isPublic) === true) {
+      const publicValue = await countPublicCollecs(selectedCollec.id);
+      console.log(publicValue);
+      if (publicValue >= 3) {
+        setFormError(`Você já postou 3 vídeos públicos na coleção "${selectedCollec?.name}"`);
+        console.log('Só é possível publicar 3 vídeos publicos ');
+        return;
+      }
     }
   
 
@@ -103,6 +110,7 @@ export const CreatePost = () => {
   }
 
   async function savePost(mediaURL = '', thumbURL = '', mediaURLName = '', thumbURLName = '') {
+    // eslint-disable-next-line no-unused-vars
     const { id, name, publicPost, userId } = selectedCollec;
 
     const post = {
@@ -123,10 +131,6 @@ export const CreatePost = () => {
     };
 
     const Document = await insertDocument(post);
-
-    if (IsValidTrueOrFalse(isPublic)) {
-      await updateCollec(id, { name, userId, publicPost: publicPost + 1 });
-    }
 
     if (Document) navigate(`/post/${Document?.id}`);
   }
