@@ -1,14 +1,20 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect  } from 'react';
 import { Container } from '../CreateInput/styled';
 import { InputHidden, InputPlaceholder, Label } from './styled';
 import { ContainerSvg, SvgStyled } from '../../styles/formStyled';
 
 const sizeSVG = 20;
 
-export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', onChange, ...rest }) {
+export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', resetPlaceholder, initialPlaceholder = '', type = '', onChange, ...rest }) {
   const [state, setstate] = useState('');
   const [Placeholder, setPlaceholder] = useState(placeholder);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (resetPlaceholder) {
+      setPlaceholder(initialPlaceholder);
+    }
+  }, [resetPlaceholder, initialPlaceholder]);
 
   const handleLabelKeyDown = event => {
     if (event.key === 'Enter') {
@@ -41,7 +47,7 @@ export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', onCha
         onKeyDown={handleLabelKeyDown}
       >
         <InputPlaceholder aria-hidden={true}>
-          {Placeholder ? Placeholder : 'Nenhum arquivo escolhido'}
+          {Placeholder ? Placeholder : type == 'video' ? 'Adicionar Vídeo' :  type == 'thumb' && 'Adicionar thumb'}
         </InputPlaceholder>
         <InputHidden
           type='file'

@@ -24,6 +24,7 @@ import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
+import { useEffect } from 'react';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -40,6 +41,9 @@ export const CreatePost = () => {
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
+  const [resetThumbPlaceholder, setResetThumbPlaceholder] = useState(false);
+  const [resetVideoPlaceholder, setResetVideoPlaceholder] = useState(false);
+  const [resetCounter, setResetCounter] = useState(0);
 
   // eslint-disable-next-line no-unused-vars
   const { updateCollec, response: responseCollec } = useUpdateCollec('collec');
@@ -67,7 +71,6 @@ export const CreatePost = () => {
         return;
       }
     }
-
 
     const mediaVideo = document.getElementById('mediaVideo')?.files?.[0];
     const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
@@ -132,6 +135,7 @@ export const CreatePost = () => {
 
     if (Document) navigate(`/post/${Document?.id}`);
   }
+
   const Reset = () => {
     setTitle('');
     setBody('');
@@ -140,7 +144,15 @@ export const CreatePost = () => {
     setSelectedCollec({});
     setIsPublic('false');
     setFormError('');
+    setResetThumbPlaceholder(prevState => !prevState);
+    setResetVideoPlaceholder(prevState => !prevState);
+    setResetCounter(prevCounter => prevCounter + 1);
   };
+
+  useEffect(() => {
+    setResetThumbPlaceholder(prevState => !prevState);
+    setResetVideoPlaceholder(prevState => !prevState);
+  },[resetCounter]);
 
   return (
     <ContainerCenter>
@@ -164,23 +176,27 @@ export const CreatePost = () => {
             <CustomInputTypeFile
               Svg={LuImagePlus}
               onChange={event => setSelectedThumb(processSelectedFile(event)?.url)}
+              resetPlaceholder={resetThumbPlaceholder}
               className='red'
               placeholder='Adicionar thumb'
               aria-label='adicione arquivos de imagem para ser utilizado como Thumb'
               name='thumb'
               id='mediaThumb'
               accept='image/*'
+              type = 'thumb'
               required
             />
             <CustomInputTypeFile
               Svg={LuFileVideo}
               onChange={event => setSelectedVideo(processSelectedFile(event)?.url)}
-              placeholder='Adicionar Video'
+              resetPlaceholder={resetVideoPlaceholder}
+              placeholder='Adicionar Vídeo'
               className='red'
               name='video'
               aria-label='adicione arquivos de Vídeo'
               id='mediaVideo'
-              accept='video/* '
+              accept='video/*'
+              type = 'video'
               required
             />
           </ContainerFlex>
@@ -218,9 +234,9 @@ export const CreatePost = () => {
               title='define se a postagem vai ser publica ou privada'
               aria-label='define se a postagem vai ser publica ou privada'
             >
-              <option value={"false"}>Privado</option>
+              <option value={'false'}>Privado</option>
               <hr />
-              <option value={"true"}>Publico</option>
+              <option value={'true'}>Publico</option>
             </CreateInput>
             <DialogPlay
               RenderTag={selectedCollec}
