@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Progress = styled.progress`
   border-radius: 1rem;
@@ -49,8 +49,9 @@ export const ContainerForm = styled.section`
   display: flex;
   margin: 0 auto;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
-  gap: 2.3rem;
+  gap: 1.5rem;
 
   > h1 {
     font-size: 2rem;
@@ -59,11 +60,15 @@ export const ContainerForm = styled.section`
 `;
 
 export const Form = styled.form`
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1rem;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const ContainerVideo = styled.div`
@@ -86,12 +91,12 @@ export const Video = styled.video`
 export const ContainerTags = styled.div`
   display: flex;
   flex-flow: wrap;
-  gap: .5rem;
+  gap: 0.5rem;
   background-color: ${({ theme }) => theme.color.fourthHover};
   border-radius: ${({ theme }) => theme.border.radius};
   color: ${({ theme }) => theme.color.fourthBg};
   border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};
-  padding: .8rem;
+  padding: 0.8rem;
   width: 100%;
 `;
 
@@ -105,8 +110,8 @@ export const Tag = styled.div`
   font-size: ${({ theme }) => theme.font.size.sm};
   display: flex;
   align-items: center;
-  gap: .3rem;
-  padding-inline: .9rem;
+  gap: 0.3rem;
+  padding-inline: 0.9rem;
   height: 4rem;
 `;
 

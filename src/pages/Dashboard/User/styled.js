@@ -17,16 +17,22 @@ export const CreatePostTitle = styled.h2`
 export const ContainerCard = styled.section`
   display: flex;
   height: 100%;
+  width: 80%;
+  margin: 0 auto;
   flex-direction: column;
   gap: 1.5rem;
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow};
   background-color: ${({ theme }) => theme.color.secondBg};
   padding: 1.5rem 1rem;
   border-radius: ${({ theme }) => theme.border.radius};
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `;
 
 export const Card = styled.div`
-  padding: 1.5rem 2.5rem;
+  padding: 0.5rem 2.5rem;
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow};
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -53,7 +59,6 @@ export const Card = styled.div`
   place-items: center;
 
   @media (min-width: 900px) {
-    gap: 2rem;
     grid-template-columns: min-content 1fr min-content;
     grid-template-rows: min-content;
     grid-template-areas: 'init edit date';
@@ -78,6 +83,7 @@ export const Author = styled(TitlePost)`
   flex-direction: row;
   gap: 0.5rem;
   align-items: center;
+  font-size: ${({ theme }) => theme.font.size.sm};
 
   *.date {
     display: block;
@@ -142,8 +148,13 @@ export const ContainerHeader = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 80%;
   padding-bottom: 3rem;
+  margin: 0 auto;
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `;
 export const UserLoggedBall = styled.div`
   width: 20px;

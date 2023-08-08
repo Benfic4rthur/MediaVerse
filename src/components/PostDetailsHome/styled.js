@@ -107,9 +107,9 @@ const animate = keyframes`
 
 export const ContainerPost = styled.a`
   animation: ${animate} 0.5s ease-in-out;
+  width: min(100%, 34rem);
   height: fit-content;
-  width: min(100%, 40rem);
-  padding: 2rem 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -126,7 +126,7 @@ export const ContainerPost = styled.a`
 
 const MidiaStyled = css`
   width: 100%;
-  height: 18rem;
+  height: 16rem;
   overflow: hidden;
   object-fit: cover;
   object-position: center center;

@@ -3,6 +3,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { LuEdit, LuPlus, LuTrash2, LuUser } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
+import { RxDividerVertical } from 'react-icons/rx';
 
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
@@ -148,7 +149,7 @@ export const DashboardUser = () => {
                 <ContRowEdit className='date'>
                   {loggedAt ? (
                     <>
-                      <Author className='date'>
+                      {/* <Author className='date'>
                         Login: {dateFormat.format(new Date(loggedAtNum)) + 'hrs'}{' '}
                       </Author>
                       <Author className='date'>
@@ -160,6 +161,18 @@ export const DashboardUser = () => {
 
                       <Author className='date'>
                         Tempo de uso:{' '}
+                        {StillLoggedIn ? 'Calculando' : FormattedTimeDiff(loggedAt, loggedOutAt)}
+                      </Author> */}
+                      <Author className='date'>
+                        <RxDividerVertical />
+                        Login: {dateFormat.format(new Date(loggedAtNum)) + 'hrs'}
+                        <RxDividerVertical />
+                        Logout:{' '}
+                        {StillLoggedIn
+                          ? 'Usuário ainda logado'
+                          : dateFormat.format(new Date(loggedOutAtNum)) + 'hrs'}
+                        <RxDividerVertical />
+                        Tempo de uso:
                         {StillLoggedIn ? 'Calculando' : FormattedTimeDiff(loggedAt, loggedOutAt)}
                       </Author>
                     </>

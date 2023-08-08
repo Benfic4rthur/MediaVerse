@@ -35,7 +35,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1rem;
 `;
 
 const TextariaOrInputStyled = css`
@@ -86,7 +86,7 @@ export const SvgStyled = styled.svg`
 
 export const Textaria = styled.textarea`
   width: 100%;
-  height: 20rem;
+  height: 12rem;
   padding: 1.2rem;
 
   ${TextariaOrInputStyled}

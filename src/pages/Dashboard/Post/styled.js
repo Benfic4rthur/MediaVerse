@@ -4,8 +4,13 @@ export const ContainerHeader = styled.section`
   z-index: 0;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
   padding-bottom: 2rem;
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `;
 export const ContainerCreatePost = styled.div`
   gap: 1rem;
@@ -24,7 +29,7 @@ export const CreatePostTitle = styled.h2`
 export const ContainerPost = styled.section`
   display: flex;
   height: 100%;
-  max-width: 112.4rem;
+  width: 80%;
   margin: 0 auto;
 
   flex-direction: column;
@@ -33,6 +38,10 @@ export const ContainerPost = styled.section`
   background-color: ${({ theme }) => theme.color.secondBg};
   padding: 1.5rem 1rem;
   border-radius: ${({ theme }) => theme.border.radius};
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `;
 
 export const Post = styled.div`
@@ -67,7 +76,6 @@ export const ContainerToggle = styled.div`
   display: flex;
   flex-flow: row;
   gap: 1rem;
-
 `;
 
 export const ContainerFormToggle = styled.form`
@@ -169,9 +177,8 @@ export const MediaPreview = styled.img`
 `;
 
 export const InputRadial = styled.input`
- height: min-content;
- border-radius: 50%;
-
+  height: min-content;
+  border-radius: 50%;
 `;
 
 export const ButtonEvent = styled.button`

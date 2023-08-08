@@ -4,8 +4,13 @@ export const ContainerHeader = styled.section`
   z-index: 0;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
   padding-bottom: 2rem;
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `;
 export const ContainerCreatePost = styled.div`
   gap: 1rem;
@@ -24,7 +29,7 @@ export const CreatePostTitle = styled.h2`
 export const ContainerPost = styled.section`
   display: flex;
   height: 100%;
-  max-width: 112.4rem;
+  width: 80%;
   margin: 0 auto;
 
   flex-direction: column;
@@ -33,6 +38,10 @@ export const ContainerPost = styled.section`
   background-color: ${({ theme }) => theme.color.secondBg};
   padding: 1.5rem 1rem;
   border-radius: ${({ theme }) => theme.border.radius};
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `;
 
 export const Post = styled.div`
@@ -42,7 +51,7 @@ export const Post = styled.div`
   grid-template-rows: 1fr;
   align-items: center;
   gap: 1rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 1.5rem;
   box-shadow: 0.2rem 0.2rem 0.5rem ${({ theme }) => theme.color.shadow};
   background-color: ${({ theme }) => theme.color.thirdOpacity03};
   border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};
@@ -53,21 +62,20 @@ export const Post = styled.div`
     background-color: ${({ theme }) => theme.color.third};
   }
 
-  @media (max-width: 65rem) {
+  /* @media (max-width: 65rem) {
     grid-template-columns: auto min-content;
     grid-template-rows: min-content auto min-content;
     grid-template-areas:
       'Dialog Event'
       'Title Title'
       'Date Date';
-  }
+  } */
 `;
 
 export const ContainerToggle = styled.div`
   display: flex;
   flex-flow: row;
   gap: 1rem;
-
 `;
 
 export const ContainerFormToggle = styled.form`
@@ -84,7 +92,7 @@ export const TitleToggle = styled.h3`
   font-family: ${({ theme }) => theme.font.family.roboto};
   font-weight: 500;
   color: ${({ theme }) => theme.color.fourth};
-  font-size: ${({ theme }) => theme.font.size.base};
+  font-size: ${({ theme }) => theme.font.size.sm};
   align-items: center;
   flex-direction: column;
   cursor: default;
@@ -128,7 +136,7 @@ export const TitlePost = styled.h3`
   font-family: ${({ theme }) => theme.font.family.roboto};
   font-weight: 500;
   color: ${({ theme }) => theme.color.fourth};
-  font-size: ${({ theme }) => theme.font.size.base};
+  font-size: ${({ theme }) => theme.font.size.sm};
   align-items: center;
   flex-direction: column;
   width: 100%;
@@ -169,9 +177,8 @@ export const MediaPreview = styled.img`
 `;
 
 export const InputRadial = styled.input`
- height: min-content;
- border-radius: 50%;
-
+  height: min-content;
+  border-radius: 50%;
 `;
 
 export const ButtonEvent = styled.button`

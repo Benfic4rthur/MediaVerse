@@ -165,7 +165,7 @@ export const NavLinkStyled = styled(NavLink)`
   transition: 0.3s background-color, 0.3s color;
   width: 100%;
   padding: 1.3rem;
-  font-size: ${({ theme }) => theme.font.size.base};
+  font-size: ${({ theme }) => theme.font.size.sm};
   display: flex;
   gap: 0.5rem;
   border-radius: 0;

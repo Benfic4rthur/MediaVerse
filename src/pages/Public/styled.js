@@ -57,7 +57,7 @@ export const ButtonSystem = styled.div`
   font-size: ${({ theme }) => theme.font.size.sm};
   border-radius: ${({ theme }) => theme.border.radius};
   cursor: pointer;
-  transition: .7s;
+  transition: 0.7s;
 
   &:hover {
     background-color: ${({ theme }) => theme.color.firstHover};
@@ -66,8 +66,8 @@ export const ButtonSystem = styled.div`
 `;
 
 export const ContainerTitle = styled.div`
-    font-size: ${({ theme }) => theme.font.size.lg};
-    font-weight: ${({ theme }) => theme.font.weight.bold};
-    color: ${({ theme }) => theme.color.first};
-    margin-bottom: 1rem;
+  font-size: ${({ theme }) => theme.font.size.lg};
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  color: ${({ theme }) => theme.color.first};
+  margin-bottom: 1rem;
 `;
