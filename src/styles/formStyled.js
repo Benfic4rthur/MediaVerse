@@ -104,7 +104,7 @@ export const StyledButton = styled.button`
   width: 100%;
   padding: 1rem 1.6rem;
   font-weight: ${({ theme }) => theme.font.weight.bold};
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   text-align: center;
   text-decoration: none;
   border: none;
