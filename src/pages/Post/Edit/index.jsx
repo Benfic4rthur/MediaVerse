@@ -10,6 +10,7 @@ import { DialogPlay } from '../../../components/ModalPlay';
 import { UseAuthValue } from '../../../context/AuthContext';
 import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { useFetchDocument } from '../../../hooks/useFetchDocument';
+import { useNavigate } from 'react-router-dom';
 import {
   ContainerFlex,
   ContainerForm,
@@ -23,7 +24,6 @@ import { ButtonForm, ButtonResetForm, Textaria } from '../../../styles/formStyle
 import { ContainerCenter, SpinerLoading, Subtitle } from '../../../styles/styledGlobal';
 import { FetchDocument } from '../../../utils/FetchDocument';
 import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
-import { UpdateDocument } from '../../../utils/UpdateDocument';
 import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
@@ -52,6 +52,7 @@ export const EditPost = () => {
   const [progressPercent, setProgressPercent] = useState(0);
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição';
@@ -194,12 +195,7 @@ export const EditPost = () => {
       views: post?.views ?? 0,
     };
 
-    try {
-      await UpdateDocument('posts', postId, postToUpdate);
-      // navigate(`/post/${postId}`);}
-    } catch (error) {
-      setFormError(error);
-    }
+    if (Document) navigate(`/post/${postId}`);
   }
 
   const Reset = () => {
