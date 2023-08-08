@@ -63,7 +63,7 @@ export const CreatePost = () => {
     if (IsValidTrueOrFalse(isPublic) === true) {
       const publicValue = await countPublicCollecs(selectedCollec.id);
       if (publicValue >= 3) {
-        setFormError(`Você já postou 3 vídeos públicos na coleção "${selectedCollec?.name}"`);
+        setFormError(`Limite de 3 vídeos públicos atingido nesta coleção`);
         return;
       }
     }
@@ -139,6 +139,7 @@ export const CreatePost = () => {
     setSelectedVideo('');
     setSelectedCollec({});
     setIsPublic('false');
+    setFormError('');
   };
 
   return (

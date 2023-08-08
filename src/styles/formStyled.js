@@ -60,7 +60,7 @@ export const InputStyled = css`
   min-width: 100%;
   height: fit-content;
   text-align: left;
-  padding: ${props => (props.$svg ? '1.2rem 1.2rem 1.2rem 4.4rem' : '1.2rem')};
+  padding: ${props => (props.$svg ? '.9rem .9rem .9rem 4rem' : '.8rem')};
 `;
 
 export const Input = styled.input`
@@ -102,7 +102,7 @@ export const Textaria = styled.textarea`
 
 export const StyledButton = styled.button`
   width: 100%;
-  padding: 1.2rem 1.8rem;
+  padding: 1rem 1.6rem;
   font-weight: ${({ theme }) => theme.font.weight.bold};
   font-size: 1.6rem;
   text-align: center;
