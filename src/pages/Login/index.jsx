@@ -28,7 +28,7 @@ export const Login = () => {
       console.log("Logado com sucesso!");
       navigate('/');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

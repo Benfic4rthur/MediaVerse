@@ -25,7 +25,6 @@ export const Login = () => {
       password,
     };
     const res = await login(user);
-    console.log(res);
     redirect('/');
   };
   useEffect(() => {

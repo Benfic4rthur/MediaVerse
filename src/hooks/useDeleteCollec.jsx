@@ -24,7 +24,7 @@ export const useDeleteCollec = () => {
         return true
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setError(error.message);
       return false
     } finally {

@@ -67,7 +67,7 @@ export const CreatePost = () => {
         return;
       }
     }
-  
+
 
     const mediaVideo = document.getElementById('mediaVideo')?.files?.[0];
     const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];

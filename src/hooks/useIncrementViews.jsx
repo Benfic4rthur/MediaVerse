@@ -5,7 +5,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 export const useIncrementViews = (docCollection, id) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
-  
+
   useEffect(() => {
     const incrementViews = async () => {
       setLoading(true);
@@ -23,7 +23,7 @@ export const useIncrementViews = (docCollection, id) => {
           setError("Documento não encontrado");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setError(error.message);
       }
 

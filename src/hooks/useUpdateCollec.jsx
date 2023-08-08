@@ -47,7 +47,7 @@ export const useUpdateCollec = (docCollection) => {
 
       return true;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       checkCancelBeforeDispatch({ type: "ERROR", payload: error.message });
     }
   };

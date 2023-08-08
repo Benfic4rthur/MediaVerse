@@ -29,7 +29,7 @@ export const useAllUsersInfo = (docCollection) => {
         });
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setError(error.message);
         setLoading(false);
       }

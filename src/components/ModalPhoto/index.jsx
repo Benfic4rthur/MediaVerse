@@ -47,7 +47,7 @@ export const DialogPhoto = ({
 
             return { url: url.default, nameImage: image };
           } catch (error) {
-            // console.log(error);
+            // console.error(error);
           }
         }),
       );

@@ -6,7 +6,7 @@ export const useFetchDocument = (docCollection, id) => {
   const [document, setDocument] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
-  
+
   useEffect(() => {
     const loadDocument = async () => {
       setLoading(true);
@@ -17,7 +17,7 @@ export const useFetchDocument = (docCollection, id) => {
 
         setDocument(docSnap.data());
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setError(error.message);
       }
 

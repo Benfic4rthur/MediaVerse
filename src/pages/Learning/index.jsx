@@ -44,10 +44,6 @@ const Learning = () => {
     fetchTag();
   }, [post]);
 
-  useEffect(() => {
-    console.log(tagsVal);
-  }, [tagsVal]);
-
   // const handleCopyUrl = () => {
   //   if (post) {
   //     navigator.clipboard

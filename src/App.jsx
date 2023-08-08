@@ -102,7 +102,6 @@ function App() {
 
     const timeoutId = setTimeout(() => {
       setReload(e => ++e);
-      console.log('69898');
     }, 3600000);
 
     if (!isVisible) {

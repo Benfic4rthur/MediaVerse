@@ -12,7 +12,7 @@ export const useDeleteUserInfo = () => {
     try {
       await deleteDoc(doc(db, 'userInfo', userId));
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setError(error.message);
     } finally {
       setLoading(false);
