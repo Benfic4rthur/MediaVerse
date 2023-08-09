@@ -24,7 +24,6 @@ import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
-import { useEffect } from 'react';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -43,7 +42,6 @@ export const CreatePost = () => {
   const [selectedVideo, setSelectedVideo] = useState('');
   const [resetThumbPlaceholder, setResetThumbPlaceholder] = useState(false);
   const [resetVideoPlaceholder, setResetVideoPlaceholder] = useState(false);
-  const [resetCounter, setResetCounter] = useState(0);
 
   // eslint-disable-next-line no-unused-vars
   const { updateCollec, response: responseCollec } = useUpdateCollec('collec');
@@ -146,13 +144,8 @@ export const CreatePost = () => {
     setFormError('');
     setResetThumbPlaceholder(prevState => !prevState);
     setResetVideoPlaceholder(prevState => !prevState);
-    setResetCounter(prevCounter => prevCounter + 1);
   };
 
-  useEffect(() => {
-    setResetThumbPlaceholder(prevState => !prevState);
-    setResetVideoPlaceholder(prevState => !prevState);
-  },[resetCounter]);
 
   return (
     <ContainerCenter>
@@ -179,11 +172,11 @@ export const CreatePost = () => {
               resetPlaceholder={resetThumbPlaceholder}
               className='red'
               placeholder='Adicionar thumb'
+              initialPlaceholder='Adicionar thumb'
               aria-label='adicione arquivos de imagem para ser utilizado como Thumb'
               name='thumb'
               id='mediaThumb'
               accept='image/*'
-              type = 'thumb'
               required
             />
             <CustomInputTypeFile
@@ -191,12 +184,12 @@ export const CreatePost = () => {
               onChange={event => setSelectedVideo(processSelectedFile(event)?.url)}
               resetPlaceholder={resetVideoPlaceholder}
               placeholder='Adicionar Vídeo'
+              initialPlaceholder='Adicionar Vídeo'
               className='red'
               name='video'
               aria-label='adicione arquivos de Vídeo'
               id='mediaVideo'
               accept='video/*'
-              type = 'video'
               required
             />
           </ContainerFlex>

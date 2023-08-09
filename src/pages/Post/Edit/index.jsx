@@ -11,6 +11,7 @@ import { UseAuthValue } from '../../../context/AuthContext';
 import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import { useNavigate } from 'react-router-dom';
+import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 import {
   ContainerFlex,
   ContainerForm,
@@ -28,6 +29,7 @@ import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
+import { update } from 'lodash';
 
 export const EditPost = () => {
   const { id: postId } = useParams();
@@ -53,6 +55,7 @@ export const EditPost = () => {
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
   const navigate = useNavigate();
+  const { updateDocument, response } = useUpdateDocument('posts', postId);
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição';
@@ -196,7 +199,12 @@ export const EditPost = () => {
       views: post?.views ?? 0,
     };
 
-    if (Document) navigate(`/post/${postId}`);
+    try {
+      const document = await updateDocument(postId, postToUpdate);
+      if (document) navigate(`/post/${postId}`);
+    } catch (error) {
+      setFormError(error);
+    }
   }
 
   const Reset = () => {

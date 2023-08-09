@@ -5,7 +5,7 @@ import { ContainerSvg, SvgStyled } from '../../styles/formStyled';
 
 const sizeSVG = 20;
 
-export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', resetPlaceholder, initialPlaceholder = '', type = '', onChange, ...rest }) {
+export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', resetPlaceholder, initialPlaceholder = '', onChange, ...rest }) {
   const [state, setstate] = useState('');
   const [Placeholder, setPlaceholder] = useState(placeholder);
   const fileInputRef = useRef(null);
@@ -47,7 +47,7 @@ export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', reset
         onKeyDown={handleLabelKeyDown}
       >
         <InputPlaceholder aria-hidden={true}>
-          {Placeholder ? Placeholder : type == 'video' ? 'Adicionar Vídeo' :  type == 'thumb' && 'Adicionar thumb'}
+          {Placeholder ? Placeholder : initialPlaceholder}
         </InputPlaceholder>
         <InputHidden
           type='file'
