@@ -1,14 +1,16 @@
-import { useEffect, useLayoutEffect, useState, useMemo } from 'react';
 import { where } from 'firebase/firestore';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { LuEye, LuPlus, LuTag, LuTrash } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
+import { CreateInput } from '../../../components/CreateInputDash';
 import { UseAuthValue } from '../../../context/AuthContext';
+import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import {
   ContainerSpinerLoading,
   CreatePostButton,
+  Option,
   SpinerLoading,
   Subtitle,
-  Option,
 } from '../../../styles/styledGlobal';
 import { GetCollectionValues } from '../../../utils/GetCollectionValues';
 import {
@@ -21,8 +23,7 @@ import {
   Post,
   TitlePost,
 } from './styled';
-import { CreateInput } from '../../../components/CreateInputDash';
-import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
+// import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import { useDeleteCollec } from '../../../hooks/useDeleteCollec';
 
 export const Dashboard = () => {
@@ -39,28 +40,25 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const func = async (Where = null) => {
-      setLoader(true);
-
       let collectionWhere = Where;
       if (category) {
         collectionWhere = where('category', '==', category);
       }
 
       const val = await GetCollectionValues('collec', collectionWhere);
+
       if (val.length > 0) {
         const videoCountPromises = val.map(async post => {
-          const videos = await countCollecVideos(post.id);
-          return { postId: post.id, count: videos };
+          const videos = await countCollecVideos(post?.id);
+
+          return { [post?.id]: videos };
         });
 
-        Promise.all(videoCountPromises).then(counts => {
-          const newVideoCounts = {};
-          counts.forEach(countObj => {
-            newVideoCounts[countObj.postId] = countObj.count;
-          });
-          setVideoCounts(newVideoCounts);
-        });
+        const counts = await Promise.all(videoCountPromises);
 
+        const newVideoCounts = Object.assign(...counts);
+
+        setVideoCounts(newVideoCounts);
         setFilteredPosts(val);
         setLoader(false);
       } else {
@@ -71,12 +69,40 @@ export const Dashboard = () => {
     };
 
     if (userData.userStatus === 'admin') {
+      setLoader(true);
       func();
     } else {
+      setLoader(true);
+
       const Where = where('userId', '==', userData.userId);
       func(Where);
     }
   }, [category, userData.userId, userData.userStatus]);
+
+  // const Posts = await Promise.all(
+  //   val?.map(async e => ({
+  //     [e.id]: await GetCollectionValues('posts', where('collec', '==', e.id), limit(1)),
+  //   })),
+  // );
+
+  // const testset = Posts.reduce((acc, val) => {
+  //   const [[key, value]] = Object.entries(val);
+
+  //   return Object.assign(acc, { [key]: value?.[0] });
+  // }, {});
+
+  // const value = val
+  //   .reduce((acc, val) => {
+  //     const value = testset[val.id];
+
+  //     return [
+  //       ...acc,
+  //       { ...val, thumbURL: value?.thumbURL ?? '', havePosts: value ? true : false },
+  //     ];
+  //   }, [])
+  //   .filter(e => e.havePosts);
+
+  // console.log(value);
 
   const memoizedFilteredPosts = useMemo(() => filteredPosts, [filteredPosts]);
   const memoizedVideoCounts = useMemo(() => videoCounts, [videoCounts]);
@@ -104,32 +130,33 @@ export const Dashboard = () => {
         </CreatePostButton>
       </ContainerHeader>
 
-      {loader ? (
-        <ContainerSpinerLoading>
-          <SpinerLoading size={45} />
-        </ContainerSpinerLoading>
-      ) : (
-        <>
-          <ContainerPost>
-            <CreateInput
-              Svg={LuTag}
-              as='select'
-              className='red'
-              value={category}
-              onChange={event => {
-                setCategory(event.target.value);
-              }}
-              title='define a categoria'
-              aria-label='define a categoria'
-            >
-              <Option value={''}>Selecione a Categoria</Option>
-              {applicationTags.map((e, i) => (
-                <Option key={`${e}${i}`} value={e}>
-                  {e}
-                </Option>
-              ))}
-            </CreateInput>
-            {category === '' ? (
+      <ContainerPost>
+        <CreateInput
+          Svg={LuTag}
+          as='select'
+          className='red'
+          value={category}
+          onChange={event => {
+            setCategory(event.target.value);
+          }}
+          title='define a categoria'
+          aria-label='define a categoria'
+        >
+          <Option value={''}>Selecione a Categoria</Option>
+          {applicationTags.map((e, i) => (
+            <Option key={`${e}${i}`} value={e}>
+              {e}
+            </Option>
+          ))}
+        </CreateInput>
+
+        {loader ? (
+          <ContainerSpinerLoading>
+            <SpinerLoading size={45} />
+          </ContainerSpinerLoading>
+        ) : (
+          <>
+            {category === '' && !loader ? (
               <CreatePostTitle>Selecione uma categoria para ver suas coleções</CreatePostTitle>
             ) : (
               memoizedFilteredPosts?.map(post => (
@@ -156,13 +183,13 @@ export const Dashboard = () => {
                   </ContainerButtonEvent>
                 </Post>
               ))
-            )}{' '}
-            {!memoizedFilteredPosts?.length && (
-              <CreatePostTitle>Não foram encontradas coleções para essa categoria</CreatePostTitle>
             )}
-          </ContainerPost>
-        </>
-      )}
+          </>
+        )}
+        {!memoizedFilteredPosts?.length && (
+          <CreatePostTitle>Não foram encontradas coleções para essa categoria</CreatePostTitle>
+        )}
+      </ContainerPost>
     </div>
   );
 };
