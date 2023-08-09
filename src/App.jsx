@@ -45,7 +45,7 @@ function App() {
     'Beleza e Cuidados Pessoais',
     'Plataformas Digitais e Redes Sociais',
     'Marketing Digital',
-    'Tecnologia e Desenvolvimento de Sistemas',
+    'Tecnologia e Desenvolvimento Web',
     'Fotografia e Edição de Imagens',
     'Design Gráfico e Criatividade',
     'Empreendedorismo e Negócios',
