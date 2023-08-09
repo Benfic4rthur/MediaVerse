@@ -33,7 +33,7 @@ export const ContainerFlex = styled.div`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  gap: 1.5rem;
+  gap: .7rem;
 
   & .red,
   & > div {
@@ -51,7 +51,7 @@ export const ContainerForm = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: .7rem;
 
   > h1 {
     font-size: 2rem;
