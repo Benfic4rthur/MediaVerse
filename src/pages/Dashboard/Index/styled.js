@@ -182,6 +182,7 @@ export const MediaPreview = styled.img`
   width: 4rem;
   height: 4rem;
   object-fit: cover;
+  border-radius: 1rem;
   &:hover {
     cursor: pointer;
     transform: scale(1.1);

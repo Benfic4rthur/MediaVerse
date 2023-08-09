@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { LuTag, LuTrash, LuX } from 'react-icons/lu';
+import { LuTag, LuTrash, LuX, LuImagePlus } from 'react-icons/lu';
 import { MdOutlineAddBox, MdOutlineLibraryAdd } from 'react-icons/md';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useDeleteCollec } from '../../hooks/useDeleteCollec';
@@ -13,6 +14,10 @@ import { Option, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { UpdateDocument } from '../../utils/UpdateDocument';
 import { CreateInput } from '../CreateInput';
+import { mediaUpload } from '../../utils/mediaUpload';
+import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
+import { processSelectedFile } from '../../utils/processSelectedFile';
+import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
 import {
   ButtonActive,
   ButtonEvent,
@@ -33,6 +38,8 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
   const [category, setCategory] = useState('');
   const [Collec, setCollec] = useState([]);
   const { insertDocument, response } = useInsertDocument('collec');
+  const [selectedThumbModal, setSelectedThumbModal] = useState('');
+  const [resetThumbPlaceholderModal, setResetThumbPlaceholderModal] = useState(false);
   const { userData, applicationTags } = UseAuthValue();
   const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
   const { deleteDocument } = useDeleteCollec();
@@ -60,31 +67,55 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
     setLoader(true);
     setError('');
 
-    try {
-      if (!category) {
-        setError('Selecione uma categoria');
-      } else if (Name) {
-        const val = await GetCollectionValues('collec', Where);
+    const mediaThumb = document.getElementById('mediaThumbModal')?.files?.[0];
 
-        if (val?.length == 0) {
-          const vall = await insertDocument({
-            name: Name,
-            userId: userData.userId,
-            category,
-          });
-
-          await UpdateDocument('collec', vall.id, { id: vall.id });
-          setReload(e => ++e);
-        } else {
-          setError('Coleção ja existe');
-        }
-      } else {
-        setError('Selecione o nome de uma coleção');
-      }
-
+    if (!mediaThumb) {
+      setError('Selecione uma imagem.');
       setLoader(false);
+      return;
+    }
+    try {
+      await mediaUpload(
+        mediaThumb,
+        null,
+        'collec',
+        null,
+        async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+          if (!category) {
+            setError('Selecione uma categoria');
+          } else if (Name) {
+            const val = await GetCollectionValues('collec', Where);
+
+            if (val?.length === 0) {
+              try {
+                const newCollec = {
+                  name: Name,
+                  userId: userData.userId,
+                  category,
+                  publicPost: 0,
+                  mediaURL: thumbURL,
+                  thumbName: thumbURLName,
+                };
+                const vall = await insertDocument(newCollec);
+
+                await UpdateDocument('collec', vall.id, { id: vall.id });
+                setReload(e => ++e);
+              } catch (error) {
+                console.error('Error saving collection:', error);
+                setError('Erro ao salvar coleção');
+              }
+            } else {
+              setError('Coleção já existe');
+            }
+          } else {
+            setError('Selecione o nome de uma coleção');
+          }
+
+          setLoader(false);
+        },
+      );
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao tentar submeter:', error);
       setLoader(false);
     }
   };
@@ -92,7 +123,9 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
   const handleDelete = async e => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${e.name}?`);
     if (confirmDelete) {
+      deleteStorageMedia('collec', e?.thumbName);
       const val = await deleteDocument(e.id, e.name);
+      setReload(e => ++e);
       // Atualize o estado 'Collec' se a exclusão for bem-sucedida
       if (val) {
         const updatedCollec = Collec.filter(item => item.id !== e.id);
@@ -105,6 +138,9 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
   const handleReset = () => {
     setName('');
     setError('');
+    setCategory('');
+    setResetThumbPlaceholderModal(prevState => !prevState);
+    setLoader(false);
   };
 
   return (
@@ -183,6 +219,19 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
                   </Option>
                 ))}
               </CreateInput>
+              <CustomInputTypeFile
+                Svg={LuImagePlus}
+                onChange={event => setSelectedThumbModal(processSelectedFile(event)?.url)}
+                resetPlaceholder={resetThumbPlaceholderModal}
+                className='red'
+                placeholder='Adicione uma thumb na coleção'
+                initialPlaceholder='Adicione uma thumb na coleção'
+                aria-label='adicione arquivos de imagem para ser utilizado como Thumb'
+                name='thumbModal'
+                id='mediaThumbModal'
+                accept='image/*'
+                required
+              />
               <ButtonResetForm type='button' className='red' onClick={handleReset}>
                 Reset
               </ButtonResetForm>
@@ -201,26 +250,6 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
           </DialogContent>
         </Dialog.Portal>
       </Dialog.Root>
-      {/* <MessageUrl open={open} setOpen={setOpen} /> */}
     </>
   );
 };
-
-/* <fieldset className='Fieldset'>
-            <label className='Label' htmlFor='name'>
-              Name
-            </label>
-            <input className='Input' id='name' defaultValue='Pedro Duarte' />
-          </fieldset>
-          <fieldset className='Fieldset'>
-            <label className='Label' htmlFor='username'>
-              Username
-            </label>
-            <input className='Input' id='username' defaultValue='@peduarte' />
-          </fieldset> */
-
-/* <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
-            <Dialog.Close asChild>
-              <button className='Button green'>Save changes</button>
-            </Dialog.Close>
-          </div> */
