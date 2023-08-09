@@ -9,7 +9,7 @@ import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import {
   ContainerSpinerLoading,
-  CreatePostButton,
+  // CreatePostButton,
   Option,
   SpinerLoading,
   Subtitle,
@@ -25,6 +25,8 @@ import {
   Post,
   TitlePost,
   MediaPreview,
+  CreateCollecButton,
+  ContainerPostHeader,
 } from './styled';
 // import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import { useDeleteCollec } from '../../../hooks/useDeleteCollec';
@@ -131,16 +133,17 @@ export const Dashboard = () => {
         <ModalCollec
               className='red'
             >
-              <CreatePostButton as='div' type='button' style={{ cursor: 'pointer' }}>
+              <CreateCollecButton as='div' type='button' style={{ cursor: 'pointer' }}>
                 Criar Coleção <LuPlus size={17} />
-              </CreatePostButton>
+              </CreateCollecButton>
             </ModalCollec>
-        <CreatePostButton as={Link} to='/post/create'>
+        {/* <CreatePostButton as={Link} to='/post/create'>
           Criar Post <LuPlus size={17} />
-        </CreatePostButton>
+        </CreatePostButton> */}
       </ContainerHeader>
 
       <ContainerPost>
+        <ContainerPostHeader>
         <CreateInput
           Svg={LuTag}
           as='select'
@@ -159,7 +162,14 @@ export const Dashboard = () => {
             </Option>
           ))}
         </CreateInput>
-
+        {/* <ModalCollec
+              className='red'
+            >
+              <CreateCollecButton as='div' type='button' style={{ cursor: 'pointer' }}>
+                Criar Coleção <LuPlus size={17} />
+              </CreateCollecButton>
+            </ModalCollec> */}
+            </ContainerPostHeader>
         {loader ? (
           <ContainerSpinerLoading>
             <SpinerLoading size={45} />

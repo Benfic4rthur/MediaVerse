@@ -112,6 +112,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
           }
 
           setLoader(false);
+          setOpen(false);
         },
       );
     } catch (error) {
