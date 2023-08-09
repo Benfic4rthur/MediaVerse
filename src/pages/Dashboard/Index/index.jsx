@@ -4,6 +4,7 @@ import { LuEye, LuPlus, LuTag, LuTrash } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInputDash';
 import { UseAuthValue } from '../../../context/AuthContext';
+import { ModalCollec } from '../../../components/ModalCollecCreate';
 import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import {
@@ -37,7 +38,7 @@ export const Dashboard = () => {
   const { deleteDocument } = useDeleteCollec();
 
   useLayoutEffect(() => {
-    document.title = 'MediaVerse - Painel de Posts';
+    document.title = 'MediaVerse - Painel de Coleções';
   }, []);
 
   useEffect(() => {
@@ -127,7 +128,13 @@ export const Dashboard = () => {
     <div>
       <ContainerHeader>
         <Subtitle>Gerencie Coleções</Subtitle>
-
+        <ModalCollec
+              className='red'
+            >
+              <CreatePostButton as='div' type='button' style={{ cursor: 'pointer' }}>
+                Criar Coleção <LuPlus size={17} />
+              </CreatePostButton>
+            </ModalCollec>
         <CreatePostButton as={Link} to='/post/create'>
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
@@ -164,10 +171,7 @@ export const Dashboard = () => {
             ) : (
               memoizedFilteredPosts?.map(post => (
                 <Post key={post.id}>
-                  <MediaPreview
-                    src={post.mediaURL}
-                    alt={post.name}
-                  />
+                  <MediaPreview src={post.mediaURL} alt={post.name} />
                   <ContainerTitlePost className='titulo'>
                     <TitlePost title={`Título: ${post.name}`}>
                       Título: {post.name} | Vídeos: {memoizedVideoCounts[post.id] || 0}
