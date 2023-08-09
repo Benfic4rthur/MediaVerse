@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
 import { FaVenusMars } from 'react-icons/fa';
+import { LuLock, LuMail, LuPhone, LuUser } from 'react-icons/lu';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
@@ -10,7 +10,7 @@ import { UseAuthentication } from '../../hooks/useAuthentication';
 
 import { UseAuthValue } from '../../context/AuthContext';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
-import { Subtitle } from '../../styles/styledGlobal';
+import { Option, Subtitle } from '../../styles/styledGlobal';
 
 export const Register = () => {
   const [displayName, setDisplayName] = useState('');
@@ -138,14 +138,10 @@ export const Register = () => {
           value={userStatus}
           onChange={e => setUserStatus(e.target.value)}
         >
-          <option value=''>Selecione o tipo de usuário</option>
-          <hr />
-          <option value='admin'>Administrador</option>
-          <hr />
-          <option value='funcionario'>Funcionário</option>
-          <hr />
-          <option value='aluno'>Aluno</option>
-          <hr />
+          <Option value=''>Selecione o tipo de usuário</Option>
+          <Option value='admin'>Administrador</Option>
+          <Option value='funcionario'>Funcionário</Option>
+          <Option value='aluno'>Aluno</Option>
         </CreateInput>
         <CreateInput
           Svg={FaVenusMars}
@@ -154,11 +150,9 @@ export const Register = () => {
           value={userGender}
           onChange={e => setUserGender(e.target.value)}
         >
-          <option value=''>Selecionar sexo</option>
-          <hr />
-          <option value='feminino'>feminino</option>
-          <hr />
-          <option value='masculino'>masculino</option>
+          <Option value=''>Selecionar sexo</Option>
+          <Option value='feminino'>feminino</Option>
+          <Option value='masculino'>masculino</Option>
         </CreateInput>
         <CreateInput
           Svg={LuPhone}

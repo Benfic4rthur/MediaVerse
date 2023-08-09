@@ -128,6 +128,12 @@ export const LinkStyled = styled(Link)`
   }
 `;
 
+export const Option = styled.option`
+  border-top: 1px solid black;
+  background-color: ${({ theme }) => theme.color.fifth};
+  color: ${({ theme }) => theme.color.fourth};
+`;
+
 export const ContainerSpinerLoading = styled.div`
   height: 100%;
   width: 100%;

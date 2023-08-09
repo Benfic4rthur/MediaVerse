@@ -8,7 +8,7 @@ import { CreateInput } from '../../components/CreateInput';
 import { UseAuthentication } from '../../hooks/useAuthentication';
 
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
-import { Subtitle } from '../../styles/styledGlobal';
+import { Option, Subtitle } from '../../styles/styledGlobal';
 
 export const Register = () => {
   const [displayName, setDisplayName] = useState('');
@@ -132,14 +132,10 @@ export const Register = () => {
           value={userStatus}
           onChange={e => setUserStatus(e.target.value)}
         >
-          <option value=''>Selecione o tipo de usuário</option>
-          <hr />
-          <option value='admin'>Administrador</option>
-          <hr />
-          <option value='funcionario'>Funcionário</option>
-          <hr />
-          <option value='aluno'>Aluno</option>
-          <hr />
+          <Option value=''>Selecione o tipo de usuário</Option>
+          <Option value='admin'>Administrador</Option>
+          <Option value='funcionario'>Funcionário</Option>
+          <Option value='aluno'>Aluno</Option>
         </CreateInput>
         <CreateInput
           Svg={LuPhone}

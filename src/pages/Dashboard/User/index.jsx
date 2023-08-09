@@ -109,7 +109,7 @@ export const DashboardUser = () => {
             const loggedOutAtNum = Number(loggedOutAt);
             const loggedAtNum = Number(loggedAt);
 
-            const userStayLogged = loggedAtNum > loggedOutAtNum || StillLoggedIn;
+            const userStayLogged = loggedAtNum > loggedOutAtNum || StillLoggedIn
 
             return (
               <Card

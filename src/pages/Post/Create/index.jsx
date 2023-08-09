@@ -4,7 +4,7 @@ import { MdOutlineVideoLibrary } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInput';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
-import { DialogPlay } from '../../../components/ModalPlay';
+import { ModalCollec } from '../../../components/ModalCollec';
 import { UseAuthValue } from '../../../context/AuthContext';
 import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { useInsertDocument } from '../../../hooks/useInsertDocument';
@@ -19,7 +19,7 @@ import {
   Video,
 } from '../../../styles/StyledPostForm';
 import { ButtonForm, ButtonResetForm, Textaria } from '../../../styles/formStyled';
-import { ContainerCenter, SpinerLoading, Subtitle } from '../../../styles/styledGlobal';
+import { ContainerCenter, Option, SpinerLoading, Subtitle } from '../../../styles/styledGlobal';
 import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
@@ -227,11 +227,11 @@ export const CreatePost = () => {
               title='define se a postagem vai ser publica ou privada'
               aria-label='define se a postagem vai ser publica ou privada'
             >
-              <option value={'false'}>Privado</option>
-              <hr />
-              <option value={'true'}>Publico</option>
+
+              <Option value={'false'}>Privado</Option>
+              <Option value={'true'}>Publico</Option>
             </CreateInput>
-            <DialogPlay
+            <ModalCollec
               RenderTag={selectedCollec}
               className='red'
               setSelectedCollec={setSelectedCollec}
@@ -239,7 +239,7 @@ export const CreatePost = () => {
               <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
                 {selectedCollec?.name ? selectedCollec?.name : 'Adicionar coleção'}
               </CreateInput>
-            </DialogPlay>
+            </ModalCollec>
           </ContainerFlex>
 
           <ContainerFlex>

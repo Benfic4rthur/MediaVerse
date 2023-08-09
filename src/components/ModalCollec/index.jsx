@@ -2,14 +2,14 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { LuTrash, LuX } from 'react-icons/lu';
+import { LuTag, LuTrash, LuX } from 'react-icons/lu';
 import { MdOutlineAddBox, MdOutlineLibraryAdd } from 'react-icons/md';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useDeleteCollec } from '../../hooks/useDeleteCollec';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
 import { ButtonForm, ButtonResetForm, Form, SvgStyled } from '../../styles/formStyled';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
-import { SpinerLoading, Subtitle } from '../../styles/styledGlobal';
+import { Option, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { UpdateDocument } from '../../utils/UpdateDocument';
 import { CreateInput } from '../CreateInput';
@@ -24,15 +24,16 @@ import {
   TextTag,
 } from './styled';
 
-export const DialogPlay = ({ children, RenderTag, setSelectedCollec = () => {}, ...rest }) => {
+export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {}, ...rest }) => {
   const [open, setOpen] = useState(false);
   const [Loader, setLoader] = useState(false);
   const [Reload, setReload] = useState(0);
   const [Error, setError] = useState('');
   const [Name, setName] = useState('');
+  const [category, setCategory] = useState('');
   const [Collec, setCollec] = useState([]);
   const { insertDocument, response } = useInsertDocument('collec');
-  const { userData } = UseAuthValue();
+  const { userData, applicationTags } = UseAuthValue();
   const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
   const { deleteDocument } = useDeleteCollec();
 
@@ -60,11 +61,18 @@ export const DialogPlay = ({ children, RenderTag, setSelectedCollec = () => {}, 
     setError('');
 
     try {
-      if (Name) {
+      if (!category) {
+        setError('Selecione uma categoria');
+      } else if (Name) {
         const val = await GetCollectionValues('collec', Where);
 
         if (val?.length == 0) {
-          const vall = await insertDocument({ name: Name, userId: userData.userId, publicPost: 0 });
+          const vall = await insertDocument({
+            name: Name,
+            userId: userData.userId,
+            publicPost: 0,
+            category,
+          });
 
           await UpdateDocument('collec', vall.id, { id: vall.id });
           setReload(e => ++e);
@@ -157,6 +165,25 @@ export const DialogPlay = ({ children, RenderTag, setSelectedCollec = () => {}, 
                 placeholder='Nome para adicionar coleção'
                 required
               />
+              <CreateInput
+                Svg={LuTag}
+                as='select'
+                className='red'
+                value={category}
+                onChange={event => {
+                  setCategory(event.target.value);
+                }}
+                title='define se a postagem vai ser publica ou privada'
+                aria-label='define se a postagem vai ser publica ou privada'
+              >
+                <Option value={''}>Selecionar categoria</Option>
+
+                {applicationTags.map((e, i) => (
+                  <Option key={`${e}${i}`} value={e}>
+                    {e}
+                  </Option>
+                ))}
+              </CreateInput>
               <ButtonResetForm type='button' className='red' onClick={handleReset}>
                 Reset
               </ButtonResetForm>

@@ -1,10 +1,10 @@
 import {
-  EmailAuthProvider,
-  getAuth,
-  reauthenticateWithCredential,
-  updateEmail,
-  updatePassword,
-  updateProfile,
+    EmailAuthProvider,
+    getAuth,
+    reauthenticateWithCredential,
+    updateEmail,
+    updatePassword,
+    updateProfile,
 } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
@@ -19,15 +19,15 @@ import { DialogCurrent } from '../../components/ModalAccount';
 import { DialogPhoto } from '../../components/ModalPhoto';
 import { UseAuthValue } from '../../context/AuthContext';
 import {
-  ButtonForm,
-  ContainerForm,
-  Error as ErrorStyled,
-  Form,
-  Success,
+    ButtonForm,
+    ContainerForm,
+    Error as ErrorStyled,
+    Form,
+    Success,
 } from '../../styles/formStyled';
-import { Subtitle } from '../../styles/styledGlobal';
-import { ResetButton } from './styled';
+import { Option, Subtitle } from '../../styles/styledGlobal';
 import { UpdateDocument } from '../../utils/UpdateDocument';
+import { ResetButton } from './styled';
 
 export function Account() {
   const { userData, setReload } = UseAuthValue();
@@ -257,11 +257,9 @@ export function Account() {
           value={userGender}
           onChange={e => setUserGender(e.target.value)}
         >
-          <option value=''>Selecionar sexo</option>
-
-          <option value='feminino'>feminino</option>
-
-          <option value='masculino'>masculino</option>
+          <Option value=''>Selecionar sexo</Option>
+          <Option value='feminino'>feminino</Option>
+          <Option value='masculino'>masculino</Option>
         </CreateInput>
 
         <CreateInput

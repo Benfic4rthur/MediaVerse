@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { getAuth, signInWithEmailAndPassword, updateEmail } from 'firebase/auth';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { LuBuilding, LuPhone, LuUser, LuMail } from 'react-icons/lu';
 import { FaVenusMars } from 'react-icons/fa';
+import { LuMail, LuPhone, LuUser } from 'react-icons/lu';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
@@ -11,7 +10,7 @@ import { UseUserManagement } from '../../hooks/useUserEdit';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 
 import { useParams } from 'react-router-dom';
-import { Subtitle } from '../../styles/styledGlobal';
+import { Option, Subtitle } from '../../styles/styledGlobal';
 
 export const EditUser = () => {
   const [displayName, setDisplayName] = useState('');
@@ -23,7 +22,6 @@ export const EditUser = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userGender, setUserGender] = useState('');
   const { id } = useParams();
-
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição de usuário';
@@ -60,7 +58,7 @@ export const EditUser = () => {
       phoneNumber: cleanedPhoneNumber,
       userName,
       userStatus,
-      userGender
+      userGender,
     };
 
     await updateUser(updatedData);
@@ -110,13 +108,10 @@ export const EditUser = () => {
           value={userStatus}
           onChange={e => setUserStatus(e.target.value)}
         >
-          <option value=''>Selecione o tipo de usuário</option>
-          <hr />
-          <option value='admin'>Administrador</option>
-          <hr />
-          <option value='funcionario'>Funcionário</option>
-          <hr />
-          <option value='aluno'>Aluno</option>
+          <Option value=''>Selecione o tipo de usuário</Option>
+          <Option value='admin'>Administrador</Option>
+          <Option value='funcionario'>Funcionário</Option>
+          <Option value='aluno'>Aluno</Option>
         </CreateInput>
         <CreateInput
           Svg={FaVenusMars}
@@ -127,11 +122,9 @@ export const EditUser = () => {
           title='Sexo do usuário não pode ser alterado'
           onChange={e => setUserGender(e.target.value)}
         >
-          <option value=''>Selecionar sexo</option>
-          <hr />
-          <option value='feminino'>feminino</option>
-          <hr />
-          <option value='masculino'>masculino</option>
+          <Option value=''>Selecionar sexo</Option>
+          <Option value='feminino'>feminino</Option>
+          <Option value='masculino'>masculino</Option>
         </CreateInput>
         <CreateInput
           Svg={LuPhone}
