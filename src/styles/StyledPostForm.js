@@ -59,12 +59,13 @@ export const ContainerForm = styled.section`
   }
 `;
 
+
 export const Form = styled.form`
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .7rem;
+  gap: 0.7rem;
 
   @media (max-width: 600px) {
     width: 100%;

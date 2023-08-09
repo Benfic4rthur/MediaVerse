@@ -49,7 +49,6 @@ export const CreatePost = () => {
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Novo Post';
   }, []);
-
   const { insertDocument, response } = useInsertDocument('posts');
   const navigate = useNavigate();
 

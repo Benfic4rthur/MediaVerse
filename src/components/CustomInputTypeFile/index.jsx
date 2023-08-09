@@ -35,7 +35,7 @@ export function CustomInputTypeFile({ Svg = '', id = '', placeholder = '', reset
   return (
     <Container>
       {Svg && (
-        <ContainerSvg>
+        <ContainerSvg as='label' htmlFor={id ? id : state}>
           <SvgStyled as={Svg} size={sizeSVG} />
         </ContainerSvg>
       )}
