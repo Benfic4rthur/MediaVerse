@@ -13,17 +13,29 @@ export const ContainerHeader = styled.section`
   }
 `;
 export const ContainerCreatePost = styled.div`
-  gap: 1rem;
-  flex-direction: column;
   display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: 0.2rem 0.2rem 0.5rem ${({ theme }) => theme.color.shadow};
+  background-color: ${({ theme }) => theme.color.secondBg};
+  padding: 1.5rem 1rem;
+  border-radius: ${({ theme }) => theme.border.radius};
+
+  @media (max-width: 1250px) {
+    width: 100%;
+  }
 `;
 
 export const CreatePostTitle = styled.h2`
   display: inline-block;
   width: fit-content;
+  margin: 0 auto;
+  font-size: 1.7rem;
+  color: ${({ theme }) => theme.color.fourthOpacity};
+  padding-bottom: 4rem;
 `;
 
 export const ContainerPost = styled.section`
@@ -203,4 +215,11 @@ export const ButtonEvent = styled.button`
     color: ${({ theme }) => theme.color.error};
     background-color: ${({ theme }) => theme.color.third};
   }
+`;
+export const Container = styled.div`
+  position: relative;
+  height: fit-content;
+  z-index: 0;
+  width: 100%;
+  border-radius: ${({ theme }) => theme.border.radius};
 `;

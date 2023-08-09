@@ -70,7 +70,6 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
           const vall = await insertDocument({
             name: Name,
             userId: userData.userId,
-            publicPost: 0,
             category,
           });
 
@@ -173,8 +172,8 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
                 onChange={event => {
                   setCategory(event.target.value);
                 }}
-                title='define se a postagem vai ser publica ou privada'
-                aria-label='define se a postagem vai ser publica ou privada'
+                title='define a categoria da postagem'
+                aria-label='define a categoria da postagem'
               >
                 <Option value={''}>Selecionar categoria</Option>
 

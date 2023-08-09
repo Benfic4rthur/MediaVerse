@@ -41,13 +41,11 @@ export const EditPost = () => {
     name: '',
     id: '',
     userId: '',
-    publicPost: 0,
   });
   const [selectedCollecInit, setSelectedCollecInit] = useState({
     name: '',
     id: '',
     userId: '',
-    publicPost: 0,
   });
   const [isPublic, setIsPublic] = useState('false');
   const [formError, setFormError] = useState('');
