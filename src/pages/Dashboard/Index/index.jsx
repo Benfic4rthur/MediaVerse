@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useState, useMemo } from 'react';
 import { where } from 'firebase/firestore';
-import { LuEye, LuPlus, LuTag } from 'react-icons/lu';
+import { LuEye, LuPlus, LuTag, LuTrash } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import { UseAuthValue } from '../../../context/AuthContext';
 import {
@@ -13,7 +13,7 @@ import {
 import { GetCollectionValues } from '../../../utils/GetCollectionValues';
 import {
   ButtonEvent,
-  ContainerDate,
+  ContainerButtonEvent,
   ContainerHeader,
   ContainerPost,
   ContainerTitlePost,
@@ -23,6 +23,7 @@ import {
 } from './styled';
 import { CreateInput } from '../../../components/CreateInputDash';
 import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
+import { useDeleteCollec } from '../../../hooks/useDeleteCollec';
 
 export const Dashboard = () => {
   const { userData, applicationTags } = UseAuthValue();
@@ -30,6 +31,7 @@ export const Dashboard = () => {
   const [loader, setLoader] = useState(true);
   const [category, setCategory] = useState('');
   const [videoCounts, setVideoCounts] = useState({});
+  const { deleteDocument } = useDeleteCollec();
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Painel de Posts';
@@ -79,6 +81,19 @@ export const Dashboard = () => {
   const memoizedFilteredPosts = useMemo(() => filteredPosts, [filteredPosts]);
   const memoizedVideoCounts = useMemo(() => videoCounts, [videoCounts]);
 
+  const handleDelete = async (id, name) => {
+    const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${name}?`);
+    if (confirmDelete) {
+      const val = await deleteDocument(id, name);
+      // Atualize o estado 'Collec' se a exclusão for bem-sucedida
+      if (val) {
+        setFilteredPosts(filteredPosts.filter(post => post.id !== id));
+      } else {
+        alert(`Não é possível excluir a coleção. Existem posts associados a "${name}".`);
+      }
+    }
+  };
+
   return (
     <div>
       <ContainerHeader>
@@ -124,11 +139,21 @@ export const Dashboard = () => {
                       Título: {post.name} | Vídeos: {memoizedVideoCounts[post.id] || 0}
                     </TitlePost>
                   </ContainerTitlePost>
-                  <ContainerDate>
+                  <ContainerButtonEvent>
                     <ButtonEvent as={Link} to={`/dashboard/posts/${post.id}`} title='ver post'>
                       <LuEye />
                     </ButtonEvent>
-                  </ContainerDate>
+                    <ButtonEvent
+                      className='delete'
+                      title='deleter coleção'
+                      aria-label='deleter coleção'
+                      onClick={() => {
+                        handleDelete(post.id, post.name);
+                      }}
+                    >
+                      <LuTrash style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
+                    </ButtonEvent>
+                  </ContainerButtonEvent>
                 </Post>
               ))
             )}{' '}
