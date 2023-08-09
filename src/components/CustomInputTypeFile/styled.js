@@ -4,12 +4,11 @@ import { InputStyled } from '../../styles/formStyled';
 
 export const Label = styled.label`
   ${InputStyled}
-  font-size:5px;
+  font-size:10px;
   position: relative;
   width: 20rem;
   overflow: hidden;
   display: block;
-
 `;
 
 export const InputHidden = styled.input`
