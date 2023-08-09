@@ -146,7 +146,6 @@ export const CreatePost = () => {
     setResetVideoPlaceholder(prevState => !prevState);
   };
 
-
   return (
     <ContainerCenter>
       <ContainerForm>
@@ -171,8 +170,8 @@ export const CreatePost = () => {
               onChange={event => setSelectedThumb(processSelectedFile(event)?.url)}
               resetPlaceholder={resetThumbPlaceholder}
               className='red'
-              placeholder='Adicionar thumb'
-              initialPlaceholder='Adicionar thumb'
+              placeholder='Adicionar Thumb'
+              initialPlaceholder='Adicionar Thumb'
               aria-label='adicione arquivos de imagem para ser utilizado como Thumb'
               name='thumb'
               id='mediaThumb'
@@ -227,7 +226,6 @@ export const CreatePost = () => {
               title='define se a postagem vai ser publica ou privada'
               aria-label='define se a postagem vai ser publica ou privada'
             >
-
               <Option value={'false'}>Privado</Option>
               <Option value={'true'}>Publico</Option>
             </CreateInput>
