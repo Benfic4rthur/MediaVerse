@@ -123,8 +123,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
   const handleDelete = async e => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${e.name}?`);
     if (confirmDelete) {
-      deleteStorageMedia('collec', e?.thumbName);
-      const val = await deleteDocument(e.id, e.name);
+      const val = await deleteDocument(e.id, e.name, e.thumbName);
       setReload(e => ++e);
       // Atualize o estado 'Collec' se a exclusão for bem-sucedida
       if (val) {

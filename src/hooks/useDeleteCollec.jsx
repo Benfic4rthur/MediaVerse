@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { db } from '../firebase/config';
 import { deleteDoc, doc, getDocs, query, where, collection } from 'firebase/firestore';
+import { deleteStorageMedia } from '../utils/deleteStorageMedia';
 
 export const useDeleteCollec = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const deleteDocument = async (id, name) => {
+  const deleteDocument = async (id, name, thumbName) => {
     setLoading(true);
 
     try {
@@ -20,6 +21,7 @@ export const useDeleteCollec = () => {
         return false
       } else {
         await deleteDoc(doc(db, 'collec', id));
+        deleteStorageMedia('collec', thumbName);
         console.log(`Error:`);
         return true
       }

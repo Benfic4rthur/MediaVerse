@@ -6,7 +6,7 @@ import { CreateInput } from '../../../components/CreateInputDash';
 import { UseAuthValue } from '../../../context/AuthContext';
 import { ModalCollec } from '../../../components/ModalCollecCreate';
 import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
-import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
+
 import {
   ContainerSpinerLoading,
   // CreatePostButton,
@@ -84,40 +84,15 @@ export const Dashboard = () => {
     }
   }, [category, userData.userId, userData.userStatus]);
 
-  // const Posts = await Promise.all(
-  //   val?.map(async e => ({
-  //     [e.id]: await GetCollectionValues('posts', where('collec', '==', e.id), limit(1)),
-  //   })),
-  // );
-
-  // const testset = Posts.reduce((acc, val) => {
-  //   const [[key, value]] = Object.entries(val);
-
-  //   return Object.assign(acc, { [key]: value?.[0] });
-  // }, {});
-
-  // const value = val
-  //   .reduce((acc, val) => {
-  //     const value = testset[val.id];
-
-  //     return [
-  //       ...acc,
-  //       { ...val, thumbURL: value?.thumbURL ?? '', havePosts: value ? true : false },
-  //     ];
-  //   }, [])
-  //   .filter(e => e.havePosts);
-
-  // console.log(value);
-
   const memoizedFilteredPosts = useMemo(() => filteredPosts, [filteredPosts]);
   const memoizedVideoCounts = useMemo(() => videoCounts, [videoCounts]);
 
   const handleDelete = async (id, name, thumbName) => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${name}?`);
     if (confirmDelete) {
-      deleteStorageMedia('collec', thumbName);
-      const val = await deleteDocument(id, name);
+      const val = await deleteDocument(id, name, thumbName);
       // Atualize o estado 'Collec' se a exclusão for bem-sucedida
+
       if (val) {
         setFilteredPosts(filteredPosts.filter(post => post.id !== id));
       } else {

@@ -75,7 +75,7 @@ export const DashboardPost = () => {
   return (
     <div>
       <ContainerHeader>
-        <Subtitle>Gerencie posts</Subtitle>
+        <Subtitle>Gerencie os posts deste curso </Subtitle>
 
         <CreatePostButton as={Link} to='/post/create'>
           Criar Post <LuPlus size={17} />
