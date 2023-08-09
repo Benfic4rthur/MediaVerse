@@ -44,6 +44,7 @@ const TextariaOrInputStyled = css`
   color: ${({ theme }) => theme.color.fourthBg};
   border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};
   font-family: ${({ theme }) => theme.font.family.primary};
+  font-size: ${({ theme }) => theme.font.size.sm};
   line-height: ${({ theme }) => theme.font.lineHeight};
 
   &::placeholder,
@@ -71,7 +72,7 @@ export const Input = styled.input`
   ${props => props.style}
 `;
 
-export const ContainerSvg = styled.div`
+export const ContainerSvg = styled.label`
   position: absolute;
   left: 1.2rem;
   z-index: 1;
