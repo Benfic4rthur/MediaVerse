@@ -29,7 +29,7 @@ import {
   TextTag,
 } from './styled';
 
-export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {}, ...rest }) => {
+export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {}, onCollectionAdded, ...rest }) => {
   const [open, setOpen] = useState(false);
   const [Loader, setLoader] = useState(false);
   const [Reload, setReload] = useState(0);
@@ -72,6 +72,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
     if (!mediaThumb) {
       setError('Selecione uma imagem.');
       setLoader(false);
+      setOpen(true);
       return;
     }
     try {
@@ -83,6 +84,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
         async ({ mediaURL: thumbURL, name: thumbURLName }) => {
           if (!category) {
             setError('Selecione uma categoria');
+            setOpen(true);
           } else if (Name) {
             const val = await GetCollectionValues('collec', Where);
 
@@ -106,13 +108,17 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
               }
             } else {
               setError('Coleção já existe');
+              setOpen(true);
             }
           } else {
             setError('Selecione o nome de uma coleção');
+            setOpen(true);
           }
-
+          if (category && Name && mediaThumb) {
+            setOpen(false);
+          } 
           setLoader(false);
-          setOpen(false);
+          onCollectionAdded();
         },
       );
     } catch (error) {

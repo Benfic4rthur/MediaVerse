@@ -38,6 +38,8 @@ export const Dashboard = () => {
   const [category, setCategory] = useState('');
   const [videoCounts, setVideoCounts] = useState({});
   const { deleteDocument } = useDeleteCollec();
+  const [collectionAdded, setCollectionAdded] = useState(false);
+
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Painel de Coleções';
@@ -82,7 +84,10 @@ export const Dashboard = () => {
       const Where = where('userId', '==', userData.userId);
       func(Where);
     }
-  }, [category, userData.userId, userData.userStatus]);
+    if (collectionAdded) {
+      setCollectionAdded(false);
+    }
+  }, [category, userData.userId, userData.userStatus, collectionAdded]);
 
   const memoizedFilteredPosts = useMemo(() => filteredPosts, [filteredPosts]);
   const memoizedVideoCounts = useMemo(() => videoCounts, [videoCounts]);
@@ -101,13 +106,16 @@ export const Dashboard = () => {
     }
   };
 
+  const handleCollectionAdded = () => {
+    setCollectionAdded(true);
+  };
+  
+
   return (
     <div>
       <ContainerHeader>
         <Subtitle>Gerencie Coleções</Subtitle>
-        <ModalCollec
-              className='red'
-            >
+        <ModalCollec className='red' onCollectionAdded={handleCollectionAdded}>
               <CreateCollecButton as='div' type='button' style={{ cursor: 'pointer' }}>
                 Criar Coleção <LuPlus size={17} />
               </CreateCollecButton>
