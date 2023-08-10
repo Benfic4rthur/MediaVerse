@@ -200,12 +200,12 @@ const Index = () => {
                           Novo Post
                         </NavLinkMenuExpanded>
                         <NavLinkMenuExpanded
-                          aria-label='painel de postagens'
+                          aria-label='Painel de Cursos'
                         to='/dashboard/'
                           className={`${isActive => (isActive ? 'active' : '')} a2`}
                           onClick={() => setExpanded(false)}
                         >
-                          {userData.userStatus === 'admin' ? 'Painel de Postagens' : 'Dashboard'}
+                          {userData.userStatus === 'admin' ? 'Painel de Cursos' : 'Dashboard'}
                         </NavLinkMenuExpanded>
                       </>
                     )}
