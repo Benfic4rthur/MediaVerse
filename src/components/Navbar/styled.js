@@ -181,7 +181,7 @@ export const NavLinkStyled = styled(NavLink)`
     background-color: ${({ theme }) => theme.color.third};
   }
   @media screen and (max-width: 500px) {
-    font-size: ${({ theme }) => theme.font.size.sm};
+    font-size: 1.5rem;
   }
 `;
 
