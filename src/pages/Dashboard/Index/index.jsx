@@ -213,13 +213,18 @@ export const Dashboard = () => {
                   </ContainerTitlePost>
                   <ContainerButtonEvent>
                     {post?.size === 0 ? (
-                      <ButtonEvent
-                        disabled
-                        title='Esta coleção não possui nenhum vídeo'
-                        style={{ cursor: 'not-allowed' }}
-                      >
-                        <LuEye />
-                      </ButtonEvent>
+                      <>
+                        <ButtonEvent as={Link} to={`/post/create`} title='Novo post'>
+                          <LuPlus />
+                        </ButtonEvent>
+                        <ButtonEvent
+                          disabled
+                          title='Esta coleção não possui nenhum vídeo'
+                          style={{ cursor: 'not-allowed' }}
+                        >
+                          <LuEye />
+                        </ButtonEvent>
+                      </>
                     ) : (
                       <ButtonEvent as={Link} to={`/dashboard/posts/${post.id}`} title='ver post'>
                         <LuEye />
