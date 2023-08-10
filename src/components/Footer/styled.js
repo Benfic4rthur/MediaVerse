@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { MaxWidth } from '../../styles/styledGlobal';
 
 export const Footer = styled.footer`
-  height: 10rem;
+  height: 7.5rem;
   color: white;
   width: 100%;
   background-color: ${({ theme }) => theme.color.fifth};
