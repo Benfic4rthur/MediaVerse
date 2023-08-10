@@ -258,7 +258,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
             {response.error && <ErrorStyled>{response.error}</ErrorStyled>}
 
             <Dialog.Close asChild>
-              <IconButton aria-label='Close' onClick={() => setError('')}>
+              <IconButton aria-label='Close' onClick={() => handleReset()}>
                 <LuX />
               </IconButton>
             </Dialog.Close>

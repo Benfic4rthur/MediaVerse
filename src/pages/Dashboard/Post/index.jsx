@@ -2,6 +2,7 @@ import { where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuEdit, LuEye, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { Link, useParams } from 'react-router-dom';
+import { IoArrowBackCircle } from 'react-icons/io5';
 import { DialogDemo } from '../../../components/Modal';
 import {
   ContainerSpinerLoading,
@@ -27,6 +28,7 @@ import {
   Post,
   TitlePost,
   Views,
+  CreateCollecButton,
 } from './styled';
 
 export const DashboardPost = () => {
@@ -152,7 +154,10 @@ export const DashboardPost = () => {
             </ContainerPost>
           ) : (
             <ContainerCreatePost>
-              <CreatePostTitle>Não foram encontrados posts</CreatePostTitle>
+              <CreatePostTitle>Não foram encontrados posts nesta coleção.</CreatePostTitle>
+          <CreateCollecButton as={Link} to='/dashboard/'>
+          <IoArrowBackCircle size={20}/>  Voltar para painel de cursos
+          </CreateCollecButton>
             </ContainerCreatePost>
           )}
         </>

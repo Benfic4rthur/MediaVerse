@@ -204,3 +204,32 @@ export const ButtonEvent = styled.button`
     background-color: ${({ theme }) => theme.color.third};
   }
 `;
+export const CreateCollecButton = styled.link`
+  background-color: ${({ theme }) => theme.color.first};
+  filter: saturate(0.95);
+  width: 25rem;
+  /* margin-top: -1.5rem; */
+
+  text-decoration: none;
+  color: ${({ theme }) => theme.color.fourth};
+  white-space: nowrap;
+  font-size: ${({ theme }) => theme.font.size.sm};
+  cursor: pointer;
+
+  border-radius: ${({ theme }) => theme.border.radius};
+  box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow};
+
+  padding: 1.2rem 2rem;
+  margin-top: 3rem;
+
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+
+  transition: 300ms color, 300ms background-color;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.firstHover};
+  }
+`;
