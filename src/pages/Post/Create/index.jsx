@@ -229,8 +229,8 @@ export const CreatePost = () => {
                   title='define se a postagem vai ser publica ou privada'
                   aria-label='define se a postagem vai ser publica ou privada'
                 >
-                  <Option value={'false'}>{'         '}Privado</Option>
-                  <Option value={'true'}>{'         '}Publico</Option>
+                  <Option value={'false'}>{'          '}Privado</Option>
+                  <Option value={'true'}>{'          '}Publico</Option>
                 </CreateInput>
               </>
             )}
