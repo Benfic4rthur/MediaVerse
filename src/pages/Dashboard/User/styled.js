@@ -32,7 +32,7 @@ export const ContainerCard = styled.section`
 `;
 
 export const Card = styled.div`
-  padding: 0.5rem 2.5rem;
+  padding: 1.2rem 2.5rem;
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow};
   border: 1px solid #ccc;
   border-radius: 5px;
