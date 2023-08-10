@@ -50,7 +50,7 @@ export const MidiaStyled = css`
   /* width: ${props => (props.$vertical ? 'initial' : 'min(100%, 75rem)')}; */
   /* min-height: ${props => (props.$vertical ? '100%' : 'initial')}; */
   width: 100%;
-  max-height: 60rem;
+  max-height: 50rem;
   object-fit: contain;
   box-shadow: 0.3rem 0.3rem 1rem 0.3rem ${({ theme }) => theme.color.shadow};
   border-radius: 1rem;
