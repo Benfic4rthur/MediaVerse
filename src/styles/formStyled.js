@@ -59,7 +59,8 @@ const TextariaOrInputStyled = css`
 export const InputStyled = css`
   ${TextariaOrInputStyled}
   min-width: 100%;
-  height: fit-content;
+  /* height: fit-content; */
+  height: 4.1rem;
   text-align: left;
   padding: ${props => (props.$svg ? '.9rem .9rem .9rem 4rem' : '.8rem')};
 `;
