@@ -75,7 +75,7 @@ export const Input = styled.input`
 
 export const ContainerSvg = styled.label`
   position: absolute;
-  left: 1.2rem;
+  left: 1rem;
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
