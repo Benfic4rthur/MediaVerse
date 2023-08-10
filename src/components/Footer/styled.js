@@ -58,7 +58,7 @@ export const NavLinkStyled = styled.a`
 export const NavLinkWhatsapp = styled(NavLinkStyled)`
   position: fixed;
   z-index: 100;
-  bottom: 3.5rem;
+  bottom: 2.2rem;
   border-radius: 3rem;
   font-size: 2.2rem;
   background-color: ${({ theme }) => theme.color.first};
