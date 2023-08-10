@@ -76,7 +76,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
       return;
     }
     try {
-      await mediaUpload(
+       mediaUpload(
         mediaThumb,
         null,
         'collec',
@@ -116,7 +116,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
           }
           if (category && Name && mediaThumb) {
             setOpen(false);
-          } 
+          }
           setLoader(false);
           onCollectionAdded();
         },

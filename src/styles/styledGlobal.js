@@ -1,6 +1,6 @@
 import { LuLoader2 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const containerStyleBody = css`
   background-image: linear-gradient(120.21deg, #888f93 11.18%, #0c6870 74.17%);
@@ -114,10 +114,9 @@ export const PostsNotFoundTitle = styled.h3`
   color: ${({ theme }) => theme.color.fourthBg};
 `;
 
-const spinAnimation = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
+// const spinAnimation = keyframes`
+
+// `;
 
 export const LinkStyled = styled(Link)`
   border-radius: ${({ theme }) => theme.border.radius};
@@ -142,7 +141,16 @@ export const ContainerSpinerLoading = styled.div`
 `;
 
 export const SpinerLoading = styled(LuLoader2)`
-  animation: ${spinAnimation} 0.9s linear infinite;
+  @keyframes spinAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  animation: spinAnimation 0.9s linear infinite;
 `;
 
 // --------------------- //

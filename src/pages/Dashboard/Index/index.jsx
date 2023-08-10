@@ -3,8 +3,8 @@ import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { LuEye, LuPlus, LuTag, LuTrash } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInputDash';
-import { UseAuthValue } from '../../../context/AuthContext';
 import { ModalCollec } from '../../../components/ModalCollecCreate';
+import { UseAuthValue } from '../../../context/AuthContext';
 import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 
 import {
@@ -19,14 +19,15 @@ import {
   ButtonEvent,
   ContainerButtonEvent,
   ContainerHeader,
+  ContainerMediaPreview,
   ContainerPost,
+  ContainerPostHeader,
   ContainerTitlePost,
+  CreateCollecButton,
   CreatePostTitle,
+  MediaPreview,
   Post,
   TitlePost,
-  MediaPreview,
-  CreateCollecButton,
-  ContainerPostHeader,
 } from './styled';
 // import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import { useDeleteCollec } from '../../../hooks/useDeleteCollec';
@@ -36,7 +37,7 @@ export const Dashboard = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [loader, setLoader] = useState(true);
   const [category, setCategory] = useState('');
-  const [videoCounts, setVideoCounts] = useState({});
+  // const [videoCounts, setVideoCounts] = useState({});
   const { deleteDocument } = useDeleteCollec();
   const [collectionAdded, setCollectionAdded] = useState(false);
 
@@ -54,21 +55,37 @@ export const Dashboard = () => {
       const val = await GetCollectionValues('collec', collectionWhere);
 
       if (val.length > 0) {
-        const videoCountPromises = val.map(async post => {
-          const videos = await countCollecVideos(post?.id);
+        // setFilteredPosts(val);
 
-          return { [post?.id]: videos };
+        // const videoCountPromises = val.map(async post => {
+        //   const DocumentData = await countCollecVideos(post?.id);
+
+        //   console.log(
+        //     DocumentData.docs[0]?._document?.data?.value?.mapValue?.fields?.thumbURL?.stringValue,
+        //   );
+
+        //   return { ...post, [post?.id]: DocumentData.size}})
+
+        // const counts = await Promise.all(videoCountPromises);
+
+        // const newVideoCounts = Object.assign(...counts);
+
+        // setVideoCounts(newVideoCounts);
+        // setFilteredPosts(counts);
+        // setLoader(false);
+        setFilteredPosts(val);
+        setLoader(false);
+
+        const videoCountPromises = val.map(async post => {
+          const DocumentData = await countCollecVideos(post?.id);
+
+          return { ...post, size: DocumentData.size };
         });
 
         const counts = await Promise.all(videoCountPromises);
 
-        const newVideoCounts = Object.assign(...counts);
-
-        setVideoCounts(newVideoCounts);
-        setFilteredPosts(val);
-        setLoader(false);
+        setFilteredPosts(counts);
       } else {
-        setVideoCounts({});
         setFilteredPosts([]);
         setLoader(false);
       }
@@ -89,7 +106,6 @@ export const Dashboard = () => {
   }, [category, userData.userId, userData.userStatus, collectionAdded]);
 
   const memoizedFilteredPosts = useMemo(() => filteredPosts, [filteredPosts]);
-  const memoizedVideoCounts = useMemo(() => videoCounts, [videoCounts]);
 
   const handleDelete = async (id, name, thumbName) => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${name}?`);
@@ -114,7 +130,7 @@ export const Dashboard = () => {
       <ContainerHeader>
         <Subtitle>Gerencie Coleções</Subtitle>
         <ModalCollec className='red' onCollectionAdded={handleCollectionAdded}>
-          <CreateCollecButton as='div' type='button' style={{ cursor: 'pointer' }}>
+          <CreateCollecButton as='div' type='button'>
             Criar Coleção <LuPlus size={17} />
           </CreateCollecButton>
         </ModalCollec>
@@ -157,20 +173,26 @@ export const Dashboard = () => {
           </ContainerSpinerLoading>
         ) : (
           <>
-            {category === '' && !loader ? (
+            {category === '' || memoizedFilteredPosts.length === 0 ? (
               <CreatePostTitle>Selecione uma categoria para ver suas coleções</CreatePostTitle>
             ) : (
               memoizedFilteredPosts?.map(post => (
                 <Post key={post.id}>
-                  <MediaPreview src={post.mediaURL} alt={post.name} />
+                  <ContainerMediaPreview>
+                    <MediaPreview src={post.mediaURL} alt={post.name} />
+                  </ContainerMediaPreview>
                   <ContainerTitlePost className='titulo'>
                     <TitlePost title={`Título: ${post.name}`}>
-                      Título: {post.name} | Vídeos: {memoizedVideoCounts[post.id] || 0}
+                      Título: {post.name} | Vídeos: {post?.size ?? '-'}
                     </TitlePost>
                   </ContainerTitlePost>
                   <ContainerButtonEvent>
-                    {memoizedVideoCounts[post.id] === 0 ? (
-                      <ButtonEvent disabled title='Esta coleção não possui nenhum vídeo' style={{ cursor: 'not-allowed' }}>
+                    {post?.size === 0 ? (
+                      <ButtonEvent
+                        disabled
+                        title='Esta coleção não possui nenhum vídeo'
+                        style={{ cursor: 'not-allowed' }}
+                      >
                         <LuEye />
                       </ButtonEvent>
                     ) : (
@@ -182,20 +204,15 @@ export const Dashboard = () => {
                       className='delete'
                       title='deleter coleção'
                       aria-label='deleter coleção'
-                      onClick={() => {
-                        handleDelete(post.id, post.name, post.thumbName);
-                      }}
+                      onClick={() => handleDelete(post.id, post.name, post.thumbName)}
                     >
-                      <LuTrash style={{ cursor: 'pointer' }} /> {/* Ícone de lixeira */}
+                      <LuTrash />
                     </ButtonEvent>
                   </ContainerButtonEvent>
                 </Post>
               ))
             )}
           </>
-        )}
-        {!memoizedFilteredPosts?.length && (
-          <CreatePostTitle>Não foram encontradas coleções para essa categoria</CreatePostTitle>
         )}
       </ContainerPost>
     </div>

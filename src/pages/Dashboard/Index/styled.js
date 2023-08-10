@@ -35,7 +35,7 @@ export const CreatePostTitle = styled.h2`
   margin: 0 auto;
   font-size: 1.7rem;
   color: ${({ theme }) => theme.color.fourthOpacity};
-  padding-bottom: 4rem;
+  padding-block: 1.24rem;
 `;
 
 export const ContainerPost = styled.section`
@@ -66,7 +66,6 @@ export const Post = styled.div`
   padding: 1rem 1.5rem;
   box-shadow: 0.2rem 0.2rem 0.5rem ${({ theme }) => theme.color.shadow};
   background-color: ${({ theme }) => theme.color.thirdOpacity03};
-  border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};
   border-radius: 0.5rem;
   transition: 200ms linear background-color;
 
@@ -178,15 +177,25 @@ export const Views = styled.p`
   cursor: default;
 `;
 
-export const MediaPreview = styled.img`
+export const ContainerMediaPreview = styled.div`
   width: 4rem;
   height: 4rem;
-  object-fit: cover;
   border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.color.firstOpacity};
+
   &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
+`;
+
+export const MediaPreview = styled.img`
+  width: 100%;
+  height: 100%;
+  object-position: center center;
+  object-fit: cover;
+  transform: scale(1.06);
 `;
 
 export const InputRadial = styled.input`
@@ -235,6 +244,7 @@ export const CreateCollecButton = styled.button`
   color: ${({ theme }) => theme.color.fourth};
   white-space: nowrap;
   font-size: ${({ theme }) => theme.font.size.sm};
+  cursor: pointer;
 
   border-radius: ${({ theme }) => theme.border.radius};
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow};
@@ -256,4 +266,4 @@ export const CreateCollecButton = styled.button`
 export const ContainerPostHeader = styled.div`
   justify-content: space-between;
   display: flex;
-  `;
+`;
