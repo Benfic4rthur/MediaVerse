@@ -87,7 +87,7 @@ export const SvgStyled = styled.svg`
 
 export const Textaria = styled.textarea`
   width: 100%;
-  height: 12rem;
+  height: 10rem;
   padding: 1.2rem;
 
   ${TextariaOrInputStyled}

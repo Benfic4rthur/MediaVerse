@@ -51,7 +51,7 @@ export const Post = styled.div`
   grid-template-rows: 1fr;
   align-items: center;
   gap: 1rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 2rem;
   box-shadow: 0.2rem 0.2rem 0.5rem ${({ theme }) => theme.color.shadow};
   background-color: ${({ theme }) => theme.color.thirdOpacity03};
   border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};

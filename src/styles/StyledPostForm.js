@@ -59,9 +59,8 @@ export const ContainerForm = styled.section`
   }
 `;
 
-
 export const Form = styled.form`
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;

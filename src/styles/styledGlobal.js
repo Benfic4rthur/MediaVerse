@@ -33,7 +33,7 @@ export const MaxWidth = css`
 
 export const Main = styled.main`
   ${MaxWidth}
-  padding-block: 3rem;
+  padding-block: 2rem;
   padding-inline: min(5%, 2rem);
 `;
 
