@@ -33,9 +33,9 @@ export const CreatePostTitle = styled.h2`
   display: inline-block;
   width: fit-content;
   margin: 0 auto;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   color: ${({ theme }) => theme.color.fourthOpacity};
-  padding-bottom: 4rem;
+  padding-bottom: 5rem;
 `;
 
 export const ContainerPost = styled.section`
