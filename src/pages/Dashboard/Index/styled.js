@@ -35,7 +35,7 @@ export const CreatePostTitle = styled.h2`
   margin: 0 auto;
   font-size: 1.7rem;
   color: ${({ theme }) => theme.color.fourthOpacity};
-  padding-block: 1.24rem;
+  padding-bottom: 4rem;
 `;
 
 export const ContainerPost = styled.section`
@@ -62,6 +62,7 @@ export const Post = styled.div`
   grid-template-columns: min-content 1fr min-content min-content;
   grid-template-rows: 1fr;
   align-items: center;
+  border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};
   gap: 1rem;
   padding: 1rem 1.5rem;
   box-shadow: 0.2rem 0.2rem 0.5rem ${({ theme }) => theme.color.shadow};
