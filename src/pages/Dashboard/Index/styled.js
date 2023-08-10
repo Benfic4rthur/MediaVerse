@@ -36,6 +36,9 @@ export const CreatePostTitle = styled.h2`
   font-size: 1.6rem;
   color: ${({ theme }) => theme.color.fourthOpacity};
   padding-bottom: 5rem;
+  @media screen and (max-width: 400px) {
+    font-size: 1rem;
+  }
 `;
 
 export const ContainerPost = styled.section`
