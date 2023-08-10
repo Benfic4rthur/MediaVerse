@@ -31,7 +31,7 @@ export const ContainerHome = styled.div`
 
 export const PostsContainer = styled.section`
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   min-width: 100%;
   min-height: min-content;
   flex-flow: row wrap;
