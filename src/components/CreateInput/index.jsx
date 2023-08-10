@@ -19,6 +19,7 @@ export function CreateInput({ Svg = '', id ="", ...rest }) {
         </ContainerSvg>
       )}
       <Input {...rest} id={id ? id : state} $svg={Svg} />
+      
     </Container>
   );
 }

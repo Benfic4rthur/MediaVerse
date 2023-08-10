@@ -129,8 +129,12 @@ export const LinkStyled = styled(Link)`
 
 export const Option = styled.option`
   border-top: 1px solid black;
+  height: 4.1rem;
   background-color: ${({ theme }) => theme.color.fifth};
   color: ${({ theme }) => theme.color.fourth};
+  @media screen and (max-width: 500px) {
+    min-height: 4.1rem;
+  }
 `;
 
 export const ContainerSpinerLoading = styled.div`
