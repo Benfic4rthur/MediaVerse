@@ -34,13 +34,13 @@ export const LinkImgFooter = styled.a`
 
 export const ImgFooter = styled.img`
   min-height: 2.2rem;
-  width: 3.3rem;
+  width: 2.4rem;
 `;
 
 export const NavLinkStyled = styled.a`
   text-decoration: none;
   color: white;
-  font-size: 3rem;
+  font-size: 2.2rem;
   display: flex;
   justify-content: end;
   text-decoration: none;
@@ -58,9 +58,9 @@ export const NavLinkStyled = styled.a`
 export const NavLinkWhatsapp = styled(NavLinkStyled)`
   position: fixed;
   z-index: 100;
-  bottom: 3rem;
+  bottom: 3.5rem;
   border-radius: 3rem;
-  font-size: 3.1rem;
+  font-size: 2.2rem;
   background-color: ${({ theme }) => theme.color.first};
   transform: rotate(40deg);
   animation: ${({ theme }) => theme.animation.balancinho} 1s alternate infinite;
