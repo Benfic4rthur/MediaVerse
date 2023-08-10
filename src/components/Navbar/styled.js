@@ -154,7 +154,6 @@ export const Menu = styled.div`
 export const NavLinkStyled = styled(NavLink)`
   text-decoration: none;
   color: ${({ theme }) => theme.color.fourthOpacity};
-  font-size: ${({ theme }) => theme.font.size.base};
   padding: 0.5rem;
   border-radius: ${({ theme }) => theme.border.radius};
   display: flex;
@@ -165,7 +164,8 @@ export const NavLinkStyled = styled(NavLink)`
   transition: 0.3s background-color, 0.3s color;
   width: 100%;
   padding: 1.3rem;
-  font-size: ${({ theme }) => theme.font.size.sm};
+  /* font-size: ${({ theme }) => theme.font.size.sm}; */
+  font-size: 1rem;
   display: flex;
   gap: 0.5rem;
   border-radius: 0;
