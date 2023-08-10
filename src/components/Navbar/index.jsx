@@ -168,7 +168,7 @@ const Index = () => {
                   <img
                     src={avatar}
                     alt=''
-                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                    style={{ width: '40px', height: '40px', borderRadius: '50%' }}
                   />
                 </ButtonMenuExpanded>
                 <ContainerAdaptiveMenu>
@@ -176,7 +176,7 @@ const Index = () => {
                     <img
                       src={avatar}
                       alt=''
-                      style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                      style={{ width: '40px', height: '40px', borderRadius: '50%' }}
                     />
                   </ButtonMenuExpanded>
                   <Menu $expanded={expanded}>

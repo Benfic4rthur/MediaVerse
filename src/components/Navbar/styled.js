@@ -254,8 +254,8 @@ export const NavLinkMenuExpanded = styled(NavLinkStyled)`
 `;
 
 export const ButtonMenuExpanded = styled.button`
-  min-height: 5rem;
-  min-width: 5rem;
+  min-height: 4rem;
+  min-width: 4rem;
   border-radius: 50%;
   overflow: hidden;
   background-color: ${({ theme }) => theme.color.firstOpacity};
