@@ -1,10 +1,10 @@
 import {
-    EmailAuthProvider,
-    getAuth,
-    reauthenticateWithCredential,
-    updateEmail,
-    updatePassword,
-    updateProfile,
+  EmailAuthProvider,
+  getAuth,
+  reauthenticateWithCredential,
+  updateEmail,
+  updatePassword,
+  updateProfile,
 } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
@@ -19,11 +19,11 @@ import { DialogCurrent } from '../../components/ModalAccount';
 import { DialogPhoto } from '../../components/ModalPhoto';
 import { UseAuthValue } from '../../context/AuthContext';
 import {
-    ButtonForm,
-    ContainerForm,
-    Error as ErrorStyled,
-    Form,
-    Success,
+  ButtonForm,
+  ContainerForm,
+  Error as ErrorStyled,
+  Form,
+  Success,
 } from '../../styles/formStyled';
 import { Option, Subtitle } from '../../styles/styledGlobal';
 import { UpdateDocument } from '../../utils/UpdateDocument';
@@ -173,8 +173,8 @@ export function Account() {
         } catch (error) {
           if (error.code === 'ENOENT') {
             import(`../../assets/notAvatar.jpg`)
-          .then(image => setAvatar(image.default))
-          .catch(error => console.error(error));
+              .then(image => setAvatar(image.default))
+              .catch(error => console.error(error));
           } else {
             console.error(error);
           }
@@ -183,7 +183,7 @@ export function Account() {
     };
 
     func();
-  }, [userGender,photoURL]);
+  }, [userGender, photoURL]);
 
   return (
     <ContainerForm>
@@ -200,7 +200,7 @@ export function Account() {
           <img
             src={avatar}
             alt=''
-            style={{ width: '100px', height: '100px', borderRadius: '50%', cursor: 'pointer' }}
+            style={{ width: '85px', height: '85px', borderRadius: '50%', cursor: 'pointer' }}
           />
         </DialogPhoto>
 

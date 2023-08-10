@@ -16,8 +16,8 @@ export const DialogDescription = styled(Content)`
 `;
 
 export const ButtonActive = styled.button`
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.color.firstOpacity};
 `;
@@ -30,8 +30,8 @@ export const ContainerButtonAvatar = styled.section`
 `;
 
 export const ButtonAvatar = styled.button`
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.color.firstOpacity};
   overflow: hidden;
