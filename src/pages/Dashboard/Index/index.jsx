@@ -152,7 +152,7 @@ export const Dashboard = () => {
             title='define a categoria'
             aria-label='define a categoria'
           >
-            <Option value={''}>{'      '}Selecione a Categoria</Option>
+            <Option value={''}>{'         '}Selecione a Categoria</Option>
             {applicationTags.map((e, i) => (
               <Option key={`${e}${i}`} value={e}>
                 {e}

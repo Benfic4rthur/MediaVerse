@@ -257,9 +257,9 @@ export function Account() {
           value={userGender}
           onChange={e => setUserGender(e.target.value)}
         >
-          <Option value=''>{"      "}Selecionar sexo</Option>
-          <Option value='feminino'>{"      "}feminino</Option>
-          <Option value='masculino'>{"      "}masculino</Option>
+          <Option value=''>{"         "}Selecionar sexo</Option>
+          <Option value='feminino'>{"         "}feminino</Option>
+          <Option value='masculino'>{"         "}masculino</Option>
         </CreateInput>
 
         <CreateInput
