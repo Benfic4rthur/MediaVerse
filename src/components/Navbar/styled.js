@@ -31,7 +31,7 @@ export const NavLinkLogo = styled(NavLink)`
 `;
 
 export const Logo = styled.img`
-  height: 4rem;
+  height: 2.68rem;
   margin-top: 0.6rem;
   margin-right: 0.1rem;
   text-decoration: none;
@@ -44,7 +44,7 @@ export const UserName = styled.span`
   color: transparent;
   font-family: ${({ theme }) => theme.font.family.second};
   /* font-size: clamp(1.9rem, 3vw, 2.8rem); */
-  font-size: 1.7rem;
+  font-size: 1.139rem;
   margin-top: 1rem;
   margin-left: -0.3rem;
 `;

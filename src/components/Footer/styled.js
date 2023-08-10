@@ -34,7 +34,7 @@ export const LinkImgFooter = styled.a`
 
 export const ImgFooter = styled.img`
   min-height: 2.2rem;
-  width: 4rem;
+  width: 3.3rem;
 `;
 
 export const NavLinkStyled = styled.a`
