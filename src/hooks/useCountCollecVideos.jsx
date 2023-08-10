@@ -5,5 +5,5 @@ export const countCollecVideos = async (id) => {
     const postsQuery = query(collection(db, 'posts'), where('collec', '==', id));
     const postsSnapshot = await getDocs(postsQuery);
 
-    return postsSnapshot.size;
+    return postsSnapshot;
 }
