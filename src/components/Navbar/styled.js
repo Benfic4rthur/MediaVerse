@@ -180,6 +180,9 @@ export const NavLinkStyled = styled(NavLink)`
     color: ${({ theme }) => theme.color.fourth};
     background-color: ${({ theme }) => theme.color.third};
   }
+  @media screen and (max-width: 500px) {
+    font-size: ${({ theme }) => theme.font.size.sm};
+  }
 `;
 
 const HiddenNavLink = css`
