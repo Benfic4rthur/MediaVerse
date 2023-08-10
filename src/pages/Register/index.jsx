@@ -94,6 +94,9 @@ export const Register = () => {
     }
   }, [authError]);
 
+  const screenWidth =
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
   return (
     <ContainerForm>
       <Subtitle>Novo Cadastro</Subtitle>
@@ -131,29 +134,61 @@ export const Register = () => {
           onChange={e => setEmail(e.target.value)}
           autoComplete='off'
         />
-        <CreateInput
-          Svg={MdOutlineAdminPanelSettings}
-          as='select'
-          required
-          value={userStatus}
-          onChange={e => setUserStatus(e.target.value)}
-        >
-          <Option value=''>{'         '}Selecione o tipo de usuário</Option>
-          <Option value='admin'>{'         '}Administrador</Option>
-          <Option value='funcionario'>{'         '}Funcionário</Option>
-          <Option value='aluno'>{'         '}Aluno</Option>
-        </CreateInput>
-        <CreateInput
-          Svg={FaVenusMars}
-          as='select'
-          required
-          value={userGender}
-          onChange={e => setUserGender(e.target.value)}
-        >
-          <Option value=''>{'         '}Selecionar sexo</Option>
-          <Option value='feminino'>{'         '}feminino</Option>
-          <Option value='masculino'>{'         '}masculino</Option>
-        </CreateInput>
+
+        {screenWidth <= 896 && (
+          <>
+            <CreateInput
+              Svg={MdOutlineAdminPanelSettings}
+              as='select'
+              required
+              value={userStatus}
+              onChange={e => setUserStatus(e.target.value)}
+            >
+              <Option value=''>{'         '}Selecione o tipo de usuário</Option>
+              <Option value='admin'>{'         '}Administrador</Option>
+              <Option value='funcionario'>{'         '}Funcionário</Option>
+              <Option value='aluno'>{'         '}Aluno</Option>
+            </CreateInput>
+            <CreateInput
+              Svg={FaVenusMars}
+              as='select'
+              required
+              value={userGender}
+              onChange={e => setUserGender(e.target.value)}
+            >
+              <Option value=''>{'         '}Selecionar sexo</Option>
+              <Option value='feminino'>{'         '}feminino</Option>
+              <Option value='masculino'>{'         '}masculino</Option>
+            </CreateInput>
+          </>
+        )}
+        {screenWidth > 896 && (
+          <>
+            <CreateInput
+              Svg={MdOutlineAdminPanelSettings}
+              as='select'
+              required
+              value={userStatus}
+              onChange={e => setUserStatus(e.target.value)}
+            >
+              <Option value=''>Selecione o tipo de usuário</Option>
+              <Option value='admin'>Administrador</Option>
+              <Option value='funcionario'>Funcionário</Option>
+              <Option value='aluno'>Aluno</Option>
+            </CreateInput>
+            <CreateInput
+              Svg={FaVenusMars}
+              as='select'
+              required
+              value={userGender}
+              onChange={e => setUserGender(e.target.value)}
+            >
+              <Option value=''>Selecionar sexo</Option>
+              <Option value='feminino'>feminino</Option>
+              <Option value='masculino'>masculino</Option>
+            </CreateInput>
+          </>
+        )}
         <CreateInput
           Svg={LuPhone}
           as={InputMask}

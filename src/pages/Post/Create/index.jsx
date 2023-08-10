@@ -144,7 +144,8 @@ export const CreatePost = () => {
     setResetThumbPlaceholder(prevState => !prevState);
     setResetVideoPlaceholder(prevState => !prevState);
   };
-
+  const screenWidth =
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
   return (
     <ContainerCenter>
@@ -215,20 +216,41 @@ export const CreatePost = () => {
           />
 
           <ContainerFlex>
-            <CreateInput
-              Svg={LuLock}
-              as='select'
-              className='red'
-              value={isPublic}
-              onChange={event => {
-                setIsPublic(event.target.value);
-              }}
-              title='define se a postagem vai ser publica ou privada'
-              aria-label='define se a postagem vai ser publica ou privada'
-            >
-              <Option value={'false'}>{"         "}Privado</Option>
-              <Option value={'true'}>{"         "}Publico</Option>
-            </CreateInput>
+            {screenWidth <= 896 && (
+              <>
+                <CreateInput
+                  Svg={LuLock}
+                  as='select'
+                  className='red'
+                  value={isPublic}
+                  onChange={event => {
+                    setIsPublic(event.target.value);
+                  }}
+                  title='define se a postagem vai ser publica ou privada'
+                  aria-label='define se a postagem vai ser publica ou privada'
+                >
+                  <Option value={'false'}>{'         '}Privado</Option>
+                  <Option value={'true'}>{'         '}Publico</Option>
+                </CreateInput>
+              </>
+            )}
+            {screenWidth > 896 && (
+              <CreateInput
+                Svg={LuLock}
+                as='select'
+                className='red'
+                value={isPublic}
+                onChange={event => {
+                  setIsPublic(event.target.value);
+                }}
+                title='define se a postagem vai ser publica ou privada'
+                aria-label='define se a postagem vai ser publica ou privada'
+              >
+                <Option value={'false'}>Privado</Option>
+                <Option value={'true'}>Publico</Option>
+              </CreateInput>
+            )}
+
             <ModalCollec
               RenderTag={selectedCollec}
               className='red'

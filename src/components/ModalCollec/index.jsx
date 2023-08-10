@@ -41,7 +41,11 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
   const [selectedThumbModal, setSelectedThumbModal] = useState('');
   const [resetThumbPlaceholderModal, setResetThumbPlaceholderModal] = useState(false);
   const { userData, applicationTags } = UseAuthValue();
-  const Where = and(where('name', '==', Name), where('userId', '==', userData.userId), where('category', '==', category));
+  const Where = and(
+    where('name', '==', Name),
+    where('userId', '==', userData.userId),
+    where('category', '==', category),
+  );
   const { deleteDocument } = useDeleteCollec();
 
   useEffect(() => {
@@ -66,35 +70,40 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
     e?.preventDefault();
     setLoader(true);
     setError('');
-  
+
     const mediaThumb = document.getElementById('mediaThumbModal')?.files?.[0];
-  
+
     if (!Name) {
       setError('Insira o nome de uma coleção');
       setLoader(false);
       setOpen(true);
       return;
     }
-  
+
     if (!category) {
       setError('Selecione uma categoria');
       setLoader(false);
       setOpen(true);
       return;
     }
-  
+
     if (!mediaThumb) {
       setError('Selecione uma imagem.');
       setLoader(false);
       setOpen(true);
       return;
     }
-  
+
     try {
       const val = await GetCollectionValues('collec', Where);
-    
-      const existingCollection = val.find(collection => collection.name === Name && collection.category === category && collection.userId === userData.userId);
-    
+
+      const existingCollection = val.find(
+        collection =>
+          collection.name === Name &&
+          collection.category === category &&
+          collection.userId === userData.userId,
+      );
+
       if (!existingCollection) {
         await mediaUpload(
           mediaThumb,
@@ -111,13 +120,13 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
                 thumbName: thumbURLName,
               };
               const vall = await insertDocument(newCollec);
-    
+
               await UpdateDocument('collec', vall.id, { id: vall.id });
               setReload(e => ++e);
-    
+
               if (category && Name && mediaThumb) {
                 handleReset();
-              } 
+              }
               setLoader(false);
             } catch (error) {
               console.error('Error saving collection:', error);
@@ -135,7 +144,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
       console.error('Erro ao tentar submeter:', error);
       setLoader(false);
     }
-  }
+  };
   const handleDelete = async e => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${e.name}?`);
     if (confirmDelete) {
@@ -157,6 +166,9 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
     setResetThumbPlaceholderModal(prevState => !prevState);
     setLoader(false);
   };
+
+  const screenWidth =
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
   return (
     <>
@@ -215,25 +227,50 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
                 placeholder='Nome para adicionar coleção'
                 required
               />
-              <CreateInput
-                Svg={LuTag}
-                as='select'
-                className='red'
-                value={category}
-                onChange={event => {
-                  setCategory(event.target.value);
-                }}
-                title='define a categoria da postagem'
-                aria-label='define a categoria da postagem'
-              >
-                <Option value={''}>{'         '}Selecionar categoria</Option>
+              {screenWidth <= 896 && (
+                <>
+                  <CreateInput
+                    Svg={LuTag}
+                    as='select'
+                    className='red'
+                    value={category}
+                    onChange={event => {
+                      setCategory(event.target.value);
+                    }}
+                    title='define a categoria da postagem'
+                    aria-label='define a categoria da postagem'
+                  >
+                    <Option value={''}>{'         '}Selecionar categoria</Option>
 
-                {applicationTags.map((e, i) => (
-                  <Option key={`${e}${i}`} value={e}>
-                    {e}
-                  </Option>
-                ))}
-              </CreateInput>
+                    {applicationTags.map((e, i) => (
+                      <Option key={`${e}${i}`} value={e}>
+                        {e}
+                      </Option>
+                    ))}
+                  </CreateInput>
+                </>
+              )}
+              {screenWidth > 896 && (
+                <CreateInput
+                  Svg={LuTag}
+                  as='select'
+                  className='red'
+                  value={category}
+                  onChange={event => {
+                    setCategory(event.target.value);
+                  }}
+                  title='define a categoria da postagem'
+                  aria-label='define a categoria da postagem'
+                >
+                  <Option value={''}>Selecionar categoria</Option>
+
+                  {applicationTags.map((e, i) => (
+                    <Option key={`${e}${i}`} value={e}>
+                      {e}
+                    </Option>
+                  ))}
+                </CreateInput>
+              )}
               <CustomInputTypeFile
                 Svg={LuImagePlus}
                 onChange={event => setSelectedThumbModal(processSelectedFile(event)?.url)}

@@ -185,6 +185,9 @@ export function Account() {
     func();
   }, [userGender, photoURL]);
 
+  const screenWidth =
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
   return (
     <ContainerForm>
       <Subtitle>Edição de Usuário</Subtitle>
@@ -250,17 +253,35 @@ export function Account() {
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'
         />
-        <CreateInput
-          Svg={FaVenusMars}
-          as='select'
-          required
-          value={userGender}
-          onChange={e => setUserGender(e.target.value)}
-        >
-          <Option value=''>{"         "}Selecionar sexo</Option>
-          <Option value='feminino'>{"         "}feminino</Option>
-          <Option value='masculino'>{"         "}masculino</Option>
-        </CreateInput>
+        {screenWidth <= 896 && (
+          <>
+            {' '}
+            <CreateInput
+              Svg={FaVenusMars}
+              as='select'
+              required
+              value={userGender}
+              onChange={e => setUserGender(e.target.value)}
+            >
+              <Option value=''>{'         '}Selecionar sexo</Option>
+              <Option value='feminino'>{'         '}feminino</Option>
+              <Option value='masculino'>{'         '}masculino</Option>
+            </CreateInput>
+          </>
+        )}
+        {screenWidth > 896 && (
+          <CreateInput
+            Svg={FaVenusMars}
+            as='select'
+            required
+            value={userGender}
+            onChange={e => setUserGender(e.target.value)}
+          >
+            <Option value=''>Selecionar sexo</Option>
+            <Option value='feminino'>feminino</Option>
+            <Option value='masculino'>masculino</Option>
+          </CreateInput>
+        )}
 
         <CreateInput
           Svg={LuLock}

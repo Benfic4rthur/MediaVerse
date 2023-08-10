@@ -125,6 +125,9 @@ export const Dashboard = () => {
     setCollectionAdded(true);
   };
 
+  const screenWidth =
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
   return (
     <div>
       <ContainerHeader>
@@ -141,24 +144,46 @@ export const Dashboard = () => {
 
       <ContainerPost>
         <ContainerPostHeader>
-          <CreateInput
-            Svg={LuTag}
-            as='select'
-            className='red'
-            value={category}
-            onChange={event => {
-              setCategory(event.target.value);
-            }}
-            title='define a categoria'
-            aria-label='define a categoria'
-          >
-            <Option value={''}>{'         '}Selecione a Categoria</Option>
-            {applicationTags.map((e, i) => (
-              <Option key={`${e}${i}`} value={e}>
-                {e}
-              </Option>
-            ))}
-          </CreateInput>
+          {screenWidth <= 896 && (
+            <CreateInput
+              Svg={LuTag}
+              as='select'
+              className='red'
+              value={category}
+              onChange={event => {
+                setCategory(event.target.value);
+              }}
+              title='define a categoria'
+              aria-label='define a categoria'
+            >
+              <Option value={''}>{'         '}Selecione a Categoria</Option>
+              {applicationTags.map((e, i) => (
+                <Option key={`${e}${i}`} value={e}>
+                  {e}
+                </Option>
+              ))}
+            </CreateInput>
+          )}
+          {screenWidth > 896 && (
+            <CreateInput
+              Svg={LuTag}
+              as='select'
+              className='red'
+              value={category}
+              onChange={event => {
+                setCategory(event.target.value);
+              }}
+              title='define a categoria'
+              aria-label='define a categoria'
+            >
+              <Option value={''}>Selecione a Categoria</Option>
+              {applicationTags.map((e, i) => (
+                <Option key={`${e}${i}`} value={e}>
+                  {e}
+                </Option>
+              ))}
+            </CreateInput>
+          )}
           {/* <ModalCollec
               className='red'
             >
