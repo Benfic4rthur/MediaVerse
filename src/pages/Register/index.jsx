@@ -138,10 +138,10 @@ export const Register = () => {
           value={userStatus}
           onChange={e => setUserStatus(e.target.value)}
         >
-          <Option value=''>{'        '}Selecione o tipo de usuário</Option>
-          <Option value='admin'>{'                   '}Administrador</Option>
-          <Option value='funcionario'>{'                   '}Funcionário</Option>
-          <Option value='aluno'>{'                   '}Aluno</Option>
+          <Option value=''>{'   '}Selecione o tipo de usuário</Option>
+          <Option value='admin'>{'   '}Administrador</Option>
+          <Option value='funcionario'>{'   '}Funcionário</Option>
+          <Option value='aluno'>{'   '}Aluno</Option>
         </CreateInput>
         <CreateInput
           Svg={FaVenusMars}
@@ -150,9 +150,9 @@ export const Register = () => {
           value={userGender}
           onChange={e => setUserGender(e.target.value)}
         >
-          <Option value=''>{'                '}Selecionar sexo</Option>
-          <Option value='feminino'>{'                     '}feminino</Option>
-          <Option value='masculino'>{'                    '}masculino</Option>
+          <Option value=''>{'   '}Selecionar sexo</Option>
+          <Option value='feminino'>{'   '}feminino</Option>
+          <Option value='masculino'>{'   '}masculino</Option>
         </CreateInput>
         <CreateInput
           Svg={LuPhone}
