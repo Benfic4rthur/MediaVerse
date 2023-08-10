@@ -226,7 +226,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
                 title='define a categoria da postagem'
                 aria-label='define a categoria da postagem'
               >
-                <Option value={''}>{'   '}Selecionar categoria</Option>
+                <Option value={''}>{'      '}Selecionar categoria</Option>
 
                 {applicationTags.map((e, i) => (
                   <Option key={`${e}${i}`} value={e}>

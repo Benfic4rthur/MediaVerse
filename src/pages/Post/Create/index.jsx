@@ -227,8 +227,8 @@ export const CreatePost = () => {
               aria-label='define se a postagem vai ser publica ou privada'
             >
 
-              <Option value={'false'}>{"   "}Privado</Option>
-              <Option value={'true'}>{"   "}Publico</Option>
+              <Option value={'false'}>{"      "}Privado</Option>
+              <Option value={'true'}>{"      "}Publico</Option>
             </CreateInput>
             <ModalCollec
               RenderTag={selectedCollec}
