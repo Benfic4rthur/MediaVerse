@@ -41,7 +41,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
   const [selectedThumbModal, setSelectedThumbModal] = useState('');
   const [resetThumbPlaceholderModal, setResetThumbPlaceholderModal] = useState(false);
   const { userData, applicationTags } = UseAuthValue();
-  const Where = and(where('name', '==', Name), where('userId', '==', userData.userId));
+  const Where = and(where('name', '==', Name), where('userId', '==', userData.userId), where('category', '==', category));
   const { deleteDocument } = useDeleteCollec();
 
   useEffect(() => {
@@ -66,67 +66,79 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
     e?.preventDefault();
     setLoader(true);
     setError('');
-
+  
     const mediaThumb = document.getElementById('mediaThumbModal')?.files?.[0];
-
+  
+    if (!Name) {
+      setError('Insira o nome de uma coleção');
+      setLoader(false);
+      setOpen(true);
+      return;
+    }
+  
+    if (!category) {
+      setError('Selecione uma categoria');
+      setLoader(false);
+      setOpen(true);
+      return;
+    }
+  
     if (!mediaThumb) {
       setError('Selecione uma imagem.');
       setLoader(false);
       setOpen(true);
       return;
     }
+  
     try {
-      await mediaUpload(
-        mediaThumb,
-        null,
-        'collec',
-        null,
-        async ({ mediaURL: thumbURL, name: thumbURLName }) => {
-          if (!category) {
-            setError('Selecione uma categoria');
-            setOpen(true);
-          } else if (Name) {
-            const val = await GetCollectionValues('collec', Where);
-
-            if (val?.length === 0) {
-              try {
-                const newCollec = {
-                  name: Name,
-                  userId: userData.userId,
-                  category,
-                  publicPost: 0,
-                  mediaURL: thumbURL,
-                  thumbName: thumbURLName,
-                };
-                const vall = await insertDocument(newCollec);
-
-                await UpdateDocument('collec', vall.id, { id: vall.id });
-                setReload(e => ++e);
-              } catch (error) {
-                console.error('Error saving collection:', error);
-                setError('Erro ao salvar coleção');
-              }
-            } else {
-              setError('Coleção já existe');
-              setOpen(true);
+      const val = await GetCollectionValues('collec', Where);
+    
+      const existingCollection = val.find(collection => collection.name === Name && collection.category === category && collection.userId === userData.userId);
+    
+      if (!existingCollection) {
+        await mediaUpload(
+          mediaThumb,
+          null,
+          'collec',
+          null,
+          async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+            try {
+              const newCollec = {
+                name: Name,
+                userId: userData.userId,
+                category,
+                mediaURL: thumbURL,
+                thumbName: thumbURLName,
+              };
+              const vall = await insertDocument(newCollec);
+    
+              await UpdateDocument('collec', vall.id, { id: vall.id });
+              setReload(e => ++e);
+    
+              if (category && Name && mediaThumb) {
+                setOpen(false);
+                handleReset();
+              } 
+              setLoader(false);
+              onCollectionAdded();
+            } catch (error) {
+              console.error('Error saving collection:', error);
+              setLoader(false);
+              setError('Erro ao salvar coleção');
             }
-          } else {
-            setError('Selecione o nome de uma coleção');
-            setOpen(true);
-          }
-          if (category && Name && mediaThumb) {
-            setOpen(false);
-          } 
-          setLoader(false);
-          onCollectionAdded();
-        },
-      );
+          },
+        );
+      } else {
+        setError('Coleção já existe');
+        setLoader(false);
+        setOpen(true);
+      }
     } catch (error) {
       console.error('Erro ao tentar submeter:', error);
       setLoader(false);
     }
-  };
-
+  }
+  
   const handleDelete = async e => {
     const confirmDelete = window.confirm(`Tem certeza que deseja excluir a coleção ${e.name}?`);
     if (confirmDelete) {
@@ -218,7 +230,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
             {response.error && <ErrorStyled>{response.error}</ErrorStyled>}
 
             <Dialog.Close asChild>
-              <IconButton aria-label='Close' onClick={() => setError('')}>
+              <IconButton aria-label='Close' onClick={() => handleReset()}>
                 <LuX />
               </IconButton>
             </Dialog.Close>
