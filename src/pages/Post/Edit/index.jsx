@@ -311,10 +311,10 @@ export const EditPost = () => {
               type='reset'
               disabled={progressPercent > 1}
             >
-              Resetar
+              Limpar
             </ButtonResetForm>
             <ButtonForm className='red' disabled={progressPercent > 1}>
-              {progressPercent < 1 ? 'Enviar' : <SpinerLoading size={18} />}
+              {progressPercent < 1 ? 'Salvar' : <SpinerLoading size={18} />}
             </ButtonForm>
           </ContainerFlex>
           {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}

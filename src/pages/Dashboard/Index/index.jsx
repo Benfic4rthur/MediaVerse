@@ -40,7 +40,6 @@ export const Dashboard = () => {
   const { deleteDocument } = useDeleteCollec();
   const [collectionAdded, setCollectionAdded] = useState(false);
 
-
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Painel de Coleções';
   }, []);
@@ -109,17 +108,16 @@ export const Dashboard = () => {
   const handleCollectionAdded = () => {
     setCollectionAdded(true);
   };
-  
 
   return (
     <div>
       <ContainerHeader>
         <Subtitle>Gerencie Coleções</Subtitle>
         <ModalCollec className='red' onCollectionAdded={handleCollectionAdded}>
-              <CreateCollecButton as='div' type='button' style={{ cursor: 'pointer' }}>
-                Criar Coleção <LuPlus size={17} />
-              </CreateCollecButton>
-            </ModalCollec>
+          <CreateCollecButton as='div' type='button' style={{ cursor: 'pointer' }}>
+            Criar Coleção <LuPlus size={17} />
+          </CreateCollecButton>
+        </ModalCollec>
         {/* <CreatePostButton as={Link} to='/post/create'>
           Criar Post <LuPlus size={17} />
         </CreatePostButton> */}
@@ -127,32 +125,32 @@ export const Dashboard = () => {
 
       <ContainerPost>
         <ContainerPostHeader>
-        <CreateInput
-          Svg={LuTag}
-          as='select'
-          className='red'
-          value={category}
-          onChange={event => {
-            setCategory(event.target.value);
-          }}
-          title='define a categoria'
-          aria-label='define a categoria'
-        >
-          <Option value={''}>Selecione a Categoria</Option>
-          {applicationTags.map((e, i) => (
-            <Option key={`${e}${i}`} value={e}>
-              {e}
-            </Option>
-          ))}
-        </CreateInput>
-        {/* <ModalCollec
+          <CreateInput
+            Svg={LuTag}
+            as='select'
+            className='red'
+            value={category}
+            onChange={event => {
+              setCategory(event.target.value);
+            }}
+            title='define a categoria'
+            aria-label='define a categoria'
+          >
+            <Option value={''}>Selecione a Categoria</Option>
+            {applicationTags.map((e, i) => (
+              <Option key={`${e}${i}`} value={e}>
+                {e}
+              </Option>
+            ))}
+          </CreateInput>
+          {/* <ModalCollec
               className='red'
             >
               <CreateCollecButton as='div' type='button' style={{ cursor: 'pointer' }}>
                 Criar Coleção <LuPlus size={17} />
               </CreateCollecButton>
             </ModalCollec> */}
-            </ContainerPostHeader>
+        </ContainerPostHeader>
         {loader ? (
           <ContainerSpinerLoading>
             <SpinerLoading size={45} />
@@ -171,9 +169,15 @@ export const Dashboard = () => {
                     </TitlePost>
                   </ContainerTitlePost>
                   <ContainerButtonEvent>
-                    <ButtonEvent as={Link} to={`/dashboard/posts/${post.id}`} title='ver post'>
-                      <LuEye />
-                    </ButtonEvent>
+                    {memoizedVideoCounts[post.id] === 0 ? (
+                      <ButtonEvent disabled title='Esta coleção não possui nenhum vídeo' style={{ cursor: 'not-allowed' }}>
+                        <LuEye />
+                      </ButtonEvent>
+                    ) : (
+                      <ButtonEvent as={Link} to={`/dashboard/posts/${post.id}`} title='ver post'>
+                        <LuEye />
+                      </ButtonEvent>
+                    )}
                     <ButtonEvent
                       className='delete'
                       title='deleter coleção'
