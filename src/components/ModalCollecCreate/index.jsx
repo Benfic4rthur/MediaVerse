@@ -18,11 +18,8 @@ import { mediaUpload } from '../../utils/mediaUpload';
 import { processSelectedFile } from '../../utils/processSelectedFile';
 import { CreateInput } from '../CreateInput';
 import { CustomInputTypeFile } from '../CustomInputTypeFile';
-import {
-    ButtonActive,
-    DialogContent,
-    Error as ErrorStyled
-} from './styled';
+import { ButtonActive, DialogContent, Error as ErrorStyled } from './styled';
+import { generateSearchTokens } from '../../utils/generateSearchTokens';
 
 export const ModalCollec = ({
   children,
@@ -116,6 +113,7 @@ export const ModalCollec = ({
               const newCollec = {
                 name: Name,
                 userId: userData.userId,
+                searchTokens: generateSearchTokens(Name),
                 category,
                 mediaURL: thumbURL,
                 thumbName: thumbURLName,

@@ -187,7 +187,7 @@ export const EditPost = () => {
       mediaURLName,
       thumbURLName,
       body,
-      searchTokens: generateSearchTokens(title),
+      searchTokens: [...generateSearchTokens(selectedCollec.name), ...generateSearchTokens(title)],
       collec: selectedCollec.id,
       collecName: selectedCollec.name,
       isPublic: IsValidTrueOrFalse(isPublic),

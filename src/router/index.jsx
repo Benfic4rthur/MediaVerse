@@ -66,6 +66,7 @@ export const router = createBrowserRouter(
 
           <Route element={<RedirectIfNotAuthorized />}>
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/dashboard/:idCollec' element={<Dashboard />} />
             <Route path='/dashboard/posts/:id' element={<DashboardPost />} />
             <Route path='/post/create' element={<CreatePost />} />
             <Route path='/post/create/:idCollec' element={<CreatePost />} />

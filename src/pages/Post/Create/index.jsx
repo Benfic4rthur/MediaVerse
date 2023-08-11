@@ -25,7 +25,6 @@ import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
 
-
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [progressPercent, setProgressPercent] = useState(0);
@@ -127,7 +126,8 @@ export const CreatePost = () => {
       mediaURLName,
       thumbURLName,
       body,
-      searchTokens: generateSearchTokens(title),
+      // searchTokens: generateSearchTokens(title),
+      searchTokens: [...generateSearchTokens(name), ...generateSearchTokens(title)],
       collec: id,
       collecName: name,
       isPublic: IsValidTrueOrFalse(isPublic),
@@ -293,9 +293,7 @@ export const CreatePost = () => {
             </ButtonForm>
           </ContainerFlex>
           {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
-          {(response.error || formError) && (
-            <Error>{response.error || formError}</Error>
-          )}
+          {(response.error || formError) && <Error>{response.error || formError}</Error>}
         </Form>
       </ContainerForm>
     </ContainerCenter>

@@ -27,6 +27,7 @@ import {
   Tag,
   TextTag,
 } from './styled';
+import { generateSearchTokens } from '../../utils/generateSearchTokens';
 
 export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {}, ...rest }) => {
   const [open, setOpen] = useState(false);
@@ -114,6 +115,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
               const newCollec = {
                 name: Name,
                 userId: userData.userId,
+                searchTokens: generateSearchTokens(Name),
                 category,
                 mediaURL: thumbURL,
                 thumbName: thumbURLName,

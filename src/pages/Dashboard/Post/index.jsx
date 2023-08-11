@@ -122,7 +122,9 @@ export const DashboardPost = () => {
                     </ContainerDialog>
                   )}
                   <ContainerTitlePost className='titulo'>
-                    <TitlePost title={`Título: ${post.title}`}>Título: {post.title}</TitlePost>
+                    <TitlePost title={`Título: ${post.title}`}>
+                      Título: {post.title} | Coleção {post.collecName}
+                    </TitlePost>
                   </ContainerTitlePost>
                   <ContainerDate className='data'>
                     <Views title='Quantidade de visualizações'>
@@ -155,9 +157,9 @@ export const DashboardPost = () => {
           ) : (
             <ContainerCreatePost>
               <CreatePostTitle>Não foram encontrados posts nesta coleção.</CreatePostTitle>
-          <CreateCollecButton as={Link} to='/dashboard/'>
-          <IoArrowBackCircle size={20}/>  Voltar para painel de cursos
-          </CreateCollecButton>
+              <CreateCollecButton as={Link} to={`/dashboard/${id}`}>
+                <IoArrowBackCircle size={20} /> Voltar para painel de cursos
+              </CreateCollecButton>
             </ContainerCreatePost>
           )}
         </>

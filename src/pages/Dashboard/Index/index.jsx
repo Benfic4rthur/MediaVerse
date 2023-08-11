@@ -1,38 +1,41 @@
 import { where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { LuEye, LuPlus, LuTag, LuTrash } from 'react-icons/lu';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInputDash';
 import { ModalCollec } from '../../../components/ModalCollecCreate';
 import { UseAuthValue } from '../../../context/AuthContext';
 import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 
 import {
-    ContainerSpinerLoading,
-    // CreatePostButton,
-    Option,
-    SpinerLoading,
-    Subtitle,
+  ContainerSpinerLoading,
+  // CreatePostButton,
+  Option,
+  SpinerLoading,
+  Subtitle,
 } from '../../../styles/styledGlobal';
 import { GetCollectionValues } from '../../../utils/GetCollectionValues';
 import {
-    ButtonEvent,
-    ContainerButtonEvent,
-    ContainerHeader,
-    ContainerMediaPreview,
-    ContainerPost,
-    ContainerPostHeader,
-    ContainerTitlePost,
-    CreateCollecButton,
-    CreatePostTitle,
-    MediaPreview,
-    Post,
-    TitlePost,
+  ButtonEvent,
+  ContainerButtonEvent,
+  ContainerHeader,
+  ContainerMediaPreview,
+  ContainerPost,
+  ContainerPostHeader,
+  ContainerTitlePost,
+  CreateCollecButton,
+  CreatePostTitle,
+  MediaPreview,
+  Post,
+  TitlePost,
 } from './styled';
 // import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import { useDeleteCollec } from '../../../hooks/useDeleteCollec';
+import { FetchDocument } from '../../../utils/FetchDocument';
 
 export const Dashboard = () => {
+  const { idCollec } = useParams();
+  const Params = useParams();
   const { userData, applicationTags } = UseAuthValue();
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [loader, setLoader] = useState(true);
@@ -46,6 +49,16 @@ export const Dashboard = () => {
   }, []);
 
   useEffect(() => {
+    const func = async () => {
+      if (Params?.idCollec) {
+        const collecData = await FetchDocument('collec', Params?.idCollec);
+        setCategory(collecData.data()?.category);
+      }
+    };
+    func();
+  }, [Params]);
+
+  useEffect(() => {
     const func = async (Where = null) => {
       let collectionWhere = Where;
       if (category) {
@@ -55,24 +68,6 @@ export const Dashboard = () => {
       const val = await GetCollectionValues('collec', collectionWhere);
 
       if (val.length > 0) {
-        // setFilteredPosts(val);
-
-        // const videoCountPromises = val.map(async post => {
-        //   const DocumentData = await countCollecVideos(post?.id);
-
-        //   console.log(
-        //     DocumentData.docs[0]?._document?.data?.value?.mapValue?.fields?.thumbURL?.stringValue,
-        //   );
-
-        //   return { ...post, [post?.id]: DocumentData.size}})
-
-        // const counts = await Promise.all(videoCountPromises);
-
-        // const newVideoCounts = Object.assign(...counts);
-
-        // setVideoCounts(newVideoCounts);
-        // setFilteredPosts(counts);
-        // setLoader(false);
         setFilteredPosts(val);
         setLoader(false);
 
@@ -144,7 +139,7 @@ export const Dashboard = () => {
 
       <ContainerPost>
         <ContainerPostHeader>
-          {screenWidth <= 496 && (
+          {idCollec ? (
             <CreateInput
               Svg={LuTag}
               as='select'
@@ -156,15 +151,17 @@ export const Dashboard = () => {
               title='define a categoria'
               aria-label='define a categoria'
             >
-              <Option value={''}>{'         '}Selecione a Categoria</Option>
+              {screenWidth <= 496 && (
+                <Option value={category.name}>{'         '}Selecione a Categoria</Option>
+              )}
+              {screenWidth > 496 && <Option value={category.name}>Selecione a Categoria</Option>}
               {applicationTags.map((e, i) => (
                 <Option key={`${e}${i}`} value={e}>
                   {e}
                 </Option>
               ))}
             </CreateInput>
-          )}
-          {screenWidth > 496 && (
+          ) : (
             <CreateInput
               Svg={LuTag}
               as='select'
@@ -176,7 +173,8 @@ export const Dashboard = () => {
               title='define a categoria'
               aria-label='define a categoria'
             >
-              <Option value={''}>Selecione a Categoria</Option>
+              {screenWidth <= 496 && <Option value={''}>{'         '}Selecione a Categoria</Option>}
+              {screenWidth > 496 && <Option value={''}>Selecione a Categoria</Option>}
               {applicationTags.map((e, i) => (
                 <Option key={`${e}${i}`} value={e}>
                   {e}
@@ -184,6 +182,7 @@ export const Dashboard = () => {
               ))}
             </CreateInput>
           )}
+
           {/* <ModalCollec
               className='red'
             >

@@ -54,9 +54,15 @@ export const Home = () => {
                     Resultados para a pesquisa por: '{hasSearch}'
                   </h1>
                 )}
-                <PostsContainer>
+                {/* <PostsContainer>
                   {posts.data
                     ?.filter(e => !e?.tags?.includes?.('aprendendo-o-sistema'))
+                    .map(post => (
+                      <PostDetailsHome key={post.id} to={'/post/'} post={post} />
+                    ))}
+                </PostsContainer> */}
+                <PostsContainer>
+                  {posts.data
                     .map(post => (
                       <PostDetailsHome key={post.id} to={'/post/'} post={post} />
                     ))}
