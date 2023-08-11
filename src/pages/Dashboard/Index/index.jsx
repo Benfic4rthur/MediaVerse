@@ -8,26 +8,26 @@ import { UseAuthValue } from '../../../context/AuthContext';
 import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 
 import {
-  ContainerSpinerLoading,
-  // CreatePostButton,
-  Option,
-  SpinerLoading,
-  Subtitle,
+    ContainerSpinerLoading,
+    // CreatePostButton,
+    Option,
+    SpinerLoading,
+    Subtitle,
 } from '../../../styles/styledGlobal';
 import { GetCollectionValues } from '../../../utils/GetCollectionValues';
 import {
-  ButtonEvent,
-  ContainerButtonEvent,
-  ContainerHeader,
-  ContainerMediaPreview,
-  ContainerPost,
-  ContainerPostHeader,
-  ContainerTitlePost,
-  CreateCollecButton,
-  CreatePostTitle,
-  MediaPreview,
-  Post,
-  TitlePost,
+    ButtonEvent,
+    ContainerButtonEvent,
+    ContainerHeader,
+    ContainerMediaPreview,
+    ContainerPost,
+    ContainerPostHeader,
+    ContainerTitlePost,
+    CreateCollecButton,
+    CreatePostTitle,
+    MediaPreview,
+    Post,
+    TitlePost,
 } from './styled';
 // import { countCollecVideos } from '../../../hooks/useCountCollecVideos';
 import { useDeleteCollec } from '../../../hooks/useDeleteCollec';
@@ -144,7 +144,7 @@ export const Dashboard = () => {
 
       <ContainerPost>
         <ContainerPostHeader>
-          {screenWidth <= 896 && (
+          {screenWidth <= 496 && (
             <CreateInput
               Svg={LuTag}
               as='select'
@@ -164,7 +164,7 @@ export const Dashboard = () => {
               ))}
             </CreateInput>
           )}
-          {screenWidth > 896 && (
+          {screenWidth > 496 && (
             <CreateInput
               Svg={LuTag}
               as='select'

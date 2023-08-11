@@ -3,8 +3,9 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { LuTag, LuTrash, LuX, LuImagePlus } from 'react-icons/lu';
+import { LuImagePlus, LuTag, LuTrash, LuX } from 'react-icons/lu';
 import { MdOutlineAddBox, MdOutlineLibraryAdd } from 'react-icons/md';
+import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useDeleteCollec } from '../../hooks/useDeleteCollec';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
@@ -13,11 +14,9 @@ import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { Option, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { UpdateDocument } from '../../utils/UpdateDocument';
-import { CreateInput } from '../CreateInput';
 import { mediaUpload } from '../../utils/mediaUpload';
-import { CustomInputTypeFile } from '../../components/CustomInputTypeFile';
 import { processSelectedFile } from '../../utils/processSelectedFile';
-import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
+import { CreateInput } from '../CreateInput';
 import {
   ButtonActive,
   ButtonEvent,
@@ -227,7 +226,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
                 placeholder='Nome para adicionar coleção'
                 required
               />
-              {screenWidth <= 896 && (
+              {screenWidth <= 496 && (
                 <>
                   <CreateInput
                     Svg={LuTag}
@@ -250,7 +249,7 @@ export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {},
                   </CreateInput>
                 </>
               )}
-              {screenWidth > 896 && (
+              {screenWidth > 496 && (
                 <CreateInput
                   Svg={LuTag}
                   as='select'

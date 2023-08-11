@@ -135,7 +135,7 @@ export const Register = () => {
           autoComplete='off'
         />
 
-        {screenWidth <= 896 && (
+        {screenWidth <= 496 && (
           <>
             <CreateInput
               Svg={MdOutlineAdminPanelSettings}
@@ -162,7 +162,7 @@ export const Register = () => {
             </CreateInput>
           </>
         )}
-        {screenWidth > 896 && (
+        {screenWidth > 496 && (
           <>
             <CreateInput
               Svg={MdOutlineAdminPanelSettings}

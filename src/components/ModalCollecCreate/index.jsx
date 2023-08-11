@@ -3,30 +3,25 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { and, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { LuTag, LuTrash, LuX, LuImagePlus } from 'react-icons/lu';
-import { MdOutlineAddBox, MdOutlineLibraryAdd } from 'react-icons/md';
+import { LuImagePlus, LuTag, LuX } from 'react-icons/lu';
+import { MdOutlineLibraryAdd } from 'react-icons/md';
 import { UseAuthValue } from '../../context/AuthContext';
 import { useDeleteCollec } from '../../hooks/useDeleteCollec';
 import { useInsertDocument } from '../../hooks/useInsertDocument';
-import { ButtonForm, ButtonResetForm, Form, SvgStyled } from '../../styles/formStyled';
+import { ButtonForm, ButtonResetForm, Form } from '../../styles/formStyled';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { Option, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { UpdateDocument } from '../../utils/UpdateDocument';
-import { CreateInput } from '../CreateInput';
-import { mediaUpload } from '../../utils/mediaUpload';
-import { CustomInputTypeFile } from '../CustomInputTypeFile';
-import { processSelectedFile } from '../../utils/processSelectedFile';
 import { deleteStorageMedia } from '../../utils/deleteStorageMedia';
+import { mediaUpload } from '../../utils/mediaUpload';
+import { processSelectedFile } from '../../utils/processSelectedFile';
+import { CreateInput } from '../CreateInput';
+import { CustomInputTypeFile } from '../CustomInputTypeFile';
 import {
-  ButtonActive,
-  ButtonEvent,
-  ContainerBetween,
-  ContainerTag,
-  DialogContent,
-  Error as ErrorStyled,
-  Tag,
-  TextTag,
+    ButtonActive,
+    DialogContent,
+    Error as ErrorStyled
 } from './styled';
 
 export const ModalCollec = ({
@@ -205,7 +200,7 @@ export const ModalCollec = ({
                 placeholder='Nome para adicionar coleção'
                 required
               />
-              {screenWidth <= 896 && (
+              {screenWidth <= 496 && (
                 <CreateInput
                   Svg={LuTag}
                   as='select'
@@ -226,7 +221,7 @@ export const ModalCollec = ({
                   ))}
                 </CreateInput>
               )}
-              {screenWidth > 896 && (
+              {screenWidth > 496 && (
                 <CreateInput
                   Svg={LuTag}
                   as='select'

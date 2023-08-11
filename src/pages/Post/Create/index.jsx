@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,8 +8,6 @@ import { ModalCollec } from '../../../components/ModalCollec';
 import { UseAuthValue } from '../../../context/AuthContext';
 import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { useInsertDocument } from '../../../hooks/useInsertDocument';
-import { useUpdateCollec } from '../../../hooks/useUpdateCollec';
-import { FetchDocument } from '../../../utils/FetchDocument';
 import {
   ContainerFlex,
   ContainerForm,
@@ -21,11 +19,12 @@ import {
 } from '../../../styles/StyledPostForm';
 import { ButtonForm, ButtonResetForm, Textaria } from '../../../styles/formStyled';
 import { ContainerCenter, Option, SpinerLoading, Subtitle } from '../../../styles/styledGlobal';
+import { FetchDocument } from '../../../utils/FetchDocument';
 import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
-import { useEffect } from 'react';
+
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -39,25 +38,22 @@ export const CreatePost = () => {
     publicPost: 0,
   }); // Novo estado para tag selecionada
   const { user } = UseAuthValue();
-  const { id: idCollec } = useParams();
+  const Params = useParams();
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
   const [resetThumbPlaceholder, setResetThumbPlaceholder] = useState(false);
   const [resetVideoPlaceholder, setResetVideoPlaceholder] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
-  const { updateCollec, response: responseCollec } = useUpdateCollec('collec');
-
   useEffect(() => {
     const func = async () => {
-      if (idCollec) {
-        const collecData = await FetchDocument('collec', idCollec);
+      if (Params?.idCollec) {
+        const collecData = await FetchDocument('collec', Params?.idCollec);
         setSelectedCollec(collecData.data());
       }
     };
     func();
-  }, [idCollec]);
+  }, [Params]);
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Novo Post';
@@ -229,7 +225,7 @@ export const CreatePost = () => {
           />
 
           <ContainerFlex>
-            {screenWidth <= 896 && (
+            {screenWidth <= 496 && (
               <>
                 <CreateInput
                   Svg={LuLock}
@@ -247,7 +243,7 @@ export const CreatePost = () => {
                 </CreateInput>
               </>
             )}
-            {screenWidth > 896 && (
+            {screenWidth > 496 && (
               <CreateInput
                 Svg={LuLock}
                 as='select'
@@ -264,7 +260,7 @@ export const CreatePost = () => {
               </CreateInput>
             )}
 
-            {idCollec ? (
+            {Params?.idCollec ? (
               <>
                 <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
                   {selectedCollec?.name}
@@ -297,8 +293,8 @@ export const CreatePost = () => {
             </ButtonForm>
           </ContainerFlex>
           {progressPercent >= 1 && <Progress value={progressPercent} min='0' max='100' />}
-          {(responseCollec.error || response.error || formError) && (
-            <Error>{response.error || formError || responseCollec.error}</Error>
+          {(response.error || formError) && (
+            <Error>{response.error || formError}</Error>
           )}
         </Form>
       </ContainerForm>

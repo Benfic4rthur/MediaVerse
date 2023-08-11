@@ -1,10 +1,10 @@
 import {
-  EmailAuthProvider,
-  getAuth,
-  reauthenticateWithCredential,
-  updateEmail,
-  updatePassword,
-  updateProfile,
+    EmailAuthProvider,
+    getAuth,
+    reauthenticateWithCredential,
+    updateEmail,
+    updatePassword,
+    updateProfile,
 } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useState } from 'react';
@@ -19,11 +19,11 @@ import { DialogCurrent } from '../../components/ModalAccount';
 import { DialogPhoto } from '../../components/ModalPhoto';
 import { UseAuthValue } from '../../context/AuthContext';
 import {
-  ButtonForm,
-  ContainerForm,
-  Error as ErrorStyled,
-  Form,
-  Success,
+    ButtonForm,
+    ContainerForm,
+    Error as ErrorStyled,
+    Form,
+    Success,
 } from '../../styles/formStyled';
 import { Option, Subtitle } from '../../styles/styledGlobal';
 import { UpdateDocument } from '../../utils/UpdateDocument';
@@ -253,7 +253,7 @@ export function Account() {
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'
         />
-        {screenWidth <= 896 && (
+        {screenWidth <= 496 && (
           <>
             {' '}
             <CreateInput
@@ -269,7 +269,7 @@ export function Account() {
             </CreateInput>
           </>
         )}
-        {screenWidth > 896 && (
+        {screenWidth > 496 && (
           <CreateInput
             Svg={FaVenusMars}
             as='select'

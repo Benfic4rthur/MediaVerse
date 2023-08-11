@@ -6,4 +6,3 @@ export async function FetchDocument(docCollection, id) {
 
   return await getDoc(q);
 }
-// .data()

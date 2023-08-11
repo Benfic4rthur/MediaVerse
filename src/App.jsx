@@ -99,7 +99,6 @@ function App() {
 
     return isVisible;
   };
-
   const isVisible = usePageVisibility();
 
   useEffect(() => {
@@ -107,7 +106,6 @@ function App() {
       const data = await fetchUserInfo(email);
       setUserData(data);
     };
-
     if (userEmail) {
       func(userEmail);
     }
