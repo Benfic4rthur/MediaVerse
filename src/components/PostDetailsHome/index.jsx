@@ -15,6 +15,7 @@ import {
 export const PostDetailsHome = ({ post, to }) => {
   const [date, setDate] = useState();
   const [postId, setPostId] = useState("");
+  const [Size, setSize] = useState(0);
   const limiteCaracteres = 40;
   const title =
     post.name.length > limiteCaracteres
@@ -31,8 +32,11 @@ export const PostDetailsHome = ({ post, to }) => {
     const func = async ()=>{
       const Where = where("collec", "==",  post.id)
       const val = await GetCollectionValues('posts', Where);
+
       setPostId(val?.[0]?.id);
+      setSize(val.length)
     }
+
     func()
 
   }, [post]);
@@ -42,6 +46,7 @@ export const PostDetailsHome = ({ post, to }) => {
       {post.mediaURL && (
         <ContainerMidia>
           <Image src={post.mediaURL} alt={post.title} title={post.title} />
+          <Deta title={'Postado em ' + date}>{date}</Deta>
         </ContainerMidia>
       )}
 
@@ -49,8 +54,8 @@ export const PostDetailsHome = ({ post, to }) => {
         {title}
       </Title>
       <ContainerDeta>
-        <Author>category: {post.category}</Author>
-        <Deta title={'Postado em ' + date}>{date}</Deta>
+        <Author>{post.category}</Author>
+        <Author>{Size} {Size > 1 ? "Aulas" :"Aula"}</Author>
       </ContainerDeta>
     </ContainerPost>
   );

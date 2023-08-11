@@ -35,7 +35,6 @@ export const PostsContainer = styled.section`
   min-width: 100%;
   min-height: min-content;
   flex-flow: row wrap;
-  align-items: center;
   justify-content: center;
 `;
 

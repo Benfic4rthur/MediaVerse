@@ -1,94 +1,3 @@
-// import styled, { css } from 'styled-components';
-
-// export const ContainerPost = styled.a`
-//   height: fit-content;
-//   width: min(100%, 36rem);
-//   padding: 3rem 2rem;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 0.7rem;
-//   border-radius: ${({ theme }) => theme.border.radius};
-//   background-color: ${({ theme }) => theme.color.thirdOpacity03};
-//   box-shadow: .2rem .2rem .5rem ${({ theme }) => theme.color.shadow};
-//   transition: 300ms background-color;
-//   text-decoration: none;
-//   border: .1rem solid #ccc;
-//   &:hover {
-//     background-color: ${({ theme }) => theme.color.third};
-//   }
-// `;
-
-// const MidiaStyled = css`
-//   width: 100%;
-//   height: 18rem;
-//   overflow: hidden;
-//   object-fit: cover;
-//   object-position: center center;
-//   border-radius: ${({ theme }) => theme.border.radius};
-//   &:hover {
-//     transform: scale(1.05);
-//   }
-// `;
-
-// export const ContainerMidia = styled.div`
-//   background-color: ${({ theme }) => theme.color.third};
-//   ${MidiaStyled}
-// `;
-
-// export const Image = styled.img`
-//   ${MidiaStyled}
-// `;
-
-// export const Video = styled.video`
-//   ${MidiaStyled}
-// `;
-
-// export const Tag = styled.div`
-//   padding: 0.6rem 1.2rem;
-//   width: fit-content;
-//   font-size: 1.1rem;
-//   color: ${({ theme }) => theme.color.fourthOpacity};
-//   border-radius: ${({ theme }) => theme.border.radius};
-//   background-color: ${({ theme }) => theme.color.third};
-//   height: 2.7rem;
-// `;
-
-// export const ContainerTag = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   flex-direction: row;
-//   gap: 0.5rem;
-//   overflow-y: scroll;
-//   height: 2.7rem;
-//   &::-webkit-scrollbar {
-//     width: 1.0rem;
-//   }
-
-//   &::-webkit-scrollbar-thumb {
-//     background-color: ${({ theme }) => theme.color.fourthOpacity};
-//     border-radius: 1.0rem;
-//   }
-
-//   &::-webkit-scrollbar-track {
-//     background-color: transparent;
-//   }
-//   &::-webkit-scrollbar-track:hover {
-//     background-color: ${({ theme }) => theme.color.third};
-//   }
-// `;
-
-// export const Title = styled.h2`
-//   font-size: ${({ theme }) => theme.font.size.base};
-//   color: ${({ theme }) => theme.color.fourthOpacity};
-//   width: 100%;
-//   white-space: nowrap;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-// `;
-// export const Author = styled.h3`
-//   font-size: ${({ theme }) => theme.font.size.xs};
-//   color: ${({ theme }) => theme.color.fourthOpacity};
-// `;
 import styled, { css, keyframes } from 'styled-components';
 
 const animate = keyframes`
@@ -131,6 +40,7 @@ const MidiaStyled = css`
   object-fit: cover;
   object-position: center center;
   transition: 300ms transform;
+  position: relative;
 
   border-radius: ${({ theme }) => theme.border.radius};
   &:hover {
@@ -218,6 +128,15 @@ export const ContainerDeta = styled.div`
 
 export const Deta = styled.p`
   font-size: ${({ theme }) => theme.font.size.sm};
-  color: ${({ theme }) => theme.color.fourthHover};
+  color: ${({ theme }) => theme.color.fourth};
   font-weight: 700;
+  position: absolute;
+  bottom: 0rem;
+  right: 0;
+  background-image: linear-gradient( hsl(260, 0%, 0%, 0),hsl(260, 0%, 0%, .3), hsl(260, 0%, 0%, .6), hsl(260, 0%, 0%, .9));
+  width: 100%;
+  text-align: end;
+  padding-right: .5rem;
+  padding-top: .5rem;
+  z-index: 1;
 `;
