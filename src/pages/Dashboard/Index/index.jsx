@@ -214,7 +214,7 @@ export const Dashboard = () => {
                   <ContainerButtonEvent>
                     {post?.size === 0 ? (
                       <>
-                        <ButtonEvent as={Link} to={`/post/create`} title='Novo post'>
+                        <ButtonEvent as={Link} to={`/post/create/${post.id}`} title='Novo post'>
                           <LuPlus />
                         </ButtonEvent>
                         <ButtonEvent

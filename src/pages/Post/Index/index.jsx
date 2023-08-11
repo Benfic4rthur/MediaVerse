@@ -38,7 +38,7 @@ export const Post = () => {
 
   useEffect(() => {
     const fetchTag = async () => {
-      setTagsVal(await FetchTags('posts', post?.tags));
+      setTagsVal(await FetchTags('posts', post?.collec));
     };
 
     fetchTag();
@@ -92,13 +92,9 @@ export const Post = () => {
               </SpaceShare>
             </ContainerInfo>
             <Body>{post.body}</Body>
-            {/* {post?.tags?.length > 0 && (
-              <ContainerTag>
-                {post?.tags?.map(tag => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-              </ContainerTag>
-            )} */}
+            {/* <ContainerTag>
+              <Tag>{post?.collecName}</Tag>
+            </ContainerTag> */}
           </>
         )}
       </Container>

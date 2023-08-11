@@ -7,7 +7,7 @@ export async function FetchTags(docCollection = '', searchTokens) {
   if (searchTokens) {
     const queryData = query(
       collectionRef,
-      where("tags", 'array-contains-any', searchTokens),
+      where("collec", '==', searchTokens),
       orderBy('createdAt', 'desc'),
     );
 

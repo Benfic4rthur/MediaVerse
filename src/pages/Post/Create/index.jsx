@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInput';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
 import { ModalCollec } from '../../../components/ModalCollec';
@@ -9,6 +9,7 @@ import { UseAuthValue } from '../../../context/AuthContext';
 import { countPublicCollecs } from '../../../hooks/useCountCollecs';
 import { useInsertDocument } from '../../../hooks/useInsertDocument';
 import { useUpdateCollec } from '../../../hooks/useUpdateCollec';
+import { FetchDocument } from '../../../utils/FetchDocument';
 import {
   ContainerFlex,
   ContainerForm,
@@ -24,6 +25,7 @@ import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
+import { useEffect } from 'react';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -37,6 +39,7 @@ export const CreatePost = () => {
     publicPost: 0,
   }); // Novo estado para tag selecionada
   const { user } = UseAuthValue();
+  const { id: idCollec } = useParams();
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
@@ -45,6 +48,16 @@ export const CreatePost = () => {
 
   // eslint-disable-next-line no-unused-vars
   const { updateCollec, response: responseCollec } = useUpdateCollec('collec');
+
+  useEffect(() => {
+    const func = async () => {
+      if (idCollec) {
+        const collecData = await FetchDocument('collec', idCollec);
+        setSelectedCollec(collecData.data());
+      }
+    };
+    func();
+  }, [idCollec]);
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Novo Post';
@@ -251,15 +264,23 @@ export const CreatePost = () => {
               </CreateInput>
             )}
 
-            <ModalCollec
-              RenderTag={selectedCollec}
-              className='red'
-              setSelectedCollec={setSelectedCollec}
-            >
-              <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
-                {selectedCollec?.name ? selectedCollec?.name : 'Adicionar coleção'}
-              </CreateInput>
-            </ModalCollec>
+            {idCollec ? (
+              <>
+                <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
+                  {selectedCollec?.name}
+                </CreateInput>
+              </>
+            ) : (
+              <ModalCollec
+                RenderTag={selectedCollec}
+                className='red'
+                setSelectedCollec={setSelectedCollec}
+              >
+                <CreateInput Svg={MdOutlineVideoLibrary} as='div' type='button'>
+                  {selectedCollec?.name ? selectedCollec?.name : 'Adicionar coleção'}
+                </CreateInput>
+              </ModalCollec>
+            )}
           </ContainerFlex>
 
           <ContainerFlex>
