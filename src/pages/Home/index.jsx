@@ -54,18 +54,14 @@ export const Home = () => {
                     Resultados para a pesquisa por: '{hasSearch}'
                   </h1>
                 )}
-                {/* <PostsContainer>
-                  {posts.data
-                    ?.filter(e => !e?.tags?.includes?.('aprendendo-o-sistema'))
-                    .map(post => (
-                      <PostDetailsHome key={post.id} to={'/post/'} post={post} />
-                    ))}
-                </PostsContainer> */}
                 <PostsContainer>
                   {posts.data
-                    .map(post => (
+                    .map(post => {
+                      console.log(post)
+
+                      return (
                       <PostDetailsHome key={post.id} to={'/post/'} post={post} />
-                    ))}
+                    )})}
                 </PostsContainer>
               </>
             ) : (
@@ -83,6 +79,6 @@ export async function homeLoader({ request }) {
   const query = paramsUrl.get('q');
 
   return defer({
-    PostsData: FetchDocuments('posts', query),
+    PostsData: FetchDocuments('collec', query),
   });
 }

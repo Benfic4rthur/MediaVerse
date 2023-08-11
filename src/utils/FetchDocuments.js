@@ -20,7 +20,6 @@ export async function FetchDocuments(docCollection, search = '', uid = null) {
         where('searchTokens', 'array-contains-any', searchTokens),
         orderBy('createdAt', 'desc'),
       );
-      
     } else if (uid) {
       queryData = await db
         .collection(docCollection)
@@ -28,7 +27,7 @@ export async function FetchDocuments(docCollection, search = '', uid = null) {
         .orderBy('createdAt', 'desc')
         .get();
     } else {
-      queryData = await query(collectionRef, orderBy('createdAt', 'desc'));
+      queryData = query(collectionRef, orderBy('createdAt', 'desc'));
     }
 
     const querySnapshot = await getDocs(queryData);
