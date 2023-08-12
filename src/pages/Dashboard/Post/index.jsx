@@ -79,7 +79,7 @@ export const DashboardPost = () => {
       <ContainerHeader>
         <Subtitle>Gerencie os posts deste curso </Subtitle>
 
-        <CreatePostButton as={Link} to='/post/create'>
+        <CreatePostButton as={Link} to={`/post/create/${id}`}>
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
