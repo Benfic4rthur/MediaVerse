@@ -37,9 +37,6 @@ export const Home = () => {
             <LuSearch />
           </SearchButton>
         </SearchForm>
-        {/* <Link to='/learning/OFOXyrU9ECBmt5eWnhl3' style={{ textDecoration: 'none' }}>
-          <ButtonSystem>Aprendendo o Sistema</ButtonSystem>
-        </Link> */}
       </ContainerButton>
       <Suspense fallback={<></>}>
         <Await
@@ -57,8 +54,6 @@ export const Home = () => {
                 <PostsContainer>
                   {posts.data
                     .map(post => {
-                      console.log(post)
-
                       return (
                       <PostDetailsHome key={post.id} to={'/post/'} post={post} />
                     )})}
