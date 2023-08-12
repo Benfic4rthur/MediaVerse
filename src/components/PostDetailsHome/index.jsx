@@ -71,7 +71,7 @@ export const PostDetailsHome = ({ post, to }) => {
           <ContainerDeta>
             <Author>{post.category}</Author>
             <Author>
-              {Size} {Size > 1 ? 'Aulas' : 'Aula'}
+              {Size > 1 ? `${Size} Aulas` : Size == 1 ? `${Size} Aula` : ''}
             </Author>
           </ContainerDeta>
         </ContainerPost>
