@@ -48,9 +48,7 @@ export const PostDetailsHome = ({ post, to }) => {
           </Title>
           <ContainerDeta>
             <Author>{post.category}</Author>
-            <Author>
-              {Size} {Size > 1 ? 'Aulas' : 'Aula'}
-            </Author>
+            <Author>{Size > 1 ? `${Size} Aulas` : Size == 1 ? `${Size} Aula` : ''}</Author>
           </ContainerDeta>
         </ContainerPost>
       ) : (
@@ -70,9 +68,7 @@ export const PostDetailsHome = ({ post, to }) => {
           </Title>
           <ContainerDeta>
             <Author>{post.category}</Author>
-            <Author>
-              {Size > 1 ? `${Size} Aulas` : Size == 1 ? `${Size} Aula` : ''}
-            </Author>
+            <Author>{Size > 1 ? `${Size} Aulas` : Size == 1 ? `${Size} Aula` : ''}</Author>
           </ContainerDeta>
         </ContainerPost>
       )}
