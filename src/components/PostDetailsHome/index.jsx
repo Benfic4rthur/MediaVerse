@@ -34,44 +34,23 @@ export const PostDetailsHome = ({ post, to }) => {
 
   return (
     <>
-      {Size > 0 ? (
-        <ContainerPost as={Link} to={`${to}${postId}`}>
-          {post.mediaURL && (
-            <ContainerMidia>
-              <Image src={post.mediaURL} alt={post.title} title={post.title} />
-              <Deta title={'Postado em ' + date}>{date}</Deta>
-            </ContainerMidia>
-          )}
-
-          <Title aria-label={post.title} title={post.title}>
-            {title}
-          </Title>
-          <ContainerDeta>
-            <Author>{post.category}</Author>
-            <Author>{Size > 1 ? `${Size} Aulas` :  `${Size} Aula` }</Author>
-          </ContainerDeta>
-        </ContainerPost>
-      ) : (
-        <ContainerPost
-          style={{ cursor: 'not-allowed' }}
-          title='Este curso ainda não possui postagens'
-        >
-          {post.mediaURL && (
-            <ContainerMidia>
-              <Image src={post.mediaURL} alt={post.title} title={post.title} />
-              <Deta title={'Postado em ' + date}>{date}</Deta>
-            </ContainerMidia>
-          )}
-
-          <Title aria-label={post.title} title={post.title}>
-            {title}
-          </Title>
-          <ContainerDeta>
-            <Author>{post.category}</Author>
-            <Author>{Size > 1 ? `${Size} Aulas` : Size == 1 ? `${Size} Aula` : ''}</Author>
-          </ContainerDeta>
-        </ContainerPost>
-      )}
-    </>
+    {Size > 0 && (
+      <ContainerPost as={Link} to={`${to}${postId}`}>
+        {post.mediaURL && (
+          <ContainerMidia>
+            <Image src={post.mediaURL} alt={post.title} title={post.title} />
+            <Deta title={'Postado em ' + date}>{date}</Deta>
+          </ContainerMidia>
+        )}
+        <Title aria-label={post.title} title={post.title}>
+          {title}
+        </Title>
+        <ContainerDeta>
+          <Author>{post.category}</Author>
+          <Author>{Size > 1 ? `${Size} Aulas` : `${Size} Aula`}</Author>
+        </ContainerDeta>
+      </ContainerPost>
+    )}
+  </>
   );
 };
