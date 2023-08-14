@@ -5,7 +5,7 @@ import { Await, defer, useLoaderData } from 'react-router-dom';
 import { NoPost } from '../../components/NoPost';
 import { PostDetailsHome } from '../../components/PostDetailsHome';
 import { FetchTags } from '../../utils/FetchTags';
-import { ContainerHome, PostsContainer, ContainerTitle } from './styled';
+import { ContainerHome, ContainerTitle, PostsContainer } from './styled';
 
 export const Public = () => {
   const data = useLoaderData();
@@ -41,7 +41,8 @@ export const Public = () => {
 };
 
 export async function publicLoader() {
+
   return defer({
-    PostsData: FetchTags('posts', ['promotional']),
+    PostsData: FetchTags('posts', 'gvlIcpGsWmAco6G9UNws'),
   });
 }

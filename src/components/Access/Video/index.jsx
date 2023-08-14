@@ -11,13 +11,16 @@ import {
 } from './styled';
 
 export function Video({ getData }) {
+
   return (
     <Container id='init'>
       <ContainerInfor>
         <Suspense fallback={<></>}>
           <Await resolve={getData}>
-            {data => (
-              <>
+            {data => {
+              console.log(getData, data);
+
+            return<>
                 <ContainerVideo>
                   <VideoStyled
                     src={data?.[0]?.mediaURL}
@@ -30,7 +33,7 @@ export function Video({ getData }) {
                   <Description>{data?.[0]?.body}</Description>
                 </Text>
               </>
-            )}
+            }}
           </Await>
         </Suspense>
       </ContainerInfor>

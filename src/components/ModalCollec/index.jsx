@@ -14,6 +14,7 @@ import { DialogOverlay, IconButton } from '../../styles/styledDialog';
 import { Option, SpinerLoading, Subtitle } from '../../styles/styledGlobal';
 import { GetCollectionValues } from '../../utils/GetCollectionValues';
 import { UpdateDocument } from '../../utils/UpdateDocument';
+import { generateSearchTokens } from '../../utils/generateSearchTokens';
 import { mediaUpload } from '../../utils/mediaUpload';
 import { processSelectedFile } from '../../utils/processSelectedFile';
 import { CreateInput } from '../CreateInput';
@@ -27,7 +28,6 @@ import {
   Tag,
   TextTag,
 } from './styled';
-import { generateSearchTokens } from '../../utils/generateSearchTokens';
 
 export const ModalCollec = ({ children, RenderTag, setSelectedCollec = () => {}, ...rest }) => {
   const [open, setOpen] = useState(false);
