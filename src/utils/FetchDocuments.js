@@ -39,7 +39,7 @@ export async function FetchDocuments(docCollection, search = '', uid = null) {
 
     return {
       type: 'UPDATED_DOC',
-      data: DocumentArray,
+      data: DocumentArray.filter(({ id }) => id !== 'gvlIcpGsWmAco6G9UNws'),
       error: queryError,
     };
   } catch (error) {
