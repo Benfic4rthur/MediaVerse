@@ -3,9 +3,9 @@
 import { Suspense, useLayoutEffect } from 'react';
 import { Await, defer, useLoaderData } from 'react-router-dom';
 import { NoPost } from '../../components/NoPost';
-import { PostDetailsHome } from '../../components/PostDetailsHome';
 import { FetchTags } from '../../utils/FetchTags';
 import { ContainerHome, ContainerTitle, PostsContainer } from './styled';
+import { CardPostPublic } from '../../components/CardPostPublic';
 
 export const Public = () => {
   const data = useLoaderData();
@@ -27,7 +27,7 @@ export const Public = () => {
             posts?.length ? (
               <PostsContainer>
                 {posts.map(post => (
-                  <PostDetailsHome key={post.id} to={'/post/public'} post={post} />
+                  <CardPostPublic key={post.id} to={'/post/public/'} post={post} />
                 ))}
               </PostsContainer>
             ) : (
