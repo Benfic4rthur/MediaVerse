@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { LuEye, LuShare, LuUser } from 'react-icons/lu';
+import { useParams } from 'react-router-dom';
+import { DialogDemo } from '../../../components/ModalShare';
+import { Sidebar } from '../../../components/Sidebar';
 import { useFetchDocument } from '../../../hooks/useFetchDocument';
+import { useIncrementViews } from '../../../hooks/useIncrementViews';
 import { ContainerSpinerLoading, SpinerLoading } from '../../../styles/styledGlobal';
+import { FetchTags } from '../../../utils/FetchTags';
+import { getElapsedTime } from '../../../utils/getElapsedTime';
 import {
   Author,
   Body,
@@ -14,11 +19,6 @@ import {
   Title,
   VideoStyled,
 } from './styled';
-import { DialogDemo } from '../../../components/ModalShare';
-import { Sidebar } from '../../../components/Sidebar';
-import { useIncrementViews } from '../../../hooks/useIncrementViews';
-import { FetchTags } from '../../../utils/FetchTags';
-import { getElapsedTime } from '../../../utils/getElapsedTime';
 
 export const Post = () => {
   const { id } = useParams();
@@ -60,12 +60,14 @@ export const Post = () => {
       <Container>
         {post && (
           <>
-            <CustomVideoStyled
+            <VideoStyled
               src={post.mediaURL}
               alt={post.title}
               title={post.title}
               poster={post?.thumbURL ? post?.thumbURL : ''}
               preload='none'
+              onContextMenu={e => e.preventDefault()}
+              controlsList='nodownload'
               controls
             />
             <Title>{post.title}</Title>
@@ -93,25 +95,5 @@ export const Post = () => {
       </Container>
       <Sidebar tagsVal={tagsVal} />
     </ContainerMain>
-  );
-};
-
-// Custom VideoStyled component to block download button
-const CustomVideoStyled = ({ src, alt, title, poster, ...rest }) => {
-  const handleContextMenu = e => {
-    e.preventDefault();
-  };
-
-  return (
-    <VideoStyled
-      src={src}
-      alt={alt}
-      title={title}
-      poster={poster}
-      onContextMenu={handleContextMenu}
-      controls
-      controlsList='nodownload'
-      {...rest}
-    />
   );
 };
