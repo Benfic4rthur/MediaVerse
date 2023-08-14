@@ -8,7 +8,7 @@ export function Sidebar({ tagsVal }) {
   return (
     <ContainerSidebar>
       <ContainerCenter>
-        <SubtitleGlobal>Vídeos relacionados:</SubtitleGlobal>
+        <SubtitleGlobal>Próximas aulas:</SubtitleGlobal>
       </ContainerCenter>
       {tagsVal?.length > 0 ? (
         tagsVal?.map?.((e, i) => <CardSidebar props={e} key={i} />)

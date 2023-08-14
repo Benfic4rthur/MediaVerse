@@ -19,15 +19,18 @@ import {
   Title,
   VideoStyled,
 } from './styled';
+import { useNavigate } from 'react-router-dom';
 
 export const Post = () => {
   const { id } = useParams();
   const [tagsVal, setTagsVal] = useState([]);
   const { document: post } = useFetchDocument('posts', id);
   const { loading, error } = useIncrementViews('posts', id);
-
+  const videoNavigate = useNavigate();
   const shareUrl = window.location.href;
   const shareTitle = `Veja este vídeo sobre "${post?.title}" `;
+
+  const [videoEnded, setVideoEnded] = useState(false); // Estado para rastrear se o vídeo acabou
 
   useEffect(() => {
     document.title = `MediaVerse - ${post?.title ?? 'Posts'}`;
@@ -55,21 +58,61 @@ export const Post = () => {
 
   const elapsedTime = post ? getElapsedTime(post.createdOn) : '';
 
+  const handleVideoEnd = () => {
+    setVideoEnded(true); // Atualiza o estado quando o vídeo acabar
+    setTimeout(() => {
+      videoRedirect();
+      setVideoEnded(false);
+    }, 1500);
+  };
+
+  const videoRedirect = () => {
+    const index = tagsVal.reduce((acc, e, i) => {
+      return e.id === post.id ? i : acc;
+    }, 0);
+    if (tagsVal[index]?.id) {
+      videoNavigate(`/post/${tagsVal[index]?.id}`);
+    }
+    setVideoEnded(false);
+  };
+
   return (
     <ContainerMain>
       <Container>
         {post && (
           <>
-            <VideoStyled
-              src={post.mediaURL}
-              alt={post.title}
-              title={post.title}
-              poster={post?.thumbURL ? post?.thumbURL : ''}
-              preload='none'
-              onContextMenu={e => e.preventDefault()}
-              controlsList='nodownload'
-              controls
-            />
+            {!videoEnded ? (
+              <VideoStyled
+                src={post.mediaURL}
+                alt={post.title}
+                title={post.title}
+                poster={post?.thumbURL ? post?.thumbURL : ''}
+                preload='none'
+                onContextMenu={e => e.preventDefault()}
+                controlsList='nodownload'
+                controls
+                onEnded={handleVideoEnd}
+              />
+            ) : (
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: 500,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 10,
+                  flexDirection: 'column',
+                  gap: 10,
+                }}
+              >
+                <SpinerLoading size={45} style={{ color: 'white' }} />
+                <p style={{ color: 'white', fontSize: '24px' }}>Carregando próximo vídeo...</p>
+              </div>
+            )}
+
             <Title>{post.title}</Title>
             <ContainerInfo>
               <Author>
