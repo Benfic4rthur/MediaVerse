@@ -1,5 +1,6 @@
-import { LuEye, LuShare, LuUser } from 'react-icons/lu';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { LuEye, LuShare, LuUser } from 'react-icons/lu';
 import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import { ContainerSpinerLoading, SpinerLoading } from '../../../styles/styledGlobal';
 import {
@@ -8,15 +9,11 @@ import {
   Container,
   ContainerInfo,
   ContainerMain,
-  // ContainerTag,
   LinkShare,
   SpaceShare,
-  // Tag,
   Title,
   VideoStyled,
 } from './styled';
-
-import { useEffect, useState } from 'react';
 import { DialogDemo } from '../../../components/ModalShare';
 import { Sidebar } from '../../../components/Sidebar';
 import { useIncrementViews } from '../../../hooks/useIncrementViews';
@@ -57,14 +54,13 @@ export const Post = () => {
   }
 
   const elapsedTime = post ? getElapsedTime(post.createdOn) : '';
-  // const arrayLength = Array.from({ length: 10 }).map((_, i) => i);
 
   return (
     <ContainerMain>
       <Container>
         {post && (
           <>
-            <VideoStyled
+            <CustomVideoStyled
               src={post.mediaURL}
               alt={post.title}
               title={post.title}
@@ -92,13 +88,30 @@ export const Post = () => {
               </SpaceShare>
             </ContainerInfo>
             <Body>{post.body}</Body>
-            {/* <ContainerTag>
-              <Tag>{post?.collecName}</Tag>
-            </ContainerTag> */}
           </>
         )}
       </Container>
       <Sidebar tagsVal={tagsVal} />
     </ContainerMain>
+  );
+};
+
+// Custom VideoStyled component to block download button
+const CustomVideoStyled = ({ src, alt, title, poster, ...rest }) => {
+  const handleContextMenu = e => {
+    e.preventDefault();
+  };
+
+  return (
+    <VideoStyled
+      src={src}
+      alt={alt}
+      title={title}
+      poster={poster}
+      onContextMenu={handleContextMenu}
+      controls
+      controlsList='nodownload'
+      {...rest}
+    />
   );
 };

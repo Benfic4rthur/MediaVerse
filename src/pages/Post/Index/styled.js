@@ -176,3 +176,7 @@ export const SpaceShare = styled.div`
   display: flex;
   gap: 1rem;
 `;
+export const VideoStyledBlockDownload = styled(VideoStyled)`
+/* Impede o menu de contexto (três pontinhos) nos controles de vídeo */
+pointer-events: none;
+`;
