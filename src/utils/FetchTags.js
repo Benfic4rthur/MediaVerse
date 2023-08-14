@@ -18,7 +18,7 @@ export async function FetchTags(docCollection = '', searchTokens) {
       ...doc.data(),
     }));
 
-    return DocumentArray;
+    return DocumentArray.reverse();
   } else {
     return [];
   }

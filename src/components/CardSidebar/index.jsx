@@ -1,9 +1,7 @@
-
 import { getElapsedTime } from '../../utils/getElapsedTime';
 import { Container, Descricao, Subtitle, Video } from './styled';
 
 export const CardSidebar = ({ props }) => {
-
   const { title, views, createdOn, mediaURL, id } = props;
 
   const deta = getElapsedTime(createdOn);
@@ -12,7 +10,7 @@ export const CardSidebar = ({ props }) => {
     <Container
       to={`../${id}`}
       relative='path'
-      className={({ isActive }) => ( isActive ? 'active' : '')}
+      className={({ isActive }) => (isActive ? 'active' : '')}
     >
       <Video
         src={mediaURL}

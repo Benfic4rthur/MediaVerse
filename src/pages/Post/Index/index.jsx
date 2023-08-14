@@ -71,7 +71,7 @@ export const Post = () => {
       return e.id === post.id ? i : acc;
     }, 0);
     if (tagsVal[index]?.id) {
-      videoNavigate(`/post/${tagsVal[index]?.id}`);
+      videoNavigate(`/post/${tagsVal[index + 1]?.id}`);
     }
     setVideoEnded(false);
   };
