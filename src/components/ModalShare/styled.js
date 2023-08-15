@@ -93,3 +93,16 @@ export const ContainerCopy = styled.div`
   display: flex;
   gap: 2rem;
 `;
+
+export const Success = styled.p`
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: max-content;
+  margin: 0 auto;
+  font-size: ${({ theme }) => theme.font.size.xs};
+  color: ${({ theme }) => theme.color.success};
+  border-radius: 1rem;
+  background-color: ${({ theme }) => theme.color.successBg};
+  margin-top: -35px;
+  margin-bottom: 10px;
+`;

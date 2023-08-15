@@ -1,40 +1,29 @@
 /* eslint-disable import/no-unresolved */
 import * as Dialog from '@radix-ui/react-dialog';
 import { LuX } from 'react-icons/lu';
-import {
-  DialogContent,
-  ButtonActive,
-  SpaceUrl,
-  SpaceIconsShare,
-  ContainerCopy,
-} from './styled';
+import { DialogContent, ButtonActive, SpaceUrl, SpaceIconsShare, ContainerCopy, Success } from './styled';
 import { AiOutlineFacebook, AiOutlineTwitter, AiOutlineWhatsApp } from 'react-icons/ai';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
-import MessageUrl from '../MessageUrl';
-import { useState } from 'react';
 import { DialogOverlay, IconButton } from '../../styles/styledDialog';
-
-const handleCopyUrl = () => {
-  navigator.clipboard
-    .writeText(window.location.href)
-    .then(() => {
-      console.log('URL copiado com sucesso!');
-    })
-    .catch(error => {
-      console.error('Erro ao copiar o URL:', error);
-    });
-};
-
-// const [open, setOpen] = useState(false);
+import { useState } from 'react';
 
 export const DialogDemo = ({ children, shareUrl, title, ...rest }) => {
-  const [open, setOpen] = useState(false);
-  const handleButtonClick = () => {
-    setOpen(true);
-    setTimeout(() => {
-      setOpen(false);
-    }, 3000); // Fecha o toast após 3 segundos
+  const [ open, setOpen ] = useState(false);
+  const handleCopyUrl = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        setOpen(true);
+        console.log('URL copiado com sucesso!');
+        setTimeout(() => {
+          setOpen(false);
+        }, 2000)
+      })
+      .catch(error => {
+        console.error('Erro ao copiar o URL:', error);
+      });
   };
+
   return (
     <>
       <Dialog.Root>
@@ -48,21 +37,21 @@ export const DialogDemo = ({ children, shareUrl, title, ...rest }) => {
 
             <Dialog.Description className='DialogDescription'></Dialog.Description>
             <SpaceIconsShare>
-              <WhatsappShareButton url={shareUrl} title={title} socialMedia='whatsapp'>
+              <WhatsappShareButton url={shareUrl} title={title} socialmedia='whatsapp'>
                 <AiOutlineWhatsApp
                   size={58}
                   color='#fff'
                   style={{ background: '#047b16', borderRadius: '15px' }}
                 />
               </WhatsappShareButton>
-              <FacebookShareButton url={shareUrl} title={title} socialMedia='facebook'>
+              <FacebookShareButton url={shareUrl} title={title} socialmedia='facebook'>
                 <AiOutlineFacebook
                   size={58}
                   color='#fff'
                   style={{ background: '#3b5998', borderRadius: '15px' }}
                 />
               </FacebookShareButton>
-              <TwitterShareButton url={shareUrl} title={title} socialMedia='twitter'>
+              <TwitterShareButton url={shareUrl} title={title} socialmedia='twitter'>
                 <AiOutlineTwitter
                   size={58}
                   color='#fff'
@@ -70,29 +59,27 @@ export const DialogDemo = ({ children, shareUrl, title, ...rest }) => {
                 />
               </TwitterShareButton>
             </SpaceIconsShare>
-
+            {open ? <Success>Link copiado!</Success> : null}
             <ContainerCopy>
               <ButtonActive
                 onClick={() => {
                   handleCopyUrl();
-                  handleButtonClick();
                 }}
                 style={{ width: '20%', padding: '0.5rem 5rem' }}
               >
                 Copiar URL
               </ButtonActive>
-              <SpaceUrl value={shareUrl}></SpaceUrl>
+              <SpaceUrl value={shareUrl} readOnly />
             </ContainerCopy>
 
             <Dialog.Close asChild>
-              <IconButton aria-label='Close'>
+              <IconButton aria-label='Close' onClick={() => setOpen(false)}>
                 <LuX />
               </IconButton>
             </Dialog.Close>
           </DialogContent>
         </Dialog.Portal>
       </Dialog.Root>
-      <MessageUrl open={open} setOpen={setOpen} />
     </>
   );
 };
