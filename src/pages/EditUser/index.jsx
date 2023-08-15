@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { FaVenusMars } from 'react-icons/fa';
-import { LuMail, LuPhone, LuUser } from 'react-icons/lu';
+import { LuMail, LuPhone, LuPlus, LuUser, LuX } from 'react-icons/lu';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import InputMask from 'react-input-mask';
@@ -10,12 +10,18 @@ import { UseUserManagement } from '../../hooks/useUserEdit';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 
 import { useParams } from 'react-router-dom';
+import { ContainerTags, Tag, TagUrl } from '../../styles/StyledPostForm';
 import { Option, Subtitle } from '../../styles/styledGlobal';
+import { GetCollectionValues } from '../../utils/GetCollectionValues';
+import { ButtonEvent } from '../Dashboard/Index/styled';
 
 export const EditUser = () => {
   const [displayName, setDisplayName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [userGmail, setUserGmail] = useState('');
+  const [currentAccessCollection, setCurrentAccessCollection] = useState([])
+  const [accessCollection, setAccessCollection] = useState([]);
+  const [listAccessCollection, setListAccessCollection] = useState([])
+  const [listAddAccessCollection, setListAddAccessCollection] = useState([])
   const [userName, setUserName] = useState('');
   const [error, setError] = useState('');
   const [userStatus, setUserStatus] = useState('');
@@ -34,18 +40,30 @@ export const EditUser = () => {
       setDisplayName(user.displayName);
       setPhoneNumber(user.phoneNumber);
       setUserName(user.userName);
-      setUserGmail(user.userId);
       setUserStatus(user.userStatus);
       setUserEmail(user.userId);
       setUserGender(user.userGender);
+      setAccessCollection(user?.accessCollection ?? []);
+
+      const func = async () => {
+        setCurrentAccessCollection(await GetCollectionValues('collec'));
+      };
+
+      func();
     }
   }, [user]);
 
   useEffect(() => {
-    if (userError) {
-      setError(userError);
-    }
+    if (userError) setError(userError);
   }, [userError]);
+
+  useEffect(() => {
+    const add = currentAccessCollection.filter(e => accessCollection.includes(e.id));
+    setListAccessCollection(add);
+
+    const remove = currentAccessCollection.filter(e => !accessCollection.includes(e.id));
+    setListAddAccessCollection(remove);
+  }, [currentAccessCollection, accessCollection]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -59,9 +77,18 @@ export const EditUser = () => {
       userName,
       userStatus,
       userGender,
+      accessCollection,
     };
 
     await updateUser(updatedData);
+  };
+
+  const AddCollection = id => {
+    !accessCollection.includes(id) ? setAccessCollection([...accessCollection, id]) : null
+  };
+
+  const RemoveCollection = id => {
+    setAccessCollection(accessCollection.filter(e => e !== id));
   };
 
   return (
@@ -139,16 +166,29 @@ export const EditUser = () => {
           onChange={e => setPhoneNumber(e.target.value)}
           autoComplete='off'
         />
-        {/* <CreateInput
-          aria-label='E-mail do usuário'
-          type='email'
-          name='e-mail'
-          required
-          value={userGmail}
-          placeholder='Telefone do estabelecimento'
-          onChange={e => setUserGmail(e.target.value)}
-          autoComplete='off'
-        /> */}
+
+        <ContainerTags>
+          {listAccessCollection.map(e => (
+            <Tag key={e.id} title={e.name}>
+              <TagUrl src={e?.mediaURL} />
+              <p>{e.name}</p>
+              <ButtonEvent onClick={() => RemoveCollection(e.id)}>
+                <LuX />
+              </ButtonEvent>
+            </Tag>
+          ))}
+        </ContainerTags>
+        <ContainerTags>
+          {listAddAccessCollection.map(e => (
+            <Tag key={e.id} title={e.name}>
+              <TagUrl src={e?.mediaURL} />
+              <p>{e.name}</p>
+              <ButtonEvent onClick={() => AddCollection(e.id)}>
+                <LuPlus />
+              </ButtonEvent>
+            </Tag>
+          ))}
+        </ContainerTags>
         <ButtonForm>{loading ? 'Aguarde...' : 'Atualizar'}</ButtonForm>
         {error && <Error>{error}</Error>}
         {successMessage && (

@@ -106,7 +106,7 @@ export const StyledButton = styled.button`
   width: 100%;
   padding: 1rem 1.6rem;
   font-weight: ${({ theme }) => theme.font.weight.bold};
-  font-size: 1.4rem;
+  font-size: ${({ theme }) => theme.font.size.sm};
   text-align: center;
   text-decoration: none;
   border: none;
@@ -146,7 +146,7 @@ export const ButtonResetForm = styled(StyledButton)`
 
 export const jhh = styled.p`
   padding: 0.8rem;
-  font-size: 1.2rem;
+  font-size: ${({ theme }) => theme.font.size.xs};
   color: 'hsl(59, 100%, 76%)';
   border-radius: 1rem;
   background: hsl(0, 80%, 90%);
@@ -154,7 +154,7 @@ export const jhh = styled.p`
 
 export const Error = styled.p`
   padding: 0.8rem;
-  font-size: 1.2rem;
+  font-size: ${({ theme }) => theme.font.size.xs};
   color: hsl(0, 50%, 50%);
   border-radius: 1rem;
   background: hsl(0, 80%, 90%);
@@ -162,10 +162,10 @@ export const Error = styled.p`
 
 export const Success = styled.p`
   padding: 0.8rem;
-  font-size: 1.2rem;
-  color: hsl(125, 49%, 50%);
+  font-size: ${({ theme }) => theme.font.size.xs};
+  color: ${({ theme }) => theme.color.success};
   border-radius: 1rem;
-  background-color: hsl(126, 23%, 62%);
+  background-color: ${({ theme }) => theme.color.successBg};
 `;
 
 // export const Description = styled.p`

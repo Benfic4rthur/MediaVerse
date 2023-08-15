@@ -18,16 +18,16 @@ export async function FetchDocuments(docCollection, search = '', uid = null) {
       queryData = query(
         collectionRef,
         where('searchTokens', 'array-contains-any', searchTokens),
-        orderBy('createdAt', 'desc'),
+        orderBy('createdAt', "desc"),
       );
     } else if (uid) {
       queryData = await db
         .collection(docCollection)
         .where('uid', '==', uid)
-        .orderBy('createdAt', 'desc')
+        .orderBy('createdAt', "desc")
         .get();
     } else {
-      queryData = query(collectionRef, orderBy('createdAt', 'desc'));
+      queryData = query(collectionRef, orderBy('createdAt', "desc"));
     }
 
     const querySnapshot = await getDocs(queryData);
@@ -36,10 +36,9 @@ export async function FetchDocuments(docCollection, search = '', uid = null) {
       id: doc.id,
       ...doc.data(),
     }));
-
     return {
       type: 'UPDATED_DOC',
-      data: DocumentArray.filter(({ id }) => id !== 'gvlIcpGsWmAco6G9UNws'),
+      data: DocumentArray.filter(({ id }) => id !== 'gvlIcpGsWmAco6G9UNws').reverse(),
       error: queryError,
     };
   } catch (error) {

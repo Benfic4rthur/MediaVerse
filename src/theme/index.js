@@ -25,6 +25,8 @@ export const theme = {
     error: 'hsl(1, 55%, 54%)',
     errorHover: 'hsl(1, 55%, 49%)',
     errorDisabled: 'hsl(1, 55%, 34%)',
+    success: 'hsl(126, 43%, 30%)',
+    successBg: 'hsl(126, 23%, 77%)',
   },
   font: {
     size: {
@@ -55,7 +57,7 @@ export const theme = {
     scale: 'scale(1)',
     visible: 'visible',
   },
-  sizeSVG: "2rem",
+  sizeSVG: '2rem',
   animation: {
     balancinho: keyframes`
     100% {

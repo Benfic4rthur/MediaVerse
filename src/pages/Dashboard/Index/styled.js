@@ -212,6 +212,7 @@ export const ButtonEvent = styled.button`
   background-color: ${({ theme }) => theme.color.fourthHover};
   font-size: ${({ theme }) => theme.font.size.base};
   color: ${({ theme }) => theme.color.fourth};
+  min-width: 3rem;
   width: 3rem;
   height: 3rem;
   justify-content: center;

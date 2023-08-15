@@ -107,12 +107,30 @@ export const Tag = styled.div`
   border: 0.1rem solid ${({ theme }) => theme.color.fourthOpacity};
   font-family: ${({ theme }) => theme.font.family.primary};
   line-height: ${({ theme }) => theme.font.lineHeight};
-  font-size: ${({ theme }) => theme.font.size.sm};
+  font-size: 1.3rem;
   display: flex;
+  max-width: 100%;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.7rem;
+
   padding-inline: 0.9rem;
   height: 4rem;
+
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
+export const TagUrl = styled.img`
+  height: 3rem;
+  min-width: 3rem;
+  width: 3rem;
+  object-fit: cover;
+  object-position: center center;
+  overflow: hidden;
+  border-radius: 0.5rem;
 `;
 
 export const ButtonTag = styled.button`

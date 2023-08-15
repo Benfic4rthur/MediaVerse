@@ -7,8 +7,8 @@ export async function FetchTags(docCollection = '', searchTokens) {
   if (searchTokens) {
     const queryData = query(
       collectionRef,
-      where("collec", '==', searchTokens),
-      orderBy('createdAt', 'desc'),
+      where('collec', '==', searchTokens),
+      orderBy('createdAt', "desc"),
     );
 
     const querySnapshot = await getDocs(queryData);

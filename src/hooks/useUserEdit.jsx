@@ -1,12 +1,12 @@
+import { collection, doc, getDocFromCache, getDocs, updateDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
-import { useState, useEffect } from 'react';
-import { doc, getDocFromCache, updateDoc, collection, getDocs } from 'firebase/firestore';
 
 export const UseUserManagement = userId => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const getUserData = async () => {
     try {
@@ -23,8 +23,8 @@ export const UseUserManagement = userId => {
   const updateUser = async updatedData => {
     try {
       setLoading(true);
-      setError(null);
-      setSuccessMessage(null);
+      setError('');
+      setSuccessMessage('');
 
       // checa se o userName já existe
       const querySnapshot = await getDocs(collection(db, 'userInfo'));
@@ -38,19 +38,13 @@ export const UseUserManagement = userId => {
       // if (ademiro){
       //   throw new Error('Você não pode alterar seu nome de usuário para administrador!');
       // }
-      
+
       if (existingUser) {
         throw new Error('Nome de usuário já existe!');
       }
 
       const userInfoRef = doc(db, 'userInfo', userId);
-      await updateDoc(userInfoRef, {
-        displayName: updatedData.displayName,
-        phoneNumber: updatedData.phoneNumber,
-        userName: updatedData.userName,
-        userStatus: updatedData.userStatus,
-        userGender: updatedData.userGender,
-      });
+      await updateDoc(userInfoRef,  updatedData);
 
       setUser(updatedData);
       setLoading(false);
@@ -67,9 +61,9 @@ export const UseUserManagement = userId => {
     }
 
     return () => {
-      setUser(null);
-      setLoading(null);
-      setError(null);
+      setUser('');
+      setLoading(false);
+      setError('');
     };
   }, [userId]);
 

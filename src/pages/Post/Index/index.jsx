@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from 'react';
 import { LuEye, LuShare, LuUser } from 'react-icons/lu';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DialogDemo } from '../../../components/ModalShare';
 import { Sidebar } from '../../../components/Sidebar';
 import { useFetchDocument } from '../../../hooks/useFetchDocument';
@@ -20,7 +20,6 @@ import {
   Title,
   VideoStyled,
 } from './styled';
-import { useNavigate } from 'react-router-dom';
 
 export const Post = () => {
   const { id } = useParams();
@@ -31,6 +30,7 @@ export const Post = () => {
   const shareUrl = window.location.href;
   const shareTitle = `Veja este vídeo sobre "${post?.title}" `;
   const [videoEnded, setVideoEnded] = useState(false); // Estado para rastrear se o vídeo acabou
+
   const [lastVideo, setLastVideo] = useState(false);
 
   useEffect(() => {
@@ -58,27 +58,25 @@ export const Post = () => {
   }
 
   const elapsedTime = post ? getElapsedTime(post.createdOn) : '';
-  const handleVideoEnd = () => {
-    setVideoEnded(true); // Atualiza o estado quando o vídeo acabar
-    const ProximoArray = tagsVal.find(e => Number(e.position) > Number(post.position));
-    const delay = ProximoArray?.id ? 2000 : 0;
-    setTimeout(() => {
-      setVideoEnded(false);
-      videoRedirect();
-    }, delay);
-  };
 
-  const videoRedirect = () => {
+  const handleVideoEnd = () => {
     const ProximoArray = tagsVal.find(e => Number(e.position) > Number(post.position));
     if (ProximoArray?.id) {
-      videoNavigate(`/post/${ProximoArray.id}`);
-    } else {
+      setLastVideo(false);
       setVideoEnded(true);
+
+      setTimeout(() => {
+        setVideoEnded(false);
+        videoNavigate(`/post/${ProximoArray.id}`);
+      }, 2000);
+    } else {
       setLastVideo(true);
+      setVideoEnded(true);
+
       setTimeout(() => {
         setLastVideo(false);
         videoNavigate('/');
-      }, 7500);
+      }, 5000);
     }
   };
 
@@ -168,4 +166,4 @@ export const Post = () => {
       <Sidebar tagsVal={tagsVal} />
     </ContainerMain>
   );
-};
+}
