@@ -36,6 +36,9 @@ export const DashboardPost = () => {
   const [reloader, setReloader] = useState(0);
   const [loader, setLoader] = useState(true);
   const { id } = useParams();
+  const [postId, setPostId] = useState('');
+
+
 
   const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' });
 
@@ -43,11 +46,14 @@ export const DashboardPost = () => {
     const func = async () => {
       try {
         const Where = where('collec', '==', id);
-
         setLoader(true);
         const data = await GetCollectionValues('posts', Where);
-        setPosts(data);
+        // Ordenar por ordem decrescente de createdAt
+        const sortedPosts = data.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
         setLoader(false);
+        setPosts(sortedPosts.reverse()); // Revertendo a ordem dos posts
+
+        setPostId(sortedPosts?.[0]?.id);
       } catch (error) {
         console.error(error);
         setLoader(false);
@@ -79,7 +85,7 @@ export const DashboardPost = () => {
       <ContainerHeader>
         <Subtitle>Gerencie os posts deste curso </Subtitle>
 
-        <CreatePostButton as={Link} to={`/post/create/${id}`}>
+        <CreatePostButton as={Link} to={`/post/create/${postId}`}>
           Criar Post <LuPlus size={17} />
         </CreatePostButton>
       </ContainerHeader>
