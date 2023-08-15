@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
+import { AiOutlineFieldNumber } from 'react-icons/ai';
 import { useParams } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInput';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
@@ -29,7 +30,8 @@ import { deleteStorageMedia } from '../../../utils/deleteStorageMedia';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
-import { update } from 'lodash';
+import { and, where } from 'firebase/firestore';
+import { GetCollectionValues } from '../../../utils/GetCollectionValues';
 
 export const EditPost = () => {
   const { id: postId } = useParams();
@@ -54,6 +56,9 @@ export const EditPost = () => {
   const [selectedVideo, setSelectedVideo] = useState('');
   const navigate = useNavigate();
   const { updateDocument, response } = useUpdateDocument('posts', postId);
+  const [position, setPosition] = useState('');
+  const [ currentPosition, setCurrentPosition ] = useState(0);
+  const Where = and(where('position', '==', position));
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Edição';
@@ -66,6 +71,8 @@ export const EditPost = () => {
       setSelectedVideo(post?.mediaURL);
       setBody(post.body);
       setIsPublic(post?.isPublic);
+      setPosition(post?.position);
+      setCurrentPosition(post?.position);
       const func = async () => {
         try {
           const collecData = await FetchDocument('collec', post?.collec);
@@ -96,81 +103,90 @@ export const EditPost = () => {
       setFormError('Selecione uma coleção');
       return;
     }
-
-    // if (IsValidTrueOrFalse(isPublic) && selectedCollec?.publicPost === 3) {
-    //   setFormError(`Você já postou 3 vídeos públicos na coleção "${selectedCollec?.name}"`);
-    //   return;
-    // }
+    if (!position) {
+      setFormError('Selecione uma posição.');
+      return;
+    }
+    if (position > 300) {
+      setFormError('Posição inválida.');
+      return;
+    }
 
     try {
       const mediaVideo = document.getElementById('mediaVideo')?.files?.[0];
       const mediaThumb = document.getElementById('mediaThumb')?.files?.[0];
+      const val = await GetCollectionValues('posts', Where);
+      const existinPostPosition = val.find(post => post.position === position);
+      if (!existinPostPosition || position === currentPosition) {
+        if (mediaVideo && mediaThumb) {
+          setProgressPercent(5);
 
-      if (mediaVideo && mediaThumb) {
-        setProgressPercent(5);
+          mediaUpload(
+            mediaThumb,
+            null,
+            'posts',
+            null,
+            async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+              setProgressPercent(34);
+              await deleteStorageMedia('posts', post?.thumbURLName);
 
-        mediaUpload(
-          mediaThumb,
-          null,
-          'posts',
-          null,
-          async ({ mediaURL: thumbURL, name: thumbURLName }) => {
-            setProgressPercent(34);
-            await deleteStorageMedia('posts', post?.thumbURLName);
+              mediaUpload(
+                mediaVideo,
+                null,
+                'posts',
+                null,
+                async ({ mediaURL, name: mediaURLName }) => {
+                  setProgressPercent(85);
+                  await deleteStorageMedia('posts', post?.mediaURLName);
 
-            mediaUpload(
-              mediaVideo,
-              null,
-              'posts',
-              null,
-              async ({ mediaURL, name: mediaURLName }) => {
-                setProgressPercent(85);
-                await deleteStorageMedia('posts', post?.mediaURLName);
+                  setProgressPercent(90);
+                  await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
 
-                setProgressPercent(90);
-                await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
+                  setProgressPercent(100);
+                  setProgressPercent(0);
+                },
+              );
+            },
+          );
+        } else if (mediaVideo) {
+          mediaUpload(
+            mediaVideo,
+            null,
+            'posts',
+            setProgressPercent,
+            async ({ mediaURL, name: mediaURLName }) => {
+              await deleteStorageMedia('posts', post?.mediaURLName);
 
-                setProgressPercent(100);
-                setProgressPercent(0);
-              },
-            );
-          },
-        );
-      } else if (mediaVideo) {
-        mediaUpload(
-          mediaVideo,
-          null,
-          'posts',
-          setProgressPercent,
-          async ({ mediaURL, name: mediaURLName }) => {
-            await deleteStorageMedia('posts', post?.mediaURLName);
+              await savePost(mediaURL, selectedThumb, mediaURLName, document?.thumbURLName);
+              setProgressPercent(0);
+            },
+          );
+        } else if (mediaThumb) {
+          mediaUpload(
+            mediaThumb,
+            null,
+            'posts',
+            setProgressPercent,
+            async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+              await deleteStorageMedia('posts', post?.thumbURLName);
 
-            await savePost(mediaURL, selectedThumb, mediaURLName, document?.thumbURLName);
-            setProgressPercent(0);
-          },
-        );
-      } else if (mediaThumb) {
-        mediaUpload(
-          mediaThumb,
-          null,
-          'posts',
-          setProgressPercent,
-          async ({ mediaURL: thumbURL, name: thumbURLName }) => {
-            await deleteStorageMedia('posts', post?.thumbURLName);
-
-            await savePost(selectedVideo, thumbURL, document?.mediaURLName, thumbURLName);
-            setProgressPercent(0);
-          },
-        );
+              await savePost(selectedVideo, thumbURL, document?.mediaURLName, thumbURLName);
+              setProgressPercent(0);
+            },
+          );
+        } else {
+          setProgressPercent(5);
+          await savePost(
+            selectedVideo,
+            selectedThumb,
+            document?.thumbURLName,
+            document?.mediaURLName,
+          );
+          setProgressPercent(100);
+          setProgressPercent(0);
+        }
       } else {
-        setProgressPercent(5);
-        await savePost(
-          selectedVideo,
-          selectedThumb,
-          document?.thumbURLName,
-          document?.mediaURLName,
-        );
-        setProgressPercent(100);
+        setFormError('Posição já existe');
         setProgressPercent(0);
       }
     } catch (error) {
@@ -191,6 +207,7 @@ export const EditPost = () => {
       collec: selectedCollec.id,
       collecName: selectedCollec.name,
       isPublic: IsValidTrueOrFalse(isPublic),
+      position,
       uid: uid,
       createdBy: displayName,
       createdOn: Date.now().toString(),
@@ -303,6 +320,18 @@ export const EditPost = () => {
               </CreateInput>
             </ModalCollec>
           </ContainerFlex>
+          <CreateInput
+            Svg={AiOutlineFieldNumber}
+            aria-label='Escolha a posição da aula/vídeo na coleção'
+            type='number'
+            name='position'
+            value={position}
+            className='red'
+            onChange={e => setPosition(e.target.value)}
+            placeholder='Escolha a posição da aula/vídeo na coleção'
+            title='Escolha a posição da aula/vídeo na coleção'
+            required
+          />
 
           <ContainerFlex>
             <ButtonResetForm
