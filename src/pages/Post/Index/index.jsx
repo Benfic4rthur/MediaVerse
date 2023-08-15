@@ -29,8 +29,9 @@ export const Post = () => {
   const videoNavigate = useNavigate();
   const shareUrl = window.location.href;
   const shareTitle = `Veja este vídeo sobre "${post?.title}" `;
-
   const [videoEnded, setVideoEnded] = useState(false); // Estado para rastrear se o vídeo acabou
+  const [postPosition, setPostPosition] = useState(0);
+  const [lastVideo, setLastVideo] = useState(false);
 
   useEffect(() => {
     document.title = `MediaVerse - ${post?.title ?? 'Posts'}`;
@@ -39,6 +40,7 @@ export const Post = () => {
   useEffect(() => {
     const fetchTag = async () => {
       setTagsVal(await FetchTags('posts', post?.collec));
+      setPostPosition(post?.position);
     };
 
     fetchTag();
@@ -63,17 +65,21 @@ export const Post = () => {
     setTimeout(() => {
       videoRedirect();
       setVideoEnded(false);
-    }, 1500);
+    }, 3000);
   };
 
   const videoRedirect = () => {
-    const index = tagsVal.reduce((acc, e, i) => {
-      return e.id === post.id ? i : acc;
+    const index = tagsVal.reduce((acc, e) => {
+      return e.position == Number(postPosition) + 1 ? e : acc;
     }, 0);
-    if (tagsVal[index]?.id) {
-      videoNavigate(`/post/${tagsVal[index + 1]?.id}`);
+    if (index?.id) {
+      videoNavigate(`/post/${index?.id}`);
+    } else {
+      setLastVideo(true);
+      setTimeout(() => {
+        videoNavigate('/');
+      }, 3000);
     }
-    setVideoEnded(false);
   };
 
   return (
@@ -93,6 +99,25 @@ export const Post = () => {
                 controls
                 onEnded={handleVideoEnd}
               />
+            ) : lastVideo === true ? (
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: 500,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 10,
+                  flexDirection: 'column',
+                  gap: 10,
+                }}
+              >
+                <p style={{ color: 'white', fontSize: '24px' }}>
+                  Parabéns, você concluiu o curso {post.collecName}
+                </p>
+              </div>
             ) : (
               <div
                 style={{

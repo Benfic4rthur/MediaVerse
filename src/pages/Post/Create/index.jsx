@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
+import { AiOutlineFieldNumber } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CreateInput } from '../../../components/CreateInput';
 import { CustomInputTypeFile } from '../../../components/CustomInputTypeFile';
@@ -24,6 +25,8 @@ import { IsValidTrueOrFalse } from '../../../utils/IsValidTrueOrFalse';
 import { generateSearchTokens } from '../../../utils/generateSearchTokens';
 import { mediaUpload } from '../../../utils/mediaUpload';
 import { processSelectedFile } from '../../../utils/processSelectedFile';
+import { and, where } from 'firebase/firestore';
+import { GetCollectionValues } from '../../../utils/GetCollectionValues';
 
 export const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -43,6 +46,8 @@ export const CreatePost = () => {
   const [selectedVideo, setSelectedVideo] = useState('');
   const [resetThumbPlaceholder, setResetThumbPlaceholder] = useState(false);
   const [resetVideoPlaceholder, setResetVideoPlaceholder] = useState(false);
+  const [position, setPosition] = useState('');
+  const Where = and(where('position', '==', position));
 
   useEffect(() => {
     const func = async () => {
@@ -90,25 +95,47 @@ export const CreatePost = () => {
       return;
     }
 
+    if (!position) {
+      setFormError('Selecione uma posição.');
+      return;
+    }
+    if (position > 300) {
+      setFormError('Posição inválida.');
+      return;
+    }
+    //verifica se já existe o campo position igual em algum dos posts
     try {
-      setProgressPercent(5);
-      mediaUpload(
-        mediaThumb,
-        null,
-        'posts',
-        null,
-        async ({ mediaURL: thumbURL, name: thumbURLName }) => {
-          setProgressPercent(34);
-          mediaUpload(mediaVideo, null, 'posts', null, async ({ mediaURL, name: mediaURLName }) => {
-            setProgressPercent(90);
+      const val = await GetCollectionValues('posts', Where);
+      const existinPostPosition = val.find(post => post.position === position);
+      if (!existinPostPosition) {
+        setProgressPercent(5);
+        mediaUpload(
+          mediaThumb,
+          null,
+          'posts',
+          null,
+          async ({ mediaURL: thumbURL, name: thumbURLName }) => {
+            setProgressPercent(34);
+            mediaUpload(
+              mediaVideo,
+              null,
+              'posts',
+              null,
+              async ({ mediaURL, name: mediaURLName }) => {
+                setProgressPercent(90);
 
-            await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
+                await savePost(mediaURL, thumbURL, mediaURLName, thumbURLName);
 
-            setProgressPercent(100);
-            setProgressPercent(0);
-          });
-        },
-      );
+                setProgressPercent(100);
+                setProgressPercent(0);
+              },
+            );
+          },
+        );
+      } else {
+        setFormError('Posição já existe');
+        setProgressPercent(0);
+      }
     } catch (error) {
       console.error(error);
       setProgressPercent(0);
@@ -131,6 +158,7 @@ export const CreatePost = () => {
       collec: id,
       collecName: name,
       isPublic: IsValidTrueOrFalse(isPublic),
+      position: position,
       uid: user.uid,
       createdBy: user.displayName,
       createdOn: Date.now().toString(),
@@ -148,6 +176,7 @@ export const CreatePost = () => {
     setSelectedThumb('');
     setSelectedVideo('');
     setSelectedCollec({});
+    setPosition('');
     setIsPublic('false');
     setFormError('');
     setResetThumbPlaceholder(prevState => !prevState);
@@ -278,6 +307,18 @@ export const CreatePost = () => {
               </ModalCollec>
             )}
           </ContainerFlex>
+          <CreateInput
+            Svg={AiOutlineFieldNumber}
+            aria-label='Escolha a posição da aula/vídeo na coleção'
+            type='number'
+            name='position'
+            value={position}
+            className='red'
+            onChange={e => setPosition(e.target.value)}
+            placeholder='Escolha a posição da aula/vídeo na coleção'
+            title='Escolha a posição da aula/vídeo na coleção'
+            required
+          />
 
           <ContainerFlex>
             <ButtonResetForm

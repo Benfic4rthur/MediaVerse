@@ -128,7 +128,7 @@ export const DashboardPost = () => {
                     </ContainerDialog>
                   )}
                   <ContainerTitlePost className='titulo'>
-                    <TitlePost title={`Título: ${post.title}`}>Título: {post.title}</TitlePost>
+                    <TitlePost title={`Título: ${post.title}`}>Título: {post.title} | Aula: {post.position}</TitlePost>
                   </ContainerTitlePost>
                   <ContainerDate className='data'>
                     <Views title='Quantidade de visualizações'>
