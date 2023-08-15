@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from 'react';
 import { LuEye, LuShare, LuUser } from 'react-icons/lu';
 import { useParams } from 'react-router-dom';
@@ -30,7 +31,6 @@ export const Post = () => {
   const shareUrl = window.location.href;
   const shareTitle = `Veja este vídeo sobre "${post?.title}" `;
   const [videoEnded, setVideoEnded] = useState(false); // Estado para rastrear se o vídeo acabou
-  const [postPosition, setPostPosition] = useState(0);
   const [lastVideo, setLastVideo] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,6 @@ export const Post = () => {
   useEffect(() => {
     const fetchTag = async () => {
       setTagsVal(await FetchTags('posts', post?.collec));
-      setPostPosition(post?.position);
     };
 
     fetchTag();
@@ -59,26 +58,27 @@ export const Post = () => {
   }
 
   const elapsedTime = post ? getElapsedTime(post.createdOn) : '';
-
   const handleVideoEnd = () => {
     setVideoEnded(true); // Atualiza o estado quando o vídeo acabar
+    const ProximoArray = tagsVal.find(e => Number(e.position) > Number(post.position));
+    const delay = ProximoArray?.id ? 2000 : 0;
     setTimeout(() => {
-      videoRedirect();
       setVideoEnded(false);
-    }, 3000);
+      videoRedirect();
+    }, delay);
   };
 
   const videoRedirect = () => {
-    const index = tagsVal.reduce((acc, e) => {
-      return e.position == Number(postPosition) + 1 ? e : acc;
-    }, 0);
-    if (index?.id) {
-      videoNavigate(`/post/${index?.id}`);
+    const ProximoArray = tagsVal.find(e => Number(e.position) > Number(post.position));
+    if (ProximoArray?.id) {
+      videoNavigate(`/post/${ProximoArray.id}`);
     } else {
+      setVideoEnded(true);
       setLastVideo(true);
       setTimeout(() => {
+        setLastVideo(false);
         videoNavigate('/');
-      }, 3000);
+      }, 7500);
     }
   };
 
@@ -99,26 +99,7 @@ export const Post = () => {
                 controls
                 onEnded={handleVideoEnd}
               />
-            ) : lastVideo === true ? (
-              <div
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: 500,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  background: 'rgba(0, 0, 0, 0.5)',
-                  borderRadius: 10,
-                  flexDirection: 'column',
-                  gap: 10,
-                }}
-              >
-                <p style={{ color: 'white', fontSize: '24px' }}>
-                  Parabéns, você concluiu o curso {post.collecName}
-                </p>
-              </div>
-            ) : (
+            ) : !lastVideo ? (
               <div
                 style={{
                   position: 'relative',
@@ -135,6 +116,29 @@ export const Post = () => {
               >
                 <SpinerLoading size={45} style={{ color: 'white' }} />
                 <p style={{ color: 'white', fontSize: '24px' }}>Carregando próximo vídeo...</p>
+              </div>
+            ) : (
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: 500,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 10,
+                  flexDirection: 'column',
+                  gap: 10,
+                }}
+              >
+                <p style={{ color: 'white', fontSize: '24px' }}>
+                  Parabéns, você concluiu o curso "{post.collecName}",
+                </p>
+                <p style={{ color: 'white', fontSize: '24px' }}>
+                  Verifique a disponibilidade do seu certificado em
+                </p>
+                <p style={{ color: 'white', fontSize: '24px' }}>"meu aprendizado/certificações"</p>
               </div>
             )}
 
