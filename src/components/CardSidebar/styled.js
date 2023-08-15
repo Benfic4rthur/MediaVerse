@@ -29,7 +29,7 @@ export const Container = styled(NavLink)`
   overflow: hidden;
   width: 100%;
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1rem;
   animation: ${animate} 0.5s ease-in-out;
 
   &.active {
@@ -45,7 +45,7 @@ export const Container = styled(NavLink)`
 
 export const Video = styled.video`
   ${MidiaStyled}
-  width: 200px;
+  width: 150px;
   height: 100px;
   background-color: ${({ theme }) => theme.color.firstOpacity};
   border-radius: 10px;

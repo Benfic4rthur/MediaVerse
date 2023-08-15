@@ -22,7 +22,7 @@ export const CardSidebar = ({ props }) => {
       <Descricao>
         {title}
         <Subtitle>
-          {views} views - {deta}
+        {deta} - {views} views  
         </Subtitle>
       </Descricao>
     </Container>
