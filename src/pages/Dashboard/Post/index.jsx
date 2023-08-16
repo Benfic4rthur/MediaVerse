@@ -38,8 +38,6 @@ export const DashboardPost = () => {
   const { id } = useParams();
   const [postId, setPostId] = useState('');
 
-
-
   const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' });
 
   useEffect(() => {
@@ -52,8 +50,8 @@ export const DashboardPost = () => {
         const sortedPosts = data.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
         setLoader(false);
         setPosts(sortedPosts.reverse()); // Revertendo a ordem dos posts
-
-        setPostId(sortedPosts?.[0]?.id);
+        //seta o postId com o id da collec que vem do data
+        setPostId(id);
       } catch (error) {
         console.error(error);
         setLoader(false);
@@ -128,7 +126,9 @@ export const DashboardPost = () => {
                     </ContainerDialog>
                   )}
                   <ContainerTitlePost className='titulo'>
-                    <TitlePost title={`Título: ${post.title}`}>Título: {post.title} | Aula: {post.position}</TitlePost>
+                    <TitlePost title={`Título: ${post.title}`}>
+                      Título: {post.title} | Aula: {post.position}
+                    </TitlePost>
                   </ContainerTitlePost>
                   <ContainerDate className='data'>
                     <Views title='Quantidade de visualizações'>
