@@ -127,7 +127,7 @@ export const DashboardPost = () => {
                   )}
                   <ContainerTitlePost className='titulo'>
                     <TitlePost title={`Título: ${post.title}`}>
-                      Título: {post.title} | Aula: {post.position}
+                      Título: {post.title} | Posição: {post.position}
                     </TitlePost>
                   </ContainerTitlePost>
                   <ContainerDate className='data'>

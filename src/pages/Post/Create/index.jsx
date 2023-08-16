@@ -170,7 +170,7 @@ export const CreatePost = () => {
 
     const Document = await insertDocument(post);
 
-    if (Document) navigate(`/post/${Document?.id}`);
+    if (Document) navigate(`/dashboard/posts/${id}`);
   }
 
   const Reset = () => {
