@@ -140,7 +140,9 @@ export const Post = () => {
               </div>
             )}
 
-            <Title>{post.title}</Title>
+            <Title>
+              Aula {post.position} - {post.title}
+            </Title>
             <ContainerInfo>
               <Author>
                 <LuUser size={16} />

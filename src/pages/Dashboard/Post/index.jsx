@@ -64,7 +64,7 @@ export const DashboardPost = () => {
 
   useLayoutEffect(() => {
     document.title = `MediaVerse - ${name}`;
-  }, []);
+  }, [name]);
 
   const DeteleMedia = async postData => {
     try {
@@ -129,7 +129,7 @@ export const DashboardPost = () => {
                   )}
                   <ContainerTitlePost className='titulo'>
                     <TitlePost title={`Título: ${post.title}`}>
-                      Título: {post.title} | Posição: {post.position}
+                      Título: {post.title} | Aula: {post.position}
                     </TitlePost>
                   </ContainerTitlePost>
                   <ContainerDate className='data'>

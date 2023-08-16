@@ -2,7 +2,7 @@ import { getElapsedTime } from '../../utils/getElapsedTime';
 import { Container, Descricao, Subtitle, Video } from './styled';
 
 export const CardSidebar = ({ props }) => {
-  const { title, views, createdOn, mediaURL, id } = props;
+  const { title, views, createdOn, mediaURL, id, position } = props;
 
   const deta = getElapsedTime(createdOn);
 
@@ -20,7 +20,7 @@ export const CardSidebar = ({ props }) => {
         preload='none'
       />
       <Descricao>
-        {title}
+        Aula {position} - {title}
         <Subtitle>
         {deta} - {views} views  
         </Subtitle>

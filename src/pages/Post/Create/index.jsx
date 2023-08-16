@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { LuFileVideo, LuHeading1, LuImagePlus, LuLock } from 'react-icons/lu';
 import { MdOutlineVideoLibrary } from 'react-icons/md';
@@ -41,6 +42,7 @@ export const CreatePost = () => {
   }); // Novo estado para tag selecionada
   const { user } = UseAuthValue();
   const Params = useParams();
+  const [bodyText, setBodyText] = useState('');
   const [formError, setFormError] = useState('');
   const [selectedThumb, setSelectedThumb] = useState('');
   const [selectedVideo, setSelectedVideo] = useState('');
@@ -145,6 +147,18 @@ export const CreatePost = () => {
     }
   }
 
+  useEffect(() => {
+    if (!body) {
+      setBodyText(
+        `Você está assistindo a Aula: ${position} - "${title}", do curso: "${selectedCollec.name}" - por ${user.displayName} 
+        \n    Caso possua alguma dúvida, envie-nos uma mensagem pelo suporte.
+        \n    Lembre-se de compartilhar com seus amigos!`,
+      );
+    } else {
+      setBodyText(body);
+    }
+  }, [body, title, selectedCollec, position]);
+
   async function savePost(mediaURL = '', thumbURL = '', mediaURLName = '', thumbURLName = '') {
     // eslint-disable-next-line no-unused-vars
     const { id, name, publicPost, userId } = selectedCollec;
@@ -155,7 +169,7 @@ export const CreatePost = () => {
       thumbURL,
       mediaURLName,
       thumbURLName,
-      body,
+      body: bodyText,
       // searchTokens: generateSearchTokens(title),
       searchTokens: [...generateSearchTokens(name), ...generateSearchTokens(title)],
       collec: id,
