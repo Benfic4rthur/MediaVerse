@@ -109,7 +109,7 @@ export const DashboardUser = () => {
             const loggedOutAtNum = Number(loggedOutAt);
             const loggedAtNum = Number(loggedAt);
 
-            const userStayLogged = loggedAtNum > loggedOutAtNum || StillLoggedIn
+            const userStayLogged = loggedAtNum > loggedOutAtNum || StillLoggedIn;
 
             return (
               <Card
@@ -125,7 +125,12 @@ export const DashboardUser = () => {
                     />
                   </ContainerTitlePost>
                   <Author>
-                    <LuUser size={16} /> {userName} | {userStatus}
+                    <LuUser size={16} /> {userName} |{' '}
+                    {userStatus === 'funcionario'
+                      ? 'Professor'
+                      : userStatus === 'admin'
+                      ? 'Admin'
+                      : 'Usuário'}
                   </Author>
                 </ContRowInit>
                 <ContRowDate className='edit'>
@@ -177,7 +182,9 @@ export const DashboardUser = () => {
                       </Author>
                     </>
                   ) : (
-                    <Author className='date'>ATENÇÃO: Usuário ainda não fez login </Author>
+                    <Author className='date'>
+                      {' '}| {' '}ATENÇÃO: Usuário ainda não fez login{' '}
+                    </Author>
                   )}
                 </ContRowEdit>
               </Card>

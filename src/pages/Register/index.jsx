@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 /* eslint-disable no-unused-vars */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { FaVenusMars } from 'react-icons/fa';
@@ -149,7 +150,8 @@ export const Register = () => {
             >
               <Option value=''>{'         '}Selecione o tipo de usuário</Option>
               <Option value='admin'>{'         '}Administrador</Option>
-              <Option value='funcionario'>{'         '}Funcionário</Option>
+              {/* <Option value='funcionario'>{'         '}Funcionário</Option> */}
+              <Option value='funcionario'>{'         '}Professor</Option>
               <Option value='aluno'>{'         '}Aluno</Option>
             </CreateInput>
             <CreateInput
