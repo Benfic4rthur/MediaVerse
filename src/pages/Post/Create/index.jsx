@@ -47,7 +47,10 @@ export const CreatePost = () => {
   const [resetThumbPlaceholder, setResetThumbPlaceholder] = useState(false);
   const [resetVideoPlaceholder, setResetVideoPlaceholder] = useState(false);
   const [position, setPosition] = useState('');
-  const Where = and(where("collecName", "==" , selectedCollec.name),where('position', '==', position));
+  const Where = and(
+    where('collecName', '==', selectedCollec.name),
+    where('position', '==', position),
+  );
 
   useEffect(() => {
     const func = async () => {
@@ -250,7 +253,6 @@ export const CreatePost = () => {
             value={body}
             onChange={e => setBody(e.target.value)}
             placeholder='Compartilhe seu conhecimento aqui...'
-            required
           />
 
           <ContainerFlex>
