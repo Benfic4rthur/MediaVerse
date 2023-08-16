@@ -1,4 +1,4 @@
-import { where } from 'firebase/firestore';
+import { where, and } from 'firebase/firestore';
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { LuEye, LuPlus, LuTag, LuTrash } from 'react-icons/lu';
 import { Link, useParams } from 'react-router-dom';
@@ -61,10 +61,6 @@ export const Dashboard = () => {
   useEffect(() => {
     const func = async (Where = null) => {
       let collectionWhere = Where;
-      if (category) {
-        collectionWhere = where('category', '==', category);
-      }
-
       const val = await GetCollectionValues('collec', collectionWhere);
 
       if (val.length > 0) {
@@ -88,11 +84,11 @@ export const Dashboard = () => {
 
     if (userData.userStatus === 'admin') {
       setLoader(true);
-      func();
+      const Where = where('category', '==', category);
+      func(Where);
     } else {
       setLoader(true);
-
-      const Where = where('userId', '==', userData.userId);
+      const Where = and(where('userId', '==', userData.userId), where('category', '==', category));
       func(Where);
     }
     if (collectionAdded) {
@@ -132,11 +128,7 @@ export const Dashboard = () => {
             Criar Coleção <LuPlus size={17} />
           </CreateCollecButton>
         </ModalCollec>
-        {/* <CreatePostButton as={Link} to='/post/create'>
-          Criar Post <LuPlus size={17} />
-        </CreatePostButton> */}
       </ContainerHeader>
-
       <ContainerPost>
         <ContainerPostHeader>
           {idCollec ? (
