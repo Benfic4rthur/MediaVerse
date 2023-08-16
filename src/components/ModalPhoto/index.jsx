@@ -40,18 +40,19 @@ export const DialogPhoto = ({
 
   useEffect(() => {
     const func = async () => {
-      const ImageUrl = await Promise.all(
+      const ImageUrl = await Promise?.all(
         imgUser?.[userGender]?.map(async image => {
           try {
             const url = await import(`../../assets/avatares/${userGender}/${image}.jpg`);
 
-            return { url: url.default, nameImage: image };
+            return { url: url?.default, nameImage: image };
           } catch (error) {
-            // console.error(error);
+            // eslint-disable-next-line no-unused-vars
+            return error;
           }
         }),
       );
-      setImages(ImageUrl.filter(e => e?.url));
+      setImages(ImageUrl?.filter(e => e?.url));
     };
 
     func();

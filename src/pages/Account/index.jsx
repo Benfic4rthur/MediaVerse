@@ -176,7 +176,7 @@ export function Account() {
               .then(image => setAvatar(image.default))
               .catch(error => console.error(error));
           } else {
-            console.error(error);
+            // console.error(error);
           }
         }
       }

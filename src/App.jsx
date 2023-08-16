@@ -19,12 +19,11 @@ function App() {
   const [user, setUser] = useState(undefined);
   const [Reload, setReload] = useState(0);
   const [userData, setUserData] = useState({
+    accessCollection: [],
     avatarName: '',
     deletedAt: '',
     displayName: '',
     id: '',
-    collec: '',
-    collecName: '',
     loggedAt: '',
     loggedOutAt: '',
     phoneNumber: '',
@@ -137,14 +136,14 @@ function App() {
   }, [isVisible]);
 
   useEffect(() => {
-    if (userData.deletedAt !== '' && userData.userId === userEmail) {
+    if (userData?.deletedAt !== '' && userData?.userId === userEmail) {
       signOut(auth);
     }
     onAuthStateChanged(auth, user => {
       setUser(user);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth, userData.deletedAt]);
+  }, [auth, userData?.deletedAt]);
 
   if (loadingUser) {
     return (

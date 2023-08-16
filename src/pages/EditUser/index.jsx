@@ -172,7 +172,7 @@ export const EditUser = () => {
             <Tag key={e.id} title={e.name}>
               <TagUrl src={e?.mediaURL} />
               <p>{e.name}</p>
-              <ButtonEvent onClick={() => RemoveCollection(e.id)}>
+              <ButtonEvent type='button' onClick={() => RemoveCollection(e.id)}>
                 <LuX />
               </ButtonEvent>
             </Tag>
@@ -183,7 +183,7 @@ export const EditUser = () => {
             <Tag key={e.id} title={e.name}>
               <TagUrl src={e?.mediaURL} />
               <p>{e.name}</p>
-              <ButtonEvent onClick={() => AddCollection(e.id)}>
+              <ButtonEvent type='button' onClick={() => AddCollection(e.id)}>
                 <LuPlus />
               </ButtonEvent>
             </Tag>
