@@ -11,6 +11,7 @@ import { UseAuthentication } from '../../hooks/useAuthentication';
 import { UseAuthValue } from '../../context/AuthContext';
 import { ButtonForm, ContainerForm, Error, Form, Success } from '../../styles/formStyled';
 import { Option, Subtitle } from '../../styles/styledGlobal';
+import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
   const [displayName, setDisplayName] = useState('');
@@ -26,6 +27,7 @@ export const Register = () => {
   // const [userCnpj, setUserCnpj] = useState('');
   const { imgUser } = UseAuthValue();
   const [loggedOutAt, setLoggedOutAt] = useState(Date.now().toString());
+  const gohome = useNavigate();
 
   useLayoutEffect(() => {
     document.title = 'MediaVerse - Novo Usuário';
@@ -85,6 +87,7 @@ export const Register = () => {
 
     if (!loading && !authError) {
       await auth.updateCurrentUser(currentUser);
+      gohome('/');
     }
   };
 

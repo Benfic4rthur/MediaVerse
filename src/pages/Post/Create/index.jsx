@@ -47,7 +47,7 @@ export const CreatePost = () => {
   const [resetThumbPlaceholder, setResetThumbPlaceholder] = useState(false);
   const [resetVideoPlaceholder, setResetVideoPlaceholder] = useState(false);
   const [position, setPosition] = useState('');
-  const Where = and(where('position', '==', position));
+  const Where = and(where("collecName", "==" , selectedCollec.name),where('position', '==', position));
 
   useEffect(() => {
     const func = async () => {
