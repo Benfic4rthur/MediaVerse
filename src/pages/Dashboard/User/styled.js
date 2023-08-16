@@ -160,7 +160,7 @@ export const UserLoggedBall = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: ${props => (props.logged ? 'green' : props.theme.color.error)};
+  background-color: ${props => (props.$logged ? 'green' : props.theme.color.error)};
   display: inline-block;
   margin-bottom: 1px;
   box-shadow: 2px 2px 5px ${({ theme }) => theme.color.fourthBg};

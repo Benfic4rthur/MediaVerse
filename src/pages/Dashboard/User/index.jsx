@@ -105,7 +105,7 @@ export const DashboardUser = () => {
           {filteredUsersInfo?.map(user => {
             const { loggedOutAt, loggedAt, userName, deletedAt, id, userId, userStatus } = user;
 
-            const StillLoggedIn = loggedOutAt === 'Ainda logado!';
+            const StillLoggedIn = loggedOutAt == 'Ainda logado!';
             const loggedOutAtNum = Number(loggedOutAt);
             const loggedAtNum = Number(loggedAt);
 
@@ -120,7 +120,7 @@ export const DashboardUser = () => {
                 <ContRowInit className='init'>
                   <ContainerTitlePost>
                     <UserLoggedBall
-                      logged={userStayLogged}
+                      $logged={userStayLogged}
                       title={userStayLogged ? 'Usuário Online' : 'Usuário Offline'}
                     />
                   </ContainerTitlePost>
