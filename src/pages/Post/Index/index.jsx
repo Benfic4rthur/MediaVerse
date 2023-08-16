@@ -76,7 +76,7 @@ export const Post = () => {
       setTimeout(() => {
         setLastVideo(false);
         videoNavigate('/');
-      }, 5000);
+      }, 8000);
     }
   };
 
@@ -166,4 +166,4 @@ export const Post = () => {
       <Sidebar tagsVal={tagsVal} />
     </ContainerMain>
   );
-}
+};

@@ -68,33 +68,33 @@ const Index = () => {
     //   }
     // };
 
-     const func = async () => {
-       if (checkUrl(userData.photoURL)) {
-         setAvatar(userData.photoURL);
-       } else {
-         try {
-           if (userData.userGender === 'feminino') {
-             const AvatarURL = await import(
-               `../../assets/avatares/feminino/${userData.photoURL}.jpg`
-             );
-             setAvatar(AvatarURL.default);
-           } else {
-             const AvatarURL = await import(
-               `../../assets/avatares/masculino/${userData.photoURL}.jpg`
-             );
-             setAvatar(AvatarURL.default);
-           }
-         } catch (error) {
-           if (error.code === 'ENOENT') {
-             import(`../../assets/notAvatar.jpg`)
-               .then(image => setAvatar(image.default))
-               .catch(error => console.error(error));
-           } else {
-             console.error(error);
-           }
-         }
-       }
-     };
+    const func = async () => {
+      if (checkUrl(userData.photoURL)) {
+        setAvatar(userData.photoURL);
+      } else {
+        try {
+          if (userData.userGender === 'feminino') {
+            const AvatarURL = await import(
+              `../../assets/avatares/feminino/${userData.photoURL}.jpg`
+            );
+            setAvatar(AvatarURL.default);
+          } else {
+            const AvatarURL = await import(
+              `../../assets/avatares/masculino/${userData.photoURL}.jpg`
+            );
+            setAvatar(AvatarURL.default);
+          }
+        } catch (error) {
+          if (error.code === 'ENOENT') {
+            import(`../../assets/notAvatar.jpg`)
+              .then(image => setAvatar(image.default))
+              .catch(error => console.error(error));
+          } else {
+            console.error(error);
+          }
+        }
+      }
+    };
 
     func();
   }, [user, auth.currentUser, userData.userGender, userData.photoURL]);
@@ -139,7 +139,7 @@ const Index = () => {
                         className={`${isActive => (isActive ? 'active' : '')} a2`}
                         onClick={() => setExpanded(false)}
                       >
-                        {userData.userStatus === 'admin' ? 'Painel de Cursos' : 'Dashboard'}
+                        Painel de Cursos
                       </NavLinkRowMenu>
                     </>
                   )}
@@ -201,11 +201,11 @@ const Index = () => {
                         </NavLinkMenuExpanded>
                         <NavLinkMenuExpanded
                           aria-label='Painel de Cursos'
-                        to='/dashboard/'
+                          to='/dashboard/'
                           className={`${isActive => (isActive ? 'active' : '')} a2`}
                           onClick={() => setExpanded(false)}
                         >
-                          {userData.userStatus === 'admin' ? 'Painel de Cursos' : 'Dashboard'}
+                          Painel de Cursos
                         </NavLinkMenuExpanded>
                       </>
                     )}

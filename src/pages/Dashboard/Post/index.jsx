@@ -37,6 +37,7 @@ export const DashboardPost = () => {
   const [loader, setLoader] = useState(true);
   const { id } = useParams();
   const [postId, setPostId] = useState('');
+  const [ name, setName ] = useState('');
 
   const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' });
 
@@ -52,6 +53,7 @@ export const DashboardPost = () => {
         setPosts(sortedPosts.reverse()); // Revertendo a ordem dos posts
         //seta o postId com o id da collec que vem do data
         setPostId(id);
+        setName(data[0].collecName);
       } catch (error) {
         console.error(error);
         setLoader(false);
@@ -61,7 +63,7 @@ export const DashboardPost = () => {
   }, [id, reloader]);
 
   useLayoutEffect(() => {
-    document.title = 'MediaVerse - Painel de Posts';
+    document.title = `MediaVerse - ${name}`;
   }, []);
 
   const DeteleMedia = async postData => {
@@ -81,7 +83,7 @@ export const DashboardPost = () => {
   return (
     <div>
       <ContainerHeader>
-        <Subtitle>Gerencie os posts deste curso </Subtitle>
+        <Subtitle>Gerencie: {name} </Subtitle>
 
         <CreatePostButton as={Link} to={`/post/create/${postId}`}>
           Criar Post <LuPlus size={17} />
