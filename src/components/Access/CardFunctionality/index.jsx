@@ -7,6 +7,7 @@ export function CardFunctionality({ title, description, reverse = false, childre
 
   const { showAnimation } = useAnimation(ref);
 
+  
   return (
     <Container ref={ref}>
       <ContainerMedia className={showAnimation ? typeAnimated : ''}>{children}</ContainerMedia>
