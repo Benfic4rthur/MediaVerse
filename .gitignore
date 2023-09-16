@@ -1,13 +1,12 @@
 # dependencies
 /.pnp
 .pnp.js
-package.json
+
 # testing
 /coverage
 
 # production
 /build
-
 
 # misc
 .DS_Store
@@ -40,4 +39,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*.jsx
