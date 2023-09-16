@@ -1,12 +1,13 @@
 # dependencies
 /.pnp
 .pnp.js
-
+package.json
 # testing
 /coverage
 
 # production
 /build
+/src
 
 # misc
 .DS_Store
